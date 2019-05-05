@@ -1,0 +1,37 @@
+#website-description {
+  width: 75%;
+  min-width: 220px;
+  margin: 0 auto;
+  padding: 25px 30px;
+  border-radius: 5px;
+  background-color: #ecf0f1;
+}
+
+#website-description h1 {
+  font-weight: normal;
+  font-size: 24px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#website-description p {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 15px 0;
+}
+
+@media screen and (max-width:999px) {
+  #website-description {
+    max-width: 860px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  #website-description h1 {
+    text-align: left;
+  }
+
+  #website-description p {
+    margin: 5px 0;
+  }
+}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}线路室视频站{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }} type="text/css">
+{% endblock %}
+
+{% block search_form %}
+{{ super() }}
+{% endblock %}
+
+{% block container %}
+<div class="container">
+  <div class="left-menu-col">
+    <button type="button" class="left-menu-toggle-btn">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+    <div class="left-menu-toggle-wrapper">
+      <h1 class="left-menu-head">目录</h1>
+      <ul class="left-menu-list">
+        <li class="left-menu-item menu-active" data-target-panel="overview-panel">风采展示</li>
+        {% for folder in video_folders %}
+        <li class="left-menu-item menu-inactive" data-target-panel="video-panel"
+          data-folder-name={{folder.replace(" ", "%20")}}>
+          {{ folder }}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="right-content-col">
+    <div class="panel-group">
+      <div class="content-panel panel-active" data-panel-name="overview-panel">
+        <!-- jQuery loads overview.html -->aaaaaaaaaaaaa
+      </div>
+      <div class="content-panel" data-panel-name="video-panel">
+        videovideovideo
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<script>
+  jQuery(document).ready(function () {
+    // 加载首页
+    jQuery(".content-panel[data-panel-name='overview-panel']").load('overview');
+    // 左侧菜单效果, 加载标签页
+    jQuery(".left-menu-item").click(function () {
+      if (!jQuery(this).hasClass("menu-active")) {
+        jQuery(".menu-active").removeClass("menu-active");
+        jQuery(this).addClass("menu-active");
+        var targetPanel = jQuery(this).attr("data-target-panel");
+        if (targetPanel == "video-panel") {
+          folderName = jQuery(this).attr("data-folder-name");
+          var url = 'video/' + folderName;
+          jQuery(".content-panel[data-panel-name='video-panel']").load(url);
+        }
+        jQuery(".content-panel").removeClass("panel-active");
+        jQuery(".content-panel[data-panel-name=" + targetPanel + "]").addClass("panel-active");
+      }
+    });
+  })
+</script>
+{% endblock %}

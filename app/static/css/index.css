@@ -1,0 +1,119 @@
+/* ##########################左侧目录############################ */
+.container {
+  padding-top: 60px;
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.left-menu-col {
+  flex: 20%;
+  min-width: 300px;
+  height: 100%;
+}
+
+.left-menu-toggle-btn {
+  background: none;
+  height: 32px;
+  padding: 4px 10px 5px 10px;
+  border: 1px solid snow;
+  border-radius: 6px;
+  color: snow;
+  cursor: pointer;
+  position: relative;
+  display: none;
+}
+
+.left-menu-toggle-wrapper {
+  width: 75%;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #ecf0f1;
+}
+
+.left-menu-toggle-wrapper h1{
+  font-size: 24px;
+  font-weight: normal;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 8px 16px;
+}
+
+.left-menu-item{
+  width: 100%;
+  color: #0984e3;
+  border-radius: 6px;
+  list-style: none;
+  font-size: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menu-active {
+  background-color: #0984e3 !important;
+  color: snow !important;
+}
+
+.left-menu-item:hover {
+  background-color: #c7ecee;
+}
+
+@media screen and (max-width: 1249px) {
+  .container {
+    display: block;
+  }
+
+  .left-menu-col {
+    height: auto;
+  }
+  .left-menu-toggle-wrapper {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    padding-left: 40px;
+    line-height: 40px;
+  }
+  .left-menu-toggle-wrapper h1,
+  .left-menu-list {
+    display: inline;
+  }
+  .left-menu-item {
+    display: inline;
+    white-space: nowrap;
+  }
+
+  .panel-group {
+    margin-top: 10px;
+    padding-top: 0 !important;
+  }
+}
+
+
+
+/* ##########################右侧容器############################ */
+
+.right-content-col {
+  flex: 80%;
+  height: 100%;
+}
+
+.panel-group {
+  width: 100%;
+  height: 100%;
+  padding-top: 30px;
+}
+
+.content-panel {
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.panel-active {
+  display: block !important;
+}

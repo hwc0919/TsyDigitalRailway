@@ -1,0 +1,21 @@
+{% block css %}
+<link rel="stylesheet" href={{url_for("static", filename="css/content_base.css")}} type="text/css">
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+
+<div class="panel-wrapper">
+  <div class="content-mid-col">
+    <div class="content_mid-col-wrapper">
+      {% block content_mid_col_wrapper %}
+      {% endblock %}
+    </div>
+  </div>
+
+  <div class="content-right-col">
+    {% block content_right_col %}
+    {% endblock %}
+  </div>
+</div>

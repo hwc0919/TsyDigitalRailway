@@ -1,0 +1,213 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-width: 700px;
+  height: 100%;
+  background-color: seashell;
+}
+
+@media screen and (max-width:999px) {
+  .navbar-toggle-wrapper {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    background-color: #2980b9;
+    padding: 5px 0;
+  }
+  .navbar-item {
+    margin: 5px auto 5px 50px !important;
+  }
+}
+
+@media screen and (min-width:1000px) {
+  .navbar-toggle-btn {
+    display: none;
+  }
+  .navbar-toggle-wrapper {
+    display: flex;
+  }
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.navbar {
+  width: 100%;
+  height: 60px;
+  background-color: #0984e3;
+  position: fixed;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  text-align: center;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.navbar-brand {
+  color: snow;
+  font-size: 24px;
+  min-width: 160px;
+  margin: 0px 50px;
+}
+
+.navbar-toggle-btn {
+  background: none;
+  margin: 50px;
+  border: none;
+  color: snow;
+  cursor: pointer;
+  font-size: 20px;
+  outline: none;
+}
+
+.navbar-toggle-wrapper {
+  flex-wrap: nowrap;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.navbar-menu-item {
+  display: inline-block;
+  list-style: none;
+  margin-right: 20px;
+  font-size: 18px;
+}
+
+.nav-link {
+  color: snow;
+  transition: text-shadow 0.3s;
+}
+
+.nav-link:hover {
+  text-shadow: 0px 0px 2px #ecf0f1;
+}
+
+.link-inactive {
+  color: #bdc3c7;
+}
+
+.link-inactive:hover {
+  color: #ecf0f1;
+}
+
+#search-form {
+  margin-left: 50px;
+  margin-right: auto;
+  color: snow;
+}
+
+#search-form input {
+  height: 32px;
+  width: 160px;
+  border-width: 1px;
+  border-radius: 6px;
+  padding: 10px;
+  margin-right: 5px;
+}
+
+.submit-btn {
+  background: none;
+  height: 32px;
+  padding: 4px 10px 5px 10px;
+  border: 1px solid snow;
+  border-radius: 6px;
+  z-index: 0;
+  color: snow;
+  cursor: pointer;
+  position: relative;
+}
+
+.submit-btn:hover {
+  color: black;
+  transition: all 0.3s;
+}
+
+.submit-btn::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  z-index: -1;
+  border: 1px solid snow;
+  border-radius: 6px;
+  background-color: snow;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.submit-btn:hover::before {
+  opacity: 1;
+}
+
+.userinfo-group {
+  text-align: center;
+  color: #ecf0f1;
+  margin-right: 50px;
+  cursor: pointer;
+}
+
+.userinfo-group>i {
+  font-size: 30px;
+}
+.userinfo-group>span{
+  font-size: 16px;
+  position: relative;
+  top: -5px;
+  left: 5px;
+}
+
+.userinfo-menu {
+  background: #3498db;
+  width: 120px;
+  position: absolute;
+  border-radius: 6px;
+  box-shadow: 0px 0px 5px #3498db;
+  padding: 0;
+  transform: translate(-40px, 12px);
+  display: none;
+}
+
+.userinfo-menu::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #3498db;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  z-index: -1;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.userinfo-menu a {
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: snow;
+  transition: all 0.3s;
+}
+
+.userinfo-menu a:hover {
+  background-color: snow;
+  color: black;
+}
+
+.userinfo-menu i, .userinfo-menu span {
+  margin: 10px 5px;
+}

@@ -1,0 +1,23 @@
+{% extends "content_base.html" %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href={{url_for("static", filename="css/overview.css")}} type="text/css">
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+
+{% endblock %}
+
+{% block content_mid_col_wrapper %}
+
+{% endblock %}
+
+{% block content_right_col %}
+<section id="website-description">
+  <h1>线路室视频站</h1>
+  <p>本网站提供项目视频和数字铁路模拟工具。</p>
+  <p>数字铁路工具需登陆后使用。</p>
+</section>
+{% endblock %}
