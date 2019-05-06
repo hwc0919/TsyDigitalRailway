@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}404 Not Found{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
+<style>
+  .left-menu-list a {
+    text-decoration: none;
+  }
+
+  .content-panel h1,
+  .content-panel p {
+    margin-left: 50px;
+    margin-bottom: 20px;
+  }
+</style>
+{% endblock %}
+
+{% block container %}
+<div class="container">
+  <div class="left-menu-col">
+    <button type="button" class="left-menu-toggle-btn">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+    <div class="left-menu-toggle-wrapper">
+      <h1 class="left-menu-head">目录</h1>
+      <ul class="left-menu-list">
+        <a href="/">
+          <li class="left-menu-item menu-inactive">回到主页</li>
+        </a>
+      </ul>
+    </div>
+  </div>
+  <div class="right-content-col">
+    <div class="panel-group">
+      <div class="content-panel panel-active" data-panel-name="video-panel">
+        <section class="no-content">
+          <h1>资源不存在...</h1>
+          <p><span class="count-down">3</span>s后自动跳转到首页(<a href="/">立即跳转</a>)</p>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<script>
+  var count = jQuery(".count-down").text();
+  function countDown() {
+    if (count == 0) {
+      window.location.href = '/';
+    }
+    jQuery(".count-down").text(count--);
+    setTimeout("countDown()", 1000);
+  }
+  jQuery(document).ready(function () {
+    countDown();
+  })
+</script>
+{% endblock %}

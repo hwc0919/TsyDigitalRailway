@@ -7,10 +7,6 @@
 <link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }} type="text/css">
 {% endblock %}
 
-{% block search_form %}
-{{ super() }}
-{% endblock %}
-
 {% block container %}
 <div class="container">
   <div class="left-menu-col">
@@ -23,7 +19,7 @@
         <li class="left-menu-item menu-active" data-target-panel="overview-panel">风采展示</li>
         {% for folder in video_folders %}
         <li class="left-menu-item menu-inactive" data-target-panel="video-panel"
-          data-folder-name={{folder.replace(" ", "%20")}}>
+          data-folder-name={{ folder.replace(" ", "%20") }}>
           {{ folder }}
         </li>
         {% endfor %}
@@ -33,10 +29,10 @@
   <div class="right-content-col">
     <div class="panel-group">
       <div class="content-panel panel-active" data-panel-name="overview-panel">
-        <!-- jQuery loads overview.html -->aaaaaaaaaaaaa
+        <!-- jQuery loads overview.html -->风采展示
       </div>
       <div class="content-panel" data-panel-name="video-panel">
-        videovideovideo
+        视频
       </div>
     </div>
   </div>

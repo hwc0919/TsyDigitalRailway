@@ -1,9 +1,8 @@
 import os
-import socket
 
-from app import create_app, db
+from app import create_app, db, IP, PORT
 from app.models import User, Role
-from app.main.views import IP, PORT
+
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 

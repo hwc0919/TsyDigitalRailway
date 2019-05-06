@@ -32,7 +32,7 @@
   margin: 30px auto;
   padding: 20px;
   border-radius: 5px;
-  background-color: #ecf0f1;
+  background-color: #dfe6e9;    /* American CITY LIGHTS */
 }
 
 .left-menu-toggle-wrapper h1{
@@ -62,7 +62,7 @@
   background-color: #c7ecee;
 }
 
-@media screen and (max-width: 1249px) {
+@media screen and (max-width: 1349px) {
   .container {
     display: block;
   }
@@ -92,8 +92,6 @@
     padding-top: 0 !important;
   }
 }
-
-
 
 /* ##########################右侧容器############################ */
 

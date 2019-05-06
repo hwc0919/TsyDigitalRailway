@@ -1,0 +1,141 @@
+.video-box {
+  width: 100%;
+  background-color: black;
+}
+
+.video-player-header,
+.video-player-footer {
+  width: 100%;
+  height: 60px;
+  background-color: black;
+}
+
+.video-player-body {
+  width: 100%;
+  border-left: 2px solid #101010;
+  border-right: 2px solid #101010;
+  height: 480px;
+}
+
+.video-player-body video {
+  background-color: #101010;
+  outline: none;
+}
+
+.video-description-box {
+  width: 100%;
+  height: 150px;
+}
+
+.video-description-box h1 {
+  width: 100%;
+  height: 40px;
+  font-weight: normal;
+  font-size: 20px;
+  padding: 10px 20px 5px 20px;
+}
+
+.video-description-box p {
+  width: 100%;
+  height: 110px;
+  line-height: 26px;
+  font-size: 16px;
+  padding: 0 20px 5px 20px;
+  overflow: auto;
+  background-color: #dfe6e9;
+  /* American CITY LIGHTS */
+}
+
+.right-video-list-wrapper {
+  width: 80%;
+  min-width: 280px;
+  margin: auto;
+  padding: 15px;
+  border-radius: 3px;
+  background-color: #dfe6e9;
+  /* American CITY LIGHTS */
+}
+
+.video-list-title {
+  font-size: 24px;
+  font-weight: normal;
+  margin: 10px 20px;
+}
+
+.right-video-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.video-list-item {
+  list-style: none;
+  width: 100%;
+  max-width: 300px;
+  height: 80px;
+  border-radius: 6px;
+  padding: 5px 10px;
+  margin-right: auto;
+  margin-bottom: 2px;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+  z-index: 0;
+}
+
+.list-item-active {
+  background-color: snow;
+}
+
+.video-list-item:hover {
+  box-shadow: 0 0 5px gray;
+  z-index: 1;
+}
+
+.video-list-item section {
+  width: 150px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 5px;
+}
+
+.video-list-item section h4 {
+  width: 100%;
+  height: 46px;
+  font-weight: normal;
+  white-space: normal;
+  overflow: hidden;
+}
+
+.play-hint {
+  display: none;
+  font-size: 10px;
+  transform: scaleY(0.8);
+  background-color: snow;
+  color: gray;
+  border: 2px solid gray;
+  border-radius: 6px;
+  padding: 3px 4px 2px 4px;
+  position: absolute;
+  bottom: 8px;
+  left: 80px;
+  z-index: 1;
+}
+
+.video-list-item section p i,
+.video-list-item section p span {
+  font-size: 14px;
+  margin-right: 5px;
+  color: gray;
+}
+
+.video-list-item section p span {
+  display: inline-block;
+  width: 40px;
+}
+
+@media screen and (max-width:999px) {
+  .right-video-list-wrapper {
+    width: 100%;
+    max-width: 860px;
+  }
+}

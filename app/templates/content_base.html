@@ -1,9 +1,5 @@
 {% block css %}
-<link rel="stylesheet" href={{url_for("static", filename="css/content_base.css")}} type="text/css">
-{% endblock %}
-
-{% block js %}
-
+<link rel="stylesheet" href={{url_for("static", filename="css/content_base.css")}}>
 {% endblock %}
 
 <div class="panel-wrapper">
@@ -19,3 +15,6 @@
     {% endblock %}
   </div>
 </div>
+
+{% block js %}
+{% endblock %}

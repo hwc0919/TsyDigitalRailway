@@ -1,12 +1,8 @@
 import os
 
 
-BASEDIR = os.path.abspath(os.path.dirname(__file__))
-
-
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'user1418'
-    FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod
@@ -27,13 +23,19 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
+    SQLALCHEMY_DATABASE_URI = os.environ.get('PRODUCTION_DATABASE_URL') or \
         'postgresql://postgres:user1418@localhost:5432/tsy'
+
+
+class HomeConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('HOME_DATABASE_URL') or \
+        'postgresql://postgres:0392@localhost:5432/testdb'
 
 
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
+    'home': HomeConfig,
     'default': DevelopmentConfig
 }
