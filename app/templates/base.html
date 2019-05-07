@@ -66,6 +66,8 @@
     /*###################### 登录窗口 #####################*/
     .login-window-wrapper {
       display: none;
+      align-items: center;
+      justify-content: center;
       position: fixed;
       top: 0;
       left: 0;
@@ -77,8 +79,8 @@
 
     #login-window {
       position: relative;
-      margin: auto;
       width: 420px;
+      min-width: 324px;
       background-color: whitesmoke;
       padding: 20px 30px;
       border-radius: 5px;
@@ -159,8 +161,10 @@
     .feedback {
       display: none;
       padding: 2px 10px;
-      background-color: antiquewhite;
+      background-color: snow;
+      border: 1px solid red;
       border-radius: 3px;
+      height: 25px;
       font-size: 14px;
       animation: shakes 0.5s;
     }
@@ -175,7 +179,7 @@
 
       100% {
         transform: translateX(0);
-        background-color: antiquewhite;
+        background-color: snow;
         color: black;
       }
 
@@ -245,7 +249,7 @@
         jQuery(".login-window-wrapper").toggleClass("d-flex", false);
       })
     })
-    // 表单检查
+    // 搜索表单检查
     function inputNotNull() {
       if (jQuery("input#search-form-input").val().trim() == '') {
         alert("请输入搜索内容");
@@ -286,9 +290,15 @@
           url: "/auth/login",
           data: jQuery("#login-form").serialize(),
           success: function (json) {
-            jQuery("#login-feedback").text(json.message).addClass("d-flex");
-            if (json.url) {
-              window.open(json.url, "_self");
+            if (json.status == false) {
+              jQuery("#login-feedback").text(json.message).addClass("d-flex");
+              return false;
+            } else if (json.status == true) {
+              jQuery("#login-feedback").text(json.message).addClass("d-flex");
+              setTimeout(function () { window.open(json.url, "_self"); }, 1000);
+
+            } else {
+              jQuery("#login-feedback").text("登录失败, 未知错误.").addClass("d-flex");
             }
           },
           error: function () {
@@ -318,11 +328,6 @@
         });
       }
     }
-
-    function register() {
-
-    }
-
   </script>
   {% endblock %}
 </body>

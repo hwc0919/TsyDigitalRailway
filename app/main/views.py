@@ -37,7 +37,7 @@ def overview():
 def explore_folder(folder):
     files = os.listdir(os.path.join(VIDEO_DIR, folder))
     if not files:
-        return '<h1 style="font-weight:normal;margin-left:50px">该文件夹没有视频...</h1>'
+        return '<h1 class="placeholder">该文件夹没有视频...</h1>'
     videos = [(folder, file[:-4]) for file in files if file[-4:] == '.mp4']
     return render_template('video.html', video_list=videos)
 
@@ -82,7 +82,7 @@ def search_result():
     result = search_result_dict.get('search_result')
     search_result_dict['search_result'] = None
     if not result:
-        return '<h1 style="margin-left:50px">没有找到相关视频...</h1>'
+        return '<h1 class="placeholder">没有找到相关视频...</h1>'
     return render_template('video.html', video_list=result)
 
 

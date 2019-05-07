@@ -21,7 +21,7 @@ def login():
         session['username'] = username
         session['login_status'] = True
         session['role'] = role
-        return json.dumps({'status': True, 'message': '登陆成功', 'url': '/video'})
+        return json.dumps({'status': True, 'message': '登陆成功, 即将自动跳转...', 'url': '/video'})
 
 
 @auth.route('/auth/logout')
@@ -51,7 +51,7 @@ def register():
         return render_template('auth/register.html')
     else:
         form = request.form
-        if User.query.filter_by(name=form.get('username')).first() != None:
+        if User.query.filter_by(username=form.get('username')).first() != None:
             return json.dumps({'status': False, 'error_field': 'username_field', 'message': '用户名已存在', 'url': None})
         if User.query.filter_by(realname=form.get('realname')).first() != None:
             return json.dumps({'status': False, 'error_field': 'realname_field', 'message': '真实姓名重复', 'url': None})

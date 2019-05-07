@@ -14,32 +14,49 @@
     margin-left: 10%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    /*  */
+  }
+
+  #register-form {
+    margin-right: auto;
   }
 
   .reg-form-group {
-    width: 400px;
     height: 50px;
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    margin: 15px;
+    margin: 20px 0;
     position: relative;
   }
 
   .reg-form-group label {
-    flex: 25%;
+    width: 100px;
     display: block;
   }
 
   .reg-form-group input {
-    flex: 75%;
+    width: 250px;
     height: 36px;
     border: 1px solid gray;
     border-radius: 6px;
     padding: 10px;
+    margin-right: 20px;
     font-size: 14px;
     outline: none;
     display: block;
+  }
+
+  .reg-feedback {
+    width: 150px;
+  }
+
+  #overall_field {
+    width: 520px;
+  }
+
+  #register-form button {
+    margin-bottom: 10px;
   }
 </style>
 {% endblock %}
@@ -66,36 +83,101 @@
         <div id="register-form-wrapper">
           <form id="register-form">
             <div class="reg-form-group">
-              <label>用户名<br>Username</label>
-              <input type="text" id="input-username" name="username" required>
+              <label>用户名*<br><small><i>Username</i></small></label>
+              <input type="text" class="input-required" id="reg-input-username" name="username" required>
+              <p class="feedback reg-feedback" id="username_field">aaa</p>
             </div>
             <div class="reg-form-group">
-              <label>电话号码<br>Phone</label>
-              <input type="text" id="input-username" name="username" required>
+              <label>电话号码*<br><small><i>Phone</i></small></label>
+              <input type="text" class="input-required" id="reg-input-phone" name="phone" required>
+              <p class="feedback reg-feedback" id="phone_field">bbb</p>
             </div>
             <div class="reg-form-group">
-              <label>电子邮箱<br>Email</label>
-              <input type="text" id="input-username" name="username" required>
+              <label>电子邮箱*<br><small><i>Email</i></small></label>
+              <input type="text" class="input-required" id="reg-input-email" name="email" required>
+              <p class="feedback reg-feedback" id="email_field"></p>
             </div>
             <div class="reg-form-group">
-              <label>真实姓名<br>Real name</label>
-              <input type="text" id="input-username" name="username" required>
+              <label>真实姓名*<br><small><i>Real name</i></small></label>
+              <input type="text" class="input-required" id="reg-input-realname" name="realname" required>
+              <p class="feedback reg-feedback" id="realname_field"></p>
             </div>
             <div class="reg-form-group">
-              <label>密码<br>Password</label>
-              <input type="password" id="input-password" name="password" required>
+              <label>单位<br><small><i>Company</i></small></label>
+              <input type="text" id="reg-input-company" name="company">
+              <p class="feedback reg-feedback" id="company_field"></p>
             </div>
-            <div class="btn-group">
-              <button type="button" class="primary-btn" onclick="login()">登录</button>
-              <a href="/auth/register">
-                <button type="button" class="secondary-btn">注册</button>
-              </a>
+            <div class="reg-form-group">
+              <label>部门<br><small><i>Department</i></small></label>
+              <input type="text" id="reg-input-department" name="department">
+              <p class="feedback reg-feedback" id="department_field"></p>
             </div>
-            <p class="feedback" id="reg-feedback">发生错误</p>
+            <div class="reg-form-group">
+              <label>密码*<br><small><i>Password</i></small></label>
+              <input type="password" class="input-required" id="reg-input-password" name="password" required>
+              <p class="feedback reg-feedback" id="password_field"></p>
+            </div>
+            <div class="reg-form-group">
+              <label>确认密码*<br><small><i>Verify password</i></small></label>
+              <input type="password" class="input-required" id="reg-input-verify-password" name="verify-password"
+                required>
+              <p class="feedback reg-feedback" id="verify_password_field"></p>
+            </div>
+            <button type="button" class="primary-btn" onclick="register()">确认注册</button>
+            <p class="feedback reg-feedback" id="overall_field"></p>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block js %}
+{{super()}}
+<script>
+  function register() {
+    jQuery(".reg-feedback").text("").removeClass("d-flex");
+    // notNull检查
+    var notNullFlag = true;
+    jQuery(".input-required").each(function () {
+      if (jQuery(this).val().trim() == '') {
+        jQuery(this).siblings("p").text("此字段为必填项!").addClass("d-flex");
+        notNullFlag = false;
+      }
+    })
+    if (!notNullFlag) return false;
+    else {
+      jQuery(".reg-feedback").text("").removeClass("d-flex");
+    }
+    if (jQuery("#reg-input-password").val() != jQuery("#reg-input-verify-password").val()) {
+      jQuery("#verify_password_field").text("密码不一致").addClass("d-flex");
+      return false;
+    }
+
+    jQuery.ajax({
+      type: "POST",
+      dataType: "json",
+      url: "/auth/register",
+      data: jQuery("#register-form").serialize(),
+      success: function (json) {
+        if (json.status == false) {
+          var field_name = "#" + json.error_field;
+          jQuery(field_name).text(json.message).addClass("d-flex");
+          return false;
+        } else if (json.status == true) {
+          jQuery("input").val("");
+          setTimeout(function () { alert("注册成功!"); }, 1);
+          window.open(json.url, "_self");
+        } else {
+          jQuery("#overall_field").text("注册失败, 未知错误.").addClass("d-flex");
+          return false;
+        }
+      },
+      error: function () {
+        jQuery("#login-feedback").text("网络错误, 无法注册.").addClass("d-flex");
+      }
+    })
+  }
+</script>
 {% endblock %}
