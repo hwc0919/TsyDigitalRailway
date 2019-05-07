@@ -25,7 +25,7 @@
           <a class="nav-link" href="/">项目视频</a>
         </li>
         <li class="navbar-menu-item">
-          <a class="nav-link link-inactive" href="#">数字地球</a>
+          <a class="nav-link link-inactive" href="javascript:void(0);" onclick="redirectToProjects()">数字地球</a>
         </li>
       </ul>
       <form id="search-form" class="navbar-item" action="/search" method="GET" onsubmit="return inputNotNull()">
@@ -35,10 +35,18 @@
       {% if login_status %}
       <div class="userinfo-group navbar-item show-userinfo-menu">
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-        <span>用户</span>
+        <span id="navbar-username">
+          {% if username %}
+          {{ username }}
+          {% else  %}
+          访客
+          {% endif %}
+        </span>
         <div class="userinfo-menu" id="userinfo-menu">
           <a href="#"><i class="fa fa-user-o" aria-hidden="true"></i><span>个人信息</span></a>
-          <a href="#"><i class="fa fa-power-off" aria-hidden="true"></i><span>退出登录</span></a>
+          <a href="javascript:void(0)" onclick="logout()">
+            <i class="fa fa-power-off" aria-hidden="true"></i><span>退出登录</span>
+          </a>
         </div>
       </div>
       {% else %}
@@ -54,23 +62,159 @@
   {% endblock %}
 
   {% block login %}
+  <style>
+    /*###################### 登录窗口 #####################*/
+    .login-window-wrapper {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(100, 100, 100, 0.8);
+      z-index: 2;
+    }
+
+    #login-window {
+      position: relative;
+      margin: auto;
+      width: 420px;
+      background-color: whitesmoke;
+      padding: 20px 30px;
+      border-radius: 5px;
+    }
+
+    #close-window-btn {
+      position: absolute;
+      right: 34px;
+      top: 20px;
+      padding: 1px 3px;
+      border-radius: 3px;
+      color: gray;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    #close-window-btn:hover {
+      color: black;
+    }
+
+    .form-group {
+      margin: 15px 0;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .form-group input {
+      width: 100%;
+      height: 36px;
+      border: 1px solid gray;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 14px;
+      outline: none;
+      display: block;
+    }
+
+    .btn-group {
+      width: 100%;
+      margin: 20px 0 10px 0;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+      background-color: #0984e3;
+      /* America ELECTRON BLUE */
+      padding: 8px 13px;
+      font-size: 16px;
+      color: snow;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .primary-btn:hover {
+      background-color: #0652DD;
+      /* Dutch MERCHANT MARINE BLUE */
+      box-shadow: 0 0 5px #0652DD;
+      text-shadow: 0 0 1px whitesmoke;
+    }
+
+    .secondary-btn {
+      background-color: whitesmoke;
+      color: black;
+      /* padding: 7px 12px; */
+      /* border: 1px solid black; */
+    }
+
+    .secondary-btn:hover {
+      /* box-shadow: 0 0 5px black; */
+      text-shadow: 0 0 1px black;
+    }
+
+    .feedback {
+      display: none;
+      padding: 2px 10px;
+      background-color: antiquewhite;
+      border-radius: 3px;
+      font-size: 14px;
+      animation: shakes 0.5s;
+    }
+
+    @keyframes shakes {
+
+      0% {
+        transform: translateX(0);
+        background-color: red;
+        color: snow;
+      }
+
+      100% {
+        transform: translateX(0);
+        background-color: antiquewhite;
+        color: black;
+      }
+
+      10%,
+      30%,
+      50%,
+      70%,
+      90% {
+        transform: translateX(-3px);
+      }
+
+      20%,
+      40%,
+      60%,
+      80% {
+        transform: translateX(3px);
+      }
+    }
+  </style>
   <div class="login-window-wrapper">
     <div id="login-window">
-      <form id="login-form" action='/video/login' method='POST'>
-        <i id="close-login-window" class="fa fa-times" aria-hidden="true"></i>
+      <form id="login-form">
+        <i id="close-window-btn" class="fa fa-times" aria-hidden="true"></i>
         <div class="form-group">
           <label>用户名</label>
-          <input type="text" name="username" placeholder="请输入用户名" required>
+          <input type="text" id="input-username" name="username" placeholder="请输入用户名" required>
         </div>
         <div class="form-group">
           <label>密码</label>
-          <input type="password" name="password" placeholder="请输入密码" required>
+          <input type="password" id="input-password" name="password" placeholder="请输入密码" required>
           <small>游客请使用 用户名:guest 密码:guest 登录.</small>
         </div>
-        <button type="submit" id="login-btn">登录</button>
-        <a href='/video/register'>
-          <button type="button" id="register-btn">注册</button>
-        </a>
+        <div class="btn-group">
+          <button type="button" class="primary-btn" id="login-btn" onclick="login()">登录</button>
+          <a href="/auth/register">
+            <button type="button" class="secondary-btn" id="register-btn">注册</button>
+          </a>
+        </div>
+        <p class="feedback" id="login-feedback">发生错误</p>
       </form>
     </div>
   </div>
@@ -97,7 +241,7 @@
       jQuery(".show-login-window").click(function () {
         jQuery(".login-window-wrapper").toggleClass("d-flex", true);
       })
-      jQuery("#close-login-window").click(function () {
+      jQuery("#close-window-btn").click(function () {
         jQuery(".login-window-wrapper").toggleClass("d-flex", false);
       })
     })
@@ -109,6 +253,76 @@
       }
       return true;
     }
+
+    function redirectToProjects() {
+      jQuery.ajax({
+        type: "GET",//方法类型
+        dataType: "json",//预期服务器返回的数据类型
+        url: "/auth/check_auth",
+        success: function (json) {
+          if (!json.status) {
+            alert(json.message + '. 权限不足, 无法查看项目.');
+            return false;
+          } else {
+            window.open(json.url, "_blank");
+          }
+        },
+        error: function () {
+          alert("网络错误, 项目不可访问.");
+        }
+      })
+    }
+
+    function login() {
+      jQuery("#login-feedback").text("").removeClass("d-flex");
+      if (jQuery("#input-username").val().trim() == ''
+        || jQuery("#input-password").val().trim() == '') {
+        jQuery("#login-feedback").text("用户名或密码不能为空!").addClass("d-flex");
+        return false;
+      } else {
+        jQuery.ajax({
+          type: "POST",
+          dataType: "json",
+          url: "/auth/login",
+          data: jQuery("#login-form").serialize(),
+          success: function (json) {
+            jQuery("#login-feedback").text(json.message).addClass("d-flex");
+            if (json.url) {
+              window.open(json.url, "_self");
+            }
+          },
+          error: function () {
+            jQuery("#login-feedback").text("网络错误, 无法登陆.").addClass("d-flex");
+          }
+        })
+      }
+    }
+
+    function logout() {
+      var flag = confirm("确认退出登录?");
+      if (flag) {
+        jQuery.ajax({
+          type: "GET",
+          dataType: "json",
+          url: "/auth/logout",
+          success: function (json) {
+            if (!json.status) {
+              alert(json.message);
+            } else {
+              window.open(json.url, "_self");
+            }
+          },
+          error: function () {
+            alert("网络错误.");
+          }
+        });
+      }
+    }
+
+    function register() {
+
+    }
+
   </script>
   {% endblock %}
 </body>

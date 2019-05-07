@@ -6,7 +6,8 @@ from . import db
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
+    name = db.Column(db.String(64), unique=True, nullable=False)
+    description = db.Column(db.String(128))
     users = db.relationship('User', backref='role', lazy='dynamic')
 
     def __repr__(self):
@@ -17,9 +18,15 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
+    phone = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(64), nullable=False, unique=True, index=True)
+    realname = db.Column(db.String(20), nullable=False,
+                         unique=True, index=True)
+    company = db.Column(db.String(64))
+    department = db.Column(db.String(64))
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128),
                               default=generate_password_hash('123456'))
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
     @property
     def password(self):

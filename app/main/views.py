@@ -23,7 +23,8 @@ def index():
     session['video_folders'] = video_folders
     return render_template('index.html', base_tag=HOST,
                            video_folders=video_folders,
-                           login_status=session.get('login_status', False)
+                           login_status=session.get('login_status', False),
+                           username=session.get('username', '访客')
                            )
 
 
@@ -83,3 +84,11 @@ def search_result():
     if not result:
         return '<h1 style="margin-left:50px">没有找到相关视频...</h1>'
     return render_template('video.html', video_list=result)
+
+
+@main.route('/projects')
+def projects():
+    if session.get('role') != 'Admin':
+        return '<h1>权限不足!</h1>'
+    else:
+        return redirect("http://192.10.15.156:8080/webrim/#/home")

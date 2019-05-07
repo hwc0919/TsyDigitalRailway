@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}用户注册{% endblock %}
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
+<style>
+  .left-menu-list a {
+    text-decoration: none;
+  }
+
+  #register-form-wrapper {
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .reg-form-group {
+    width: 400px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin: 15px;
+    position: relative;
+  }
+
+  .reg-form-group label {
+    flex: 25%;
+    display: block;
+  }
+
+  .reg-form-group input {
+    flex: 75%;
+    height: 36px;
+    border: 1px solid gray;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    display: block;
+  }
+</style>
+{% endblock %}
+
+{% block container %}
+<div class="container">
+  <div class="left-menu-col">
+    <button type="button" class="left-menu-toggle-btn">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+    <div class="left-menu-toggle-wrapper">
+      <h1 class="left-menu-head">目录</h1>
+      <ul class="left-menu-list">
+        <li class="left-menu-item menu-active">用户注册</li>
+        <a href="/">
+          <li class="left-menu-item menu-inactive">回到主页</li>
+        </a>
+      </ul>
+    </div>
+  </div>
+  <div class="right-content-col">
+    <div class="panel-group">
+      <div class="content-panel panel-active" data-panel-name="register-panel">
+        <div id="register-form-wrapper">
+          <form id="register-form">
+            <div class="reg-form-group">
+              <label>用户名<br>Username</label>
+              <input type="text" id="input-username" name="username" required>
+            </div>
+            <div class="reg-form-group">
+              <label>电话号码<br>Phone</label>
+              <input type="text" id="input-username" name="username" required>
+            </div>
+            <div class="reg-form-group">
+              <label>电子邮箱<br>Email</label>
+              <input type="text" id="input-username" name="username" required>
+            </div>
+            <div class="reg-form-group">
+              <label>真实姓名<br>Real name</label>
+              <input type="text" id="input-username" name="username" required>
+            </div>
+            <div class="reg-form-group">
+              <label>密码<br>Password</label>
+              <input type="password" id="input-password" name="password" required>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="primary-btn" onclick="login()">登录</button>
+              <a href="/auth/register">
+                <button type="button" class="secondary-btn">注册</button>
+              </a>
+            </div>
+            <p class="feedback" id="reg-feedback">发生错误</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
