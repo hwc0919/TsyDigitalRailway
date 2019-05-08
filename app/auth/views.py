@@ -3,7 +3,7 @@ import json
 
 from flask import redirect, render_template, request, session, url_for
 
-from ..models import Role, User, db
+from ..models import db, Role, User, Log
 from . import auth
 
 
@@ -71,15 +71,14 @@ def register():
                             password=request.form.get('password'))
             db.session.add(new_user)
             db.session.commit()
-            with open('log/dblog.txt', 'a') as f:
-                message = str(datetime.datetime.now()) + ', ' +\
-                    'register success, data: ' + str(information) + '\n'
-                f.write(message)
+            message = 'register success, data: ' + str(information)
             return json.dumps({'status': True, 'message': '注册成功', 'url': '/video'})
         except Exception as err:
-            with open('log/dblog.txt', 'a') as f:
-                message = str(datetime.datetime.now()) + ', ' + 'register failure, data: ' +\
-                    str(information) + ', ' + 'reason: ' + str(err) + '\n'
-                f.write(message)
+            message = 'register failure, data: ' + \
+                str(information) + ', ' + 'reason: ' + str(err)
             db.session.rollback()
-            return json.dumps({'status': False, 'error_field': 'overall_field', 'message': '注册失败', 'url': '/auth/register'})
+            return json.dumps({'status': False, 'error_field': 'overall_field', 'message': '注册失败'})
+        finally:
+            log = Log(log_type='register', content=message)
+            db.session.add(log)
+            db.session.commit()
