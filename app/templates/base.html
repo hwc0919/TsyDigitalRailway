@@ -3,11 +3,12 @@
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    name="viewport">
+  <meta id="viewport" name="viewport"
+    content="width=device-width, minimum-scale=0.5, maximum-scale=1.5, initial-scale=1.0">
   <base href={{base_tag}}>
   <title>{% block title %}Base{% endblock %}</title>
   {% block css %}
+  <link rel="shortcut icon" href={{ url_for("static", filename="images/favicon.ico") }} type="image/x-icon">
   <link rel="stylesheet" href={{ url_for("static", filename="css/base.css") }}>
   <link rel="stylesheet" href={{ url_for("static", filename="css/font-awesome/css/font-awesome.min.css") }}>
   {% endblock %}
@@ -229,6 +230,13 @@
   <script src={{ url_for("static", filename="js/jquery-3.4.0.min.js") }}> </script>
   <script>
     jQuery(document).ready(function () {
+      var scale = document.documentElement.clientWidth / window.innerWidth;
+      if (scale < 1) {
+        var content = "width=device-width, initial-scale=" + scale;
+      } else {
+        var content = "width=device-width, initial-scale=1.0, user-scalable=no";
+      }
+      jQuery("#viewport").attr("content", content);
       // 导航栏效果
       jQuery(".show-userinfo-menu").click(function () {
         jQuery("#userinfo-menu").fadeToggle("fast");

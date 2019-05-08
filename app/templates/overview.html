@@ -3,15 +3,139 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href={{url_for("static", filename="css/overview.css")}} type="text/css">
-{% endblock %}
+<style>
+  .slider {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 483px;
+    overflow: hidden;
+    margin: 20px auto;
+  }
 
-{% block js %}
-{{ super() }}
+  .slider-wrapper::before {
+    content: "";
+    display: block;
+    width: 104%;
+    height: 519px;
+    left: -2%;
+    top: 0px;
+    position: absolute;
+    background-color: rgba(245, 245, 245, 0.5);
+    border: 4px solid rgba(0, 0, 0, 0.05);
+    border-radius: 2px;
+    transform: translateX(-4px);
+    z-index: -1;
+  }
+
+  .slider-container {
+    position: relative;
+    width: 10000%;
+    height: 100%;
+    left: 0;
+  }
+
+  .slider-content {
+    width: 1%;
+    height: 100%;
+    font-size: 50px;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slider-content img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .slider-dots {
+    list-style: none;
+    width: 100%;
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    z-index: 1;
+  }
+
+  .slider-dots li {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+
+  .slider-dots li.dot-active {
+    background-color: white;
+  }
+
+  .slider-dots li:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .slider-arrow-group {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .slider-arrow {
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .slider-arrow:hover {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.2)
+  }
+
+  .slider-arrow i {
+    display: block;
+    margin: 20px 20px;
+  }
+</style>
 
 {% endblock %}
 
 {% block content_mid_col_wrapper %}
-<h1 class="placeholder">此处放幻灯片</h1>
+<div class="slider-wrapper">
+  <div class="slider">
+    <div class="slider-container">
+      {% for id, image in images %}
+      <div class="slider-content" data-content-id={{ id + 1 }} data-image-name={{ image.replace(" ", "%20") }}>
+        <img class="slider-img" alt={{ image + "加载失败" }}>
+      </div>
+      {% endfor %}
+    </div>
+    <ul class="slider-dots">
+      {% for id, image in images %}
+      <li class="slider-dot" data-content-id={{ id + 1 }}></li>
+      {% endfor %}
+    </ul>
+    <div class="slider-arrow-group">
+      <div class="slider-arrow slider-left-arrow">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+      </div>
+      <div class="slider-arrow slider-right-arrow">
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block content_right_col %}
@@ -20,4 +144,79 @@
   <p>本网站提供项目视频和数字铁路模拟工具。</p>
   <p>数字铁路工具需登陆后使用。</p>
 </section>
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<!-- <script src={{ url_for("static", filename="js/overview.js") }}></script> -->
+<script>
+  jQuery(document).ready(function () {
+    // 加载图片
+    jQuery(".slider-content").each(function () {
+      var curItem = jQuery(this);
+      var imgName = curItem.attr("data-image-name");
+      var url = "/static/images/风采展示/" + imgName + ".jpg";
+      curItem.children("img").attr("src", url);
+    });
+    jQuery(".slider-dot[data-content-id='1']").addClass("dot-active");
+    // 幻灯片切换控制
+    jQuery(".slider-left-arrow").click(function () {
+      slideLeft();
+    });
+    jQuery(".slider-right-arrow").click(function () {
+      slideRight();
+    });
+    jQuery(".slider-dot").click(function () {
+      that = this;
+      slideJump(that);
+    });
+    // 自动播放
+    var slideId = setInterval("slideRight()", 5000);
+    // 悬浮暂停自动切换
+    jQuery(".slider").mouseenter(function () {
+      clearInterval(slideId);
+    });
+    jQuery(".slider").mouseleave(function () {
+      slideId = setInterval("slideRight()", 5000);
+    })
+  });
+  // 左箭头切换
+  function slideLeft() {
+    var sliderTotal = jQuery(".slider-content").length;
+    var maxLeft = (1 - sliderTotal) * 100 + "%";
+    var contentId = jQuery(".dot-active").removeClass("dot-active").attr("data-content-id");
+    if (contentId == 1) {
+      var selector = ".slider-dot[data-content-id='" + sliderTotal + "']"
+      jQuery(selector).addClass("dot-active");
+      jQuery(".slider-container").animate({ left: maxLeft }, "slow")
+    } else {
+      var selector = ".slider-dot[data-content-id='" + (contentId - 1) + "']"
+      jQuery(selector).addClass("dot-active");
+      jQuery(".slider-container").animate({ left: "+=100%" }, "slow");
+    }
+  }
+  // 右箭头切换
+  function slideRight() {
+    var sliderTotal = jQuery(".slider-content").length;
+    var maxLeft = (1 - sliderTotal) * 100 + "%";
+    var contentId = jQuery(".dot-active").removeClass("dot-active").attr("data-content-id");
+    if (contentId == sliderTotal) {
+      jQuery(".slider-dot[data-content-id='1']").addClass("dot-active");
+      jQuery(".slider-container").animate({ left: '0' }, "slow")
+    } else {
+      var selector = ".slider-dot[data-content-id='" + (Number(contentId) + 1) + "']"
+      jQuery(selector).addClass("dot-active");
+      jQuery(".slider-container").animate({ left: "-=100%" }, "slow");
+    }
+  }
+  // 小圆点切换
+  function slideJump(that) {
+    if (!jQuery(that).hasClass("dot-active")) {
+      jQuery(".slider-dot").removeClass("dot-active");
+      var contentId = jQuery(that).addClass("dot-active").attr("data-content-id");
+      var left = (1 - contentId) * 100 + "%";
+      jQuery(".slider-container").animate({ left: left });
+    }
+  }
+</script>
 {% endblock %}

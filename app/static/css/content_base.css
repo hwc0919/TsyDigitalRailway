@@ -8,15 +8,14 @@
   flex: 70%;
   min-width: 700px;
   min-height: 750px;
-  background-color: antiquewhite;
 }
 
-.content_mid-col-wrapper {
-  width: 100%;
+.content-mid-col-wrapper {
+  width: 96%;
   height: 100%;
   max-width: 860px;
   margin: 0 auto;
-  background-color: seashell;
+  position: relative;
 }
 
 .content-right-col {
