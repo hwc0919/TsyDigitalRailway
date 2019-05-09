@@ -1,0 +1,61 @@
+.left-menu-list a {
+  text-decoration: none;
+}
+
+#register-form-wrapper {
+  width: 96%;
+  margin-left: 2%;
+  display: flex;
+  justify-content: left;
+}
+
+#register-form {
+  width: 940px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+#register-form .col {
+  width: 470px;
+  display: flex;
+  flex-direction: column;
+}
+
+.reg-form-group {
+  height: 50px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 10px 0;
+  position: relative;
+}
+
+.reg-form-group label {
+  width: 100px;
+  display: block;
+}
+
+.reg-form-group input {
+  width: 180px;
+  height: 36px;
+  border: 1px solid gray;
+  border-radius: 6px;
+  padding: 10px;
+  margin-right: 20px;
+  font-size: 14px;
+  outline: none;
+  display: block;
+}
+
+.reg-feedback {
+  display: hidden;
+  width: 150px;
+}
+
+#overall_field,
+#register-form button {
+  width: 200px;
+  margin: 10px 30px;
+}

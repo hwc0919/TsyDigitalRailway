@@ -21,7 +21,16 @@ def login():
         session['username'] = username
         session['login_status'] = True
         session['role'] = role
-        return json.dumps({'status': True, 'message': '登陆成功, 即将自动跳转...', 'url': '/video'})
+        log = Log(username=username, log_type='login', content='user login')
+        try:
+            db.session.add(log)
+            db.session.commit()
+        except Exception as err:
+            db.session.rollback()
+            with open('log/error.txt', 'a', encoding='utf-8') as f:
+                f.write(datetime.datetime())
+                f.write(', ' + err + '\n')
+        return json.dumps({'status': True, 'message': '登陆成功', 'url': '/video'})
 
 
 @auth.route('/auth/logout')
@@ -51,17 +60,18 @@ def register():
         return render_template('auth/register.html')
     else:
         form = request.form
-        if User.query.filter_by(username=form.get('username')).first() != None:
-            return json.dumps({'status': False, 'error_field': 'username_field', 'message': '用户名已存在', 'url': None})
+        username = form.get('username')
+        if User.query.filter_by(username=username).first() != None:
+            return json.dumps({'status': False, 'error_field': 'username_field', 'message': '用户名已存在'})
         if User.query.filter_by(realname=form.get('realname')).first() != None:
-            return json.dumps({'status': False, 'error_field': 'realname_field', 'message': '真实姓名重复', 'url': None})
+            return json.dumps({'status': False, 'error_field': 'realname_field', 'message': '真实姓名重复'})
         if User.query.filter_by(email=form.get('email')).first() != None:
-            return json.dumps({'status': False, 'error_field': 'email_field', 'message': '该邮箱已被注册', 'url': None})
+            return json.dumps({'status': False, 'error_field': 'email_field', 'message': '该邮箱已被注册'})
         information = {
-            'username': form.get('username'),
-            'phone': form.get('phone'),
+            'username': username,
             'email': form.get('email'),
             'realname': form.get('realname'),
+            'phone': form.get('phone'),
             'company': form.get('company'),
             'department': form.get('department'),
             'role': Role.query.filter_by(name='Guest').first()
@@ -72,13 +82,26 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             message = 'register success, data: ' + str(information)
-            return json.dumps({'status': True, 'message': '注册成功', 'url': '/video'})
-        except Exception as err:
-            message = 'register failure, data: ' + \
-                str(information) + ', ' + 'reason: ' + str(err)
-            db.session.rollback()
-            return json.dumps({'status': False, 'error_field': 'overall_field', 'message': '注册失败'})
-        finally:
-            log = Log(log_type='register', content=message)
+            log = Log(username=username,
+                      log_type='register', content=message)
             db.session.add(log)
             db.session.commit()
+            session['username'] = username
+            session['login_status'] = True
+            session['role'] = 'Guest'
+            return json.dumps({'status': True, 'message': '注册成功', 'url': '/video'})
+        except Exception as err:
+            db.session.rollback()
+            message = 'register failure, data: ' + \
+                str(information) + ', ' + 'reason: ' + str(err)
+            log = Log(username=username,
+                      log_type='register', content=message)
+            try:
+                db.session.add(log)
+                db.session.commit()
+            except Exception as err2:
+                db.session.rollback()
+                with open('log/error.txt', 'a') as f:
+                    f.write(datetime.datetime())
+                    f.write(', ' + err + ', ' + err2 + '\n')
+            return json.dumps({'status': False, 'error_field': 'overall_field', 'message': '服务器错误, 注册失败'})

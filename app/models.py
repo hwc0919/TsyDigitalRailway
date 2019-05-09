@@ -19,15 +19,15 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
-    phone = db.Column(db.String(20), nullable=False, unique=True)
     email = db.Column(db.String(64), nullable=False, unique=True, index=True)
     realname = db.Column(db.String(20), nullable=False, index=True)
-    company = db.Column(db.String(64))
-    department = db.Column(db.String(64))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128),
                               default=generate_password_hash('user1418'))
-    gender = db.Column(db.Enum('M', 'F', name='gender_enum'))
+    phone = db.Column(db.String(20))
+    company = db.Column(db.String(64))
+    department = db.Column(db.String(64))
+    gender = db.Column(db.String(20))
     birthday = db.Column(db.Date)
     register_time = db.Column(db.DateTime, default=datetime.datetime.now())
     delete = db.Column(db.Boolean, default=False)
@@ -49,13 +49,14 @@ class User(db.Model):
 
 class Log(db.Model):
     __tablename__ = 'logs'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.BigInteger, primary_key=True)
     time = db.Column(db.DateTime, default=datetime.datetime.now())
-    log_type = db.Column(db.String(20))
-    content = db.Column(db.Text)
+    username = db.Column(db.String(64), index=True, default='system')
+    log_type = db.Column(db.String(20), default='system')
+    content = db.Column(db.Text, default='system error')
 
     def __repr__(self):
-        return '<Log, time: {}, log_type: {}, content: {}...>'.format(self.time, self.log_type, self.content[:10])
+        return '<Log, time: {}, username: {}, log_type: {}, content: {}...>'.format(self.time, self.username, self.log_type, self.content[:10])
 
 
 def add_role_data(db, Role, User):
@@ -67,10 +68,14 @@ def add_role_data(db, Role, User):
         name='User', description='User authority, have read-only access to data.')
     guest_role = Role(
         name='Guest', description='Guest authority, only have access to videos.')
+    system_user = User(username='system', password='system', realname='system',
+                       email='system', role=admin_role)
+    server_user = User(username='server', password='server', realname='server',
+                       email='server', role=admin_role)
     guest_user = User(username='guest', password='guest', realname='guest',
-                      email='guest', phone='00000000', role=guest_role)
+                      email='guest', role=guest_role)
     db.session.add_all(
-        [admin_role, mod_role, user_role, guest_role, guest_user])
+        [admin_role, mod_role, user_role, guest_role, system_user, server_user, guest_user])
     db.session.commit()
 
 
@@ -79,11 +84,11 @@ def add_testing_user_data(db, Role, User):
     mod_role = Role.query.filter_by(name='Moderator').first()
     user_role = Role.query.filter_by(name='User').first()
     admin = User(username='admin', password='admin', realname='admin',
-                 email='admin', phone='00000001', role=admin_role)
+                 email='admin', role=admin_role)
     mod = User(username='mod', password='mod',
-               realname='mod', email='mod', phone='00000002', role=mod_role)
-    user = User(username='user', password='user', realname='user',
-                email='user', phone='00000003', role=user_role)
+               realname='mod', email='mod', role=mod_role)
+    user = User(username='user', realname='user',
+                email='user', role=user_role)
     hwc = User(username='hwc0919', password='123456', realname='何莞晨',
                email='hwc14@qq.com', phone='17888830919', role=admin_role)
     db.session.add_all([admin, mod, user, hwc])
