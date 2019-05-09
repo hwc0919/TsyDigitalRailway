@@ -20,10 +20,10 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
     email = db.Column(db.String(64), nullable=False, unique=True, index=True)
-    realname = db.Column(db.String(20), nullable=False, index=True)
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    password_hash = db.Column(db.String(128),
-                              default=generate_password_hash('user1418'))
+    realname = db.Column(db.String(20), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
+    password_hash = db.Column(db.String(128), nullable=False,
+                              default=generate_password_hash('watermelon2019'))
     phone = db.Column(db.String(20))
     company = db.Column(db.String(64))
     department = db.Column(db.String(64))
@@ -53,7 +53,7 @@ class Log(db.Model):
     time = db.Column(db.DateTime, default=datetime.datetime.now())
     username = db.Column(db.String(64), index=True, default='system')
     log_type = db.Column(db.String(20), default='system')
-    content = db.Column(db.Text, default='system error')
+    content = db.Column(db.Text, default='default system error')
 
     def __repr__(self):
         return '<Log, time: {}, username: {}, log_type: {}, content: {}...>'.format(self.time, self.username, self.log_type, self.content[:10])

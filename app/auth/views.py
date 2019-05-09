@@ -12,25 +12,30 @@ def login():
     username = request.form['username']
     password = request.form['password']
     user = User.query.filter_by(username=username).first()
+    # 检测登录信息是否合法
     if not user:
         return json.dumps({'status': False, 'message': '用户不存在', 'url': None})
     elif not user.verify_password(password):
         return json.dumps({'status': False, 'message': '用户名或密码错误', 'url': None})
     else:
-        role = user.role.name
-        session['username'] = username
-        session['login_status'] = True
-        session['role'] = role
-        log = Log(username=username, log_type='login', content='user login')
+        # 记录登录成功日志到数据库
         try:
+            log = Log(username=username, log_type='login',
+                      content='user login')
             db.session.add(log)
             db.session.commit()
+        # 重定向到文件 log/error.txt
         except Exception as err:
             db.session.rollback()
             with open('log/error.txt', 'a', encoding='utf-8') as f:
-                f.write(datetime.datetime())
-                f.write(', ' + err + '\n')
-        return json.dumps({'status': True, 'message': '登陆成功', 'url': '/video'})
+                f.write(str(datetime.datetime.now()))
+                f.write('\n' + str(err) + '\n' + '-'*20 + '\n')
+        # 返回登录成功信息至前端
+        finally:
+            session['username'] = username
+            session['login_status'] = True
+            session['role'] = user.role.name
+            return json.dumps({'status': True, 'message': '登陆成功', 'url': '/video'})
 
 
 @auth.route('/auth/logout')
@@ -49,22 +54,22 @@ def check_auth():
     role = session.get('role', 'Guest')
     status = False
     message = role + '权限'
-    if role == 'Admin':
-        status = True
+    status = (role == 'Admin')
     return json.dumps({'status': status, 'message': message, 'url': '/projects'})
 
 
 @auth.route('/auth/register', methods=['GET', 'POST'])
 def register():
+    # GET 请求返回注册页面
     if request.method == 'GET':
         return render_template('auth/register.html')
+    # POST 请求验证注册信息
     else:
         form = request.form
         username = form.get('username')
+        # 检测用户名、邮箱是否重复
         if User.query.filter_by(username=username).first() != None:
             return json.dumps({'status': False, 'error_field': 'username_field', 'message': '用户名已存在'})
-        if User.query.filter_by(realname=form.get('realname')).first() != None:
-            return json.dumps({'status': False, 'error_field': 'realname_field', 'message': '真实姓名重复'})
         if User.query.filter_by(email=form.get('email')).first() != None:
             return json.dumps({'status': False, 'error_field': 'email_field', 'message': '该邮箱已被注册'})
         information = {
@@ -76,6 +81,7 @@ def register():
             'department': form.get('department'),
             'role': Role.query.filter_by(name='Guest').first()
         }
+        # 添加新用户到数据库, 添加注册日志到数据库
         try:
             new_user = User(**information,
                             password=request.form.get('password'))
@@ -90,18 +96,23 @@ def register():
             session['login_status'] = True
             session['role'] = 'Guest'
             return json.dumps({'status': True, 'message': '注册成功', 'url': '/video'})
+        # 记录错误日志到数据库
         except Exception as err:
             db.session.rollback()
             message = 'register failure, data: ' + \
                 str(information) + ', ' + 'reason: ' + str(err)
-            log = Log(username=username,
-                      log_type='register', content=message)
             try:
+                log = Log(username=username,
+                          log_type='register', content=message)
                 db.session.add(log)
                 db.session.commit()
+            # 记录日志出错, 则重定向到文件 'log/error.txt'
             except Exception as err2:
                 db.session.rollback()
-                with open('log/error.txt', 'a') as f:
-                    f.write(datetime.datetime())
-                    f.write(', ' + err + ', ' + err2 + '\n')
-            return json.dumps({'status': False, 'error_field': 'overall_field', 'message': '服务器错误, 注册失败'})
+                with open('log/error.txt', 'a', encoding='utf-8') as f:
+                    f.write(str(datetime.datetime.now()) + '\n')
+                    f.write(message + '\n' + str(err) + '\n' +
+                            str(err2) + '\n' + '-'*20 + '\n')
+            # 返回注册失败信息至前端
+            finally:
+                return json.dumps({'status': False, 'error_field': 'overall_field', 'message': '服务器错误, 注册失败'})

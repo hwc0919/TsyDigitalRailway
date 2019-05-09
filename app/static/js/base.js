@@ -1,4 +1,5 @@
 jQuery(document).ready(function () {
+  // 动态设置viewport
   var scale = document.documentElement.clientWidth / window.innerWidth;
   if (scale < 1) {
     var content = "width=device-width, initial-scale=" + scale;
@@ -6,28 +7,36 @@ jQuery(document).ready(function () {
     var content = "width=device-width, initial-scale=1.0, user-scalable=no";
   }
   jQuery("#viewport").attr("content", content);
-  // 导航栏效果
+  // 显示用户面板
   jQuery(".show-userinfo-menu").click(function () {
     jQuery("#userinfo-menu").fadeToggle("fast");
   });
+  // 关闭用户面板
   jQuery("#userinfo-menu").mouseleave(function () {
     jQuery("#userinfo-menu").fadeOut("fast");
   });
+  // (折叠状态时)显示导航栏菜单
   jQuery(".navbar-toggle-btn").click(function () {
     jQuery(".navbar-toggle-wrapper").toggleClass("d-flex");
   });
+  // 折叠导航栏菜单
   jQuery(".navbar-toggle-wrapper").mouseleave(function () {
     jQuery(this).toggleClass("d-flex");
   })
+  // 显示登录窗口
   jQuery(".show-login-window").click(function () {
     jQuery(".login-window-wrapper").toggleClass("d-flex", true);
   })
+  // 关闭登录窗口
   jQuery("#close-window-btn").click(function () {
+    jQuery("#login-feedback").text("").removeClass("d-flex");
+    jQuery("#input-username").val("");
+    jQuery("#input-password").val("");
     jQuery(".login-window-wrapper").toggleClass("d-flex", false);
   })
 })
 
-// 搜索表单检查
+// 搜索表单notNull检查
 function inputNotNull() {
   if (jQuery("input#search-form-input").val().trim() == '') {
     alert("请输入搜索内容");
@@ -54,7 +63,7 @@ function redirectToProjects() {
     }
   })
 }
-// 登录
+// 登录输入检查
 function login() {
   jQuery("#login-feedback").text("").removeClass("d-flex");
   if (jQuery("#input-username").val().trim() == ''
