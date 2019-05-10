@@ -1,3 +1,43 @@
+jQuery(document).ready(function () {
+  jQuery("#reg-select-company").change(function () {
+    var selection = jQuery(this).val();
+    if (selection == "") {
+      jQuery("#reg-company-group").addClass("d-none");
+      jQuery("#reg-input-company").val("");
+      jQuery("#reg-department-group").addClass("d-none");
+      jQuery("#reg-input-department").val("");
+    } else if (selection == "铁四院") {
+      jQuery("#reg-company-group").addClass("d-none");
+      jQuery("#reg-input-company").val("铁四院");
+      jQuery("#reg-department-group").removeClass("d-none");
+      jQuery("#reg-input-department").val("线站处");
+    } else if (selection == "其他") {
+      jQuery("#reg-company-group").removeClass("d-none");
+      jQuery("#reg-input-company").val("");
+      jQuery("#reg-department-group").removeClass("d-none");
+      jQuery("#reg-input-department").val("");
+    }
+  });
+  jQuery("#reg-input-username").change(function () {
+    jQuery("#username_field").text("").removeClass("d-flex");
+  });
+  jQuery("#reg-input-email").change(function () {
+    jQuery("#email_field").text("").removeClass("d-flex");
+  });
+  jQuery("#reg-input-realname").change(function () {
+    jQuery("#realname_field").text("").removeClass("d-flex");
+  });
+  jQuery("#reg-input-password").change(function () {
+    jQuery("#password_field").text("").removeClass("d-flex");
+  });
+  jQuery("#reg-input-verify-password").change(function () {
+    jQuery("#verify_password_field").text("").removeClass("d-flex");
+  });
+  jQuery("#reg-input-phone").change(function () {
+    jQuery("#phone_field").text("").removeClass("d-flex");
+  });
+});
+
 function register() {
   jQuery(".reg-feedback").text("").removeClass("d-flex");
   var passFlag = true;
@@ -42,7 +82,7 @@ function register() {
     jQuery("#password_field").text("密码长度不合要求").addClass("d-flex");
   }
   // 密码一致检查
-  if (jQuery("#reg-input-password").val() != jQuery("#reg-input-verify-password").val()) {
+  if (password != jQuery("#reg-input-verify-password").val()) {
     passFlag = false;
     jQuery("#verify_password_field").text("密码不一致").addClass("d-flex");
   }

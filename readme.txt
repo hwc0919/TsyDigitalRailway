@@ -2,8 +2,7 @@
 
 检查漏洞
 
-公司名称设置为下拉
-当公司有输入时，才显示部门
+user:hover dropdown {display:block}
 
 用户信息界面
 

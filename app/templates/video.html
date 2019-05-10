@@ -4,6 +4,7 @@
 <link rel="stylesheet" href={{ url_for("static", filename="css/video.css") }}>
 {% endblock %}
 
+<!-- 中央视频播放器及视频信息栏 -->
 {% block content_mid_col_wrapper %}
 <div class="video-player-box">
   <div class="video-player-header"></div>
@@ -18,10 +19,12 @@
   </h1>
   <p class="video-description-body">
     <!-- js load description -->
+    暂无视频信息
   </p>
 </section>
 {% endblock %}
 
+<!-- 右侧视频列表 -->
 {% block content_right_col %}
 <div class="right-video-list-wrapper">
   <h1 class="video-list-title">视频列表</h1>
@@ -29,7 +32,9 @@
     {% for folder, video in video_list %}
     <li class="video-list-item" data-folder-name={{ folder.replace(" ", "%20") }}
       data-video-name={{ video.replace(" ", "%20") }}>
-      <img class="video-list-img" alt="暂无图片">
+      <div class="video-list-img-wrapper">
+        <img class="video-list-img" alt="暂无图片">
+      </div>
       <i class="fa fa-play play-hint" aria-hidden="true"></i>
       <section>
         <h4>{{ video }}</h4>

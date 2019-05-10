@@ -37,7 +37,8 @@
   display: block;
 }
 
-.reg-form-group input {
+.reg-form-group input,
+.reg-form-group select {
   width: 180px;
   height: 36px;
   border: 1px solid gray;
@@ -47,6 +48,15 @@
   font-size: 14px;
   outline: none;
   display: block;
+}
+
+.reg-form-group select {
+  padding: 0 10px;
+  height: 30px;
+}
+
+#reg-company-group {
+  margin-top: -10px;
 }
 
 .reg-feedback {

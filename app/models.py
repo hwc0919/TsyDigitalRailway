@@ -18,16 +18,16 @@ class Role(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True, index=True)
-    email = db.Column(db.String(64), nullable=False, unique=True, index=True)
-    realname = db.Column(db.String(20), nullable=False)
+    username = db.Column(db.String(20), nullable=False, index=True)
+    email = db.Column(db.String(64), nullable=False, index=True)
+    realname = db.Column(db.String(20), default='访客')
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
     password_hash = db.Column(db.String(128), nullable=False,
                               default=generate_password_hash('watermelon2019'))
     phone = db.Column(db.String(20))
     company = db.Column(db.String(64))
     department = db.Column(db.String(64))
-    gender = db.Column(db.String(20))
+    gender = db.Column(db.Boolean)
     birthday = db.Column(db.Date)
     register_time = db.Column(db.DateTime, default=datetime.datetime.now())
     delete = db.Column(db.Boolean, default=False)

@@ -65,10 +65,18 @@
               </div>
               <div class="reg-form-group">
                 <label>单位<br><small>(公司名称)</small></label>
+                <select id="reg-select-company">
+                  <option value=""></option>
+                  <option value="铁四院">铁四院</option>
+                  <option value="其他">其他</option>
+                </select>
+              </div>
+              <div class="reg-form-group d-none" id="reg-company-group">
+                <label></label>
                 <input type="text" id="reg-input-company" name="company">
                 <p class="feedback reg-feedback" id="company_field"></p>
               </div>
-              <div class="reg-form-group">
+              <div class="reg-form-group d-none" id="reg-department-group">
                 <label>部门<br><small>(所在部门)</small></label>
                 <input type="text" id="reg-input-department" name="department">
                 <p class="feedback reg-feedback" id="department_field"></p>
@@ -89,4 +97,7 @@
 {% block js %}
 {{super()}}
 <script src={{ url_for("static", filename="js/register.js") }}></script>
+<script>
+
+</script>
 {% endblock %}

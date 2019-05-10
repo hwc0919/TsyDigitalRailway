@@ -117,12 +117,10 @@
 
 @media screen and (max-width:999px) {
   #website-description {
-    width: 96% !important;
-    max-width: 860px;
-    margin: 0 auto;
     width: 100%;
-    position: relative;
-    top: -200px;
+    position: absolute;
+    top: 650px;
+    padding-left: 50px;
   }
 
   #website-description h1 {
@@ -140,6 +138,6 @@
     height: 378px !important;
   }
   #website-description {
-    top: -300px;
+    top: 550px;
   }
 }
