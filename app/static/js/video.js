@@ -30,11 +30,15 @@ jQuery(document).ready(function () {
       curItem.addClass("list-item-active");
       jQuery(".video-description-head").text(curItem.find("h4").text());
       var textURL = curItem.attr("data-url") + ".txt"
-      jQuery(".video-description-body").load(textURL);
+      jQuery(".video-description-body").load(textURL, function (responseTxt, statusTxt, xhr) {
+        if (statusTxt == "error") {
+          jQuery(".video-description-body").text("暂无视频信息");
+        }
+      });
       var videoURL = curItem.attr("data-url") + ".mp4";
       var html = '<video width=100% height=480px controls><source src="'
         + videoURL
-        + '" type = "video/mp4"></video>'
+        + '" type = "video/mp4">您的浏览器不支持video视频标签。</video>'
       jQuery(".video-player-body").html(html);
     }
   });

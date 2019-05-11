@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta id="viewport" name="viewport"
     content="width=device-width, minimum-scale=0.5, maximum-scale=1.5, initial-scale=1.0">
-  <base href={{base_tag}}>
+  <base href={{ base_tag }}>
   <title>{% block title %}Base{% endblock %}</title>
   {% block css %}
   <link rel="shortcut icon" href={{ url_for("static", filename="images/favicon.ico") }} type="image/x-icon">
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <nav class="navbar">
+  <nav class="navbar noselect">
     <a class="navbar-item navbar-brand" href="/">线路室视频站</a>
     <button type="button" class="navbar-toggle-btn">
       <i class="fa fa-bars" aria-hidden="true"></i>
@@ -33,18 +33,16 @@
         <input type="text" id="search-form-input" name="video_name" placeholder="搜索视频" required>
         <button class="submit-btn">Search</button>
       </form>
-      {% if login_status %}
-      <div class="navbar-item userinfo-group show-userinfo-menu">
+      {% if session.login_status %}
+      <div class="navbar-item userinfo-group">
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
         <span id="navbar-username">
-          {% if username %}
-          {{ username }}
-          {% else  %}
-          访客
-          {% endif %}
+          {{ session.get("username", "访客") }}
         </span>
         <div class="userinfo-menu" id="userinfo-menu">
-          <a href="#"><i class="fa fa-user-o" aria-hidden="true"></i><span>个人信息</span></a>
+          <a href="/account">
+            <i class="fa fa-user-o" aria-hidden="true"></i><span>个人信息</span>
+          </a>
           <a href="javascript:void(0)" onclick="logout()">
             <i class="fa fa-power-off" aria-hidden="true"></i><span>退出登录</span>
           </a>
@@ -62,6 +60,7 @@
   {% block container %}
   {% endblock %}
 
+  <!-- 登录窗口 -->
   {% block login %}
   <div class="login-window-wrapper">
     <div id="login-window">

@@ -1,3 +1,5 @@
+/* #################### 通用样式 #################### */
+
 * {
   margin: 0;
   padding: 0;
@@ -19,6 +21,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
+a {
+  text-decoration: none;
+}
+
 .placeholder {
   margin-left: 50px;
 }
@@ -31,7 +37,36 @@ h1, h2, h3, h4, h5, h6 {
   display: flex !important;
 }
 
+.d-flex-with-animation {
+  display: flex !important;
+  animation: fadeIn 0.5s;
+}
+
+.d-block {
+  display: block !important;
+  animation: fadeIn 0.5s;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* #################### 导航栏 #################### */
+
 .navbar {
   width: 100%;
   min-width: 700px;
@@ -104,8 +139,8 @@ h1, h2, h3, h4, h5, h6 {
   color: #ecf0f1;
 }
 
-
 /* #################### 搜索组 #################### */
+
 #search-form {
   margin-right: auto;
 }
@@ -156,6 +191,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* #################### 用户组 #################### */
+
 .userinfo-group {
   text-align: center;
   color: #ecf0f1;
@@ -197,7 +233,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .userinfo-menu a {
-  padding: 6px 8px;
+  display: block;
+  margin: 1px 4px;
   border-radius: 6px;
   color: snow;
   transition: all 0.3s;
@@ -311,14 +348,14 @@ h1, h2, h3, h4, h5, h6 {
 .login-success-feedback {
   display: none;
   padding: 2px 10px;
-  background-color: snow;
-  border: 1px solid red;
   border-radius: 3px;
+  background-color: snow;
   height: 25px;
   font-size: 14px;
 }
 
 .feedback {
+  border: 1px solid red;
   animation: shakes 0.5s;
 }
 

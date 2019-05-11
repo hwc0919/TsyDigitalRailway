@@ -1,8 +1,6 @@
-下一步: 
+TODO: 
 
-检查漏洞
-
-user:hover dropdown {display:block}
+更改userinfo-group的悬浮算法，尝试1::before伪元素扩大面积, 尝试2: 取消.navbar padding, 增加.navbar-item padding
 
 用户信息界面
 

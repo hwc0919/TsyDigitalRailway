@@ -99,7 +99,9 @@ def register():
             session['username'] = username
             session['login_status'] = True
             session['role'] = 'Guest'
-            return json.dumps({'status': True, 'message': '注册成功', 'url': '/video'})
+            return json.dumps({'status': True,
+                               'message': '注册成功',
+                               'url': '/video'})
         # 记录错误日志到数据库
         except Exception as err:
             db.session.rollback()
@@ -119,4 +121,12 @@ def register():
                             str(err2) + '\n' + '-'*20 + '\n')
             # 返回注册失败信息至前端
             finally:
-                return json.dumps({'status': False, 'error_field': 'overall_field', 'message': '服务器错误, 注册失败'})
+                return json.dumps({'status': False,
+                                   'error_field': 'overall_field',
+                                   'message': '服务器错误, 注册失败'})
+
+
+# 返回用户个人中心
+@auth.route('/account')
+def account():
+    return render_template('auth/account.html')

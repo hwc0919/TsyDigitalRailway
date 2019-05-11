@@ -70,6 +70,7 @@
   .left-menu-col {
     height: auto;
   }
+
   .left-menu-toggle-wrapper {
     margin: 0;
     width: 100%;
@@ -78,10 +79,12 @@
     padding-left: 40px;
     line-height: 40px;
   }
+
   .left-menu-toggle-wrapper h1,
   .left-menu-list {
     display: inline;
   }
+
   .left-menu-item {
     display: inline;
     white-space: nowrap;
@@ -110,8 +113,4 @@
   width: 100%;
   height: 100%;
   display: none;
-}
-
-.panel-active {
-  display: block !important;
 }

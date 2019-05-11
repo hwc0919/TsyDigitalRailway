@@ -7,9 +7,6 @@ from .. import db, HOST, BASE_DIR, VIDEO_DIR, OVERVIEW_DIR
 from ..models import User
 
 
-search_result_dict = dict()
-
-
 @main.route('/')
 def _index():
     return redirect(url_for('.index'))
@@ -21,19 +18,14 @@ def index():
     video_folders = [folder for folder in all_dirs if os.path.isdir(
         os.path.join(VIDEO_DIR, folder))]
     session['video_folders'] = video_folders
-    return render_template('index.html', base_tag=HOST,
-                           video_folders=video_folders,
-                           login_status=session.get('login_status', False),
-                           username=session.get('username', '访客')
-                           )
+    return render_template('index.html', base_tag=HOST)
 
 
 @main.route('/overview/')
 def overview():
     overview_files = os.listdir(OVERVIEW_DIR)
-    overview_images = list(enumerate([file[:-4] for file in overview_files
-                                      if file[-4:] == '.jpg']))
-
+    overview_images = [file[:-4] for file in overview_files
+                       if file[-4:] == '.jpg']
     return render_template('overview.html', images=overview_images)
 
 
@@ -48,7 +40,7 @@ def explore_folder(folder):
 
 @main.route('/search')
 def search():
-    result = search_result_dict.get('search_result')
+    result = session.get('search_result')
     if result is not None:
         return render_template('search.html')
     keywords = request.args.get('video_name')
@@ -61,7 +53,7 @@ def search():
         all_dirs = os.listdir(VIDEO_DIR)
         video_folders = [folder for folder in all_dirs if os.path.isdir(
             os.path.join(VIDEO_DIR, folder))]
-    search_result_dict['search_result'] = match(video_folders, keywords)
+    session['search_result'] = match(video_folders, keywords)
     return redirect(url_for('.search'))
 
 
@@ -83,8 +75,8 @@ def match(folders, keywords, basedir=VIDEO_DIR, file_type='.mp4'):
 
 @main.route('/result/')
 def search_result():
-    result = search_result_dict.get('search_result')
-    search_result_dict['search_result'] = None
+    result = session.get('search_result')
+    session['search_result'] = None
     if not result:
         return '<h1 class="placeholder">没有找到相关视频...</h1>'
     return render_template('video.html', video_list=result)

@@ -26,7 +26,7 @@
   </div>
   <div class="right-content-col">
     <div class="panel-group">
-      <div class="content-panel panel-active" data-panel-name="register-panel">
+      <div class="content-panel d-block" data-panel-name="register-panel">
         <div id="register-form-wrapper">
           <form id="register-form">
             <div class="col" id="register-form-required">
@@ -97,7 +97,4 @@
 {% block js %}
 {{super()}}
 <script src={{ url_for("static", filename="js/register.js") }}></script>
-<script>
-
-</script>
 {% endblock %}

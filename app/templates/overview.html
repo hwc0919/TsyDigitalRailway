@@ -9,15 +9,15 @@
 <div class="slider-wrapper">
   <div class="slider">
     <div class="slider-container">
-      {% for id, image in images %}
-      <div class="slider-content" data-content-id={{ id + 1 }} data-image-name={{ image.replace(" ", "%20") }}>
-        <img class="slider-img" alt={{ image + "加载失败" }}>
+      {% for image in images %}
+      <div class="slider-content" data-content-id={{ loop.index }} data-image-name={{ image.replace(" ", "%20") }}>
+        <img class="slider-img" alt={{ image + " 加载失败" }}>
       </div>
       {% endfor %}
     </div>
     <ul class="slider-dots">
-      {% for id, image in images %}
-      <li class="slider-dot" data-content-id={{ id + 1 }}></li>
+      {% for image in images %}
+      <li class="slider-dot" data-content-id={{ loop.index }}></li>
       {% endfor %}
     </ul>
     <div class="slider-arrow-group">
