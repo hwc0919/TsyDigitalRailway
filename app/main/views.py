@@ -24,7 +24,7 @@ def index():
 @main.route('/overview/')
 def overview():
     overview_files = os.listdir(OVERVIEW_DIR)
-    overview_images = [file[:-4] for file in overview_files
+    overview_images = [file for file in overview_files
                        if file[-4:] == '.jpg']
     return render_template('overview.html', images=overview_images)
 

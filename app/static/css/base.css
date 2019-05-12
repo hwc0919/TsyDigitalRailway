@@ -14,7 +14,7 @@ html {
 body {
   min-width: 700px;
   height: 100%;
-  background-color: antiquewhite;
+  background-color: #f7f1e3; /* Spanish SWAN WHITE*/
 }
 
 h1, h2, h3, h4, h5, h6 {

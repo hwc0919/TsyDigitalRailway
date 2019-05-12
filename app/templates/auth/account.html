@@ -5,6 +5,69 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }} type="text/css">
+<style>
+  .auth-page-wrapper {
+    width: 96%;
+    margin-left: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+  }
+
+  .userinfo-table {
+    width: 80%;
+    margin-bottom: 50px;
+  }
+
+  .userinfo-table caption {
+    position: relative;
+    text-align: left;
+    font-size: 20px;
+    margin-left: 50px;
+  }
+
+  .userinfo-table caption h4,
+  .userinfo-table a {
+    display: inline-block;
+    margin: 10px;
+  }
+
+  .userinfo-table a {
+    font-size: 15px;
+    color: #0984e3;
+  }
+
+  .userinfo-table a:hover {
+    text-shadow: 0px 0px 1px gray;
+  }
+
+  .userinfo-table caption hr::before {
+    content: "";
+    width: 100px;
+    height: 1px;
+    position: absolute;
+    left: 0px;
+    background-color: gray;
+  }
+
+  .userinfo-title {
+    width: 200px;
+    line-height: 50px;
+    color: gray;
+    text-align: right;
+    vertical-align: text-top;
+  }
+
+  .userinfo-info {
+    text-align: left;
+    vertical-align: text-top;
+    padding-left: 20px;
+  }
+
+  .userinfo-info p {
+    line-height: 30px;
+  }
+</style>
 {% endblock %}
 
 {% block container %}
@@ -27,10 +90,82 @@
   <div class="right-content-col">
     <div class="panel-group">
       <div class="content-panel d-block" data-panel-name="userinfo-panel">
-        <!-- jQuery loads auth/userinfo.html -->
+        <div class="auth-page-wrapper" id="userinfo-table-wrapper">
+          <table class="userinfo-table" id="userinfo-table">
+            <caption>
+              <h4>个人信息</h4><a href="javascript:void(0)">修改</a>
+              <hr>
+            </caption>
+            <tr>
+              <td class="userinfo-title">用户名</td>
+              <td class="userinfo-info">{{ user.username|default("", true) }}</td>
+            </tr>
+            <tr>
+              <td class="userinfo-title">真实姓名</td>
+              <td class="userinfo-info">{{ user.realname|default("", true) }}</td>
+            </tr>
+            <tr>
+            <tr>
+              <td class="userinfo-title">性别</td>
+              <td class="userinfo-info">{{ user.gender|default("", true) }}</td>
+            </tr>
+            <tr>
+              <td class="userinfo-title">生日</td>
+              <td class="userinfo-info">{{ user.birthday|default("", true) }}</td>
+            </tr>
+            <td class="userinfo-title">单位</td>
+            <td class="userinfo-info">{{ user.company|default("", true) }}</td>
+            </tr>
+            <tr>
+              <td class="userinfo-title">部门</td>
+              <td class="userinfo-info">{{ user.department|default("", true) }}</td>
+            </tr>
+            <tr>
+              <td class="userinfo-title">职位</td>
+              <td class="userinfo-info">{{ user.position|default("", true) }}</td>
+            </tr>
+            <tr>
+              <td class="userinfo-title">个人简介</td>
+              <td class="userinfo-info">
+                <p>{{ user.description|default("", true) }}</p>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
       <div class="content-panel" data-panel-name="security-panel">
-        <!-- jQuery loads auth/security.html -->
+        <div class="auth-page-wrapper">
+          <table class="userinfo-table">
+            <caption>
+              <h4>修改密码</h4>
+              <hr>
+            </caption>
+            <tr>
+              <td class="userinfo-title">密码</td>
+              <td class="userinfo-info">******<a href="javascript:void(0)">修改密码</a></td>
+            </tr>
+          </table>
+          <table class="userinfo-table">
+            <caption>
+              <h4>绑定邮箱</h4>
+              <hr>
+            </caption>
+            <tr>
+              <td class="userinfo-title">邮箱</td>
+              <td class="userinfo-info">{{ user.email|default("", true) }}<a href="javascript:void(0)">修改邮箱</a></td>
+            </tr>
+          </table>
+          <table class="userinfo-table">
+            <caption>
+              <h4>绑定手机</h4>
+              <hr>
+            </caption>
+            <tr>
+              <td class="userinfo-title">电话</td>
+              <td class="userinfo-info">{{ user.phone|default("", true) }}<a href="javascript:void(0)">修改手机</a></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -42,16 +177,7 @@
 <script src={{ url_for("static", filename="js/index.js") }}></script>
 <script>
   jQuery("document").ready(function () {
-    jQuery(".content-panel[data-panel-name='userinfo-panel']").load("/userinfo", function (response, status, xhr) {
-      if (status == "error") {
-        jQuery(this).html('<h1 class="placeholder">内容加载失败</h1>');
-      }
-    });
-    jQuery(".content-panel[data-panel-name='security-panel']").load("/security", function (response, status, xhr) {
-      if (status == "error") {
-        jQuery(this).html('<h1 class="placeholder">内容加载失败</h1>');
-      }
-    });
+
   });
 </script>
 {% endblock %}

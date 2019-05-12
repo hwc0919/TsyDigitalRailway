@@ -30,8 +30,7 @@
   <h1 class="video-list-title">视频列表</h1>
   <ul class="right-video-list">
     {% for folder, video in video_list %}
-    <li class="video-list-item" data-folder-name={{ folder.replace(" ", "%20") }}
-      data-video-name={{ video.replace(" ", "%20") }}>
+    <li class="video-list-item" data-url={{ url_for("static", filename=("video/" + folder + "/" + video)) }}>
       <div class="video-list-img-wrapper">
         <img class="video-list-img" alt="暂无图片">
       </div>

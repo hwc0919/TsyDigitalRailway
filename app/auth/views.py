@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from flask import redirect, render_template, request, session, url_for
+from flask import redirect, render_template, request, session, url_for, flash
 
 from ..models import db, Role, User, Log
 from . import auth
@@ -40,7 +40,7 @@ def login():
 
 
 # 响应注销ajax请求
-@auth.route('/auth/logout')
+@auth.route('/auth/logout/')
 def logout():
     login_status = session.get('login_status', False)
     if not login_status:
@@ -127,6 +127,11 @@ def register():
 
 
 # 返回用户个人中心
-@auth.route('/account')
+@auth.route('/account/')
 def account():
-    return render_template('auth/account.html')
+    if not session.get('login_status'):
+        flash("尚未登录")
+        return redirect("/video")
+    userinfo = {}
+    user = User.query.filter_by(username=session.get('username')).first()
+    return render_template('auth/account.html', user=user)

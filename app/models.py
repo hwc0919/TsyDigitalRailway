@@ -19,9 +19,9 @@ class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, index=True)
-    email = db.Column(db.String(64), nullable=False, index=True)
+    email = db.Column(db.String(64), index=True)
     realname = db.Column(db.String(20), default='访客')
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     password_hash = db.Column(db.String(128), nullable=False,
                               default=generate_password_hash('watermelon2019'))
     phone = db.Column(db.String(20))
@@ -29,6 +29,8 @@ class User(db.Model):
     department = db.Column(db.String(64))
     gender = db.Column(db.Boolean)
     birthday = db.Column(db.Date)
+    position = db.Column(db.String(64))
+    description = db.Column(db.Text)
     register_time = db.Column(db.DateTime, default=datetime.datetime.now())
     delete = db.Column(db.Boolean, default=False)
 
@@ -68,12 +70,9 @@ def add_role_data(db, Role, User):
         name='User', description='User authority, have read-only access to data.')
     guest_role = Role(
         name='Guest', description='Guest authority, only have access to videos.')
-    system_user = User(username='system', password='system', realname='system',
-                       email='system', role=admin_role)
-    server_user = User(username='server', password='server', realname='server',
-                       email='server', role=admin_role)
-    guest_user = User(username='guest', password='guest', realname='guest',
-                      email='guest', role=guest_role)
+    system_user = User(username='system', password='system', role=admin_role)
+    server_user = User(username='server', password='server', role=admin_role)
+    guest_user = User(username='guest', password='guest', role=guest_role)
     db.session.add_all(
         [admin_role, mod_role, user_role, guest_role, system_user, server_user, guest_user])
     db.session.commit()
@@ -83,12 +82,9 @@ def add_testing_user_data(db, Role, User):
     admin_role = Role.query.filter_by(name='Admin').first()
     mod_role = Role.query.filter_by(name='Moderator').first()
     user_role = Role.query.filter_by(name='User').first()
-    admin = User(username='admin', password='admin', realname='admin',
-                 email='admin', role=admin_role)
-    mod = User(username='mod', password='mod',
-               realname='mod', email='mod', role=mod_role)
-    user = User(username='user', realname='user',
-                email='user', role=user_role)
+    admin = User(username='admin', password='admin', role=admin_role)
+    mod = User(username='mod', password='mod', role=mod_role)
+    user = User(username='user', password='user', role=user_role)
     hwc = User(username='hwc0919', password='123456', realname='何莞晨',
                email='hwc14@qq.com', phone='17888830919', role=admin_role)
     db.session.add_all([admin, mod, user, hwc])

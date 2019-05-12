@@ -2,17 +2,16 @@ jQuery(document).ready(function () {
   // 加载图片
   jQuery(".slider-content").each(function () {
     var curItem = jQuery(this);
-    var imgName = curItem.attr("data-image-name");
-    var url = "/static/images/风采展示/" + imgName + ".jpg";
-    curItem.children("img").attr("src", url);
+    curItem.children("img").attr("src", curItem.attr("data-image-url"));
   });
   jQuery(".slider-dot[data-content-id='1']").addClass("dot-active");
   // 幻灯片切换控制
+  var sliderTotal = jQuery(".slider-content").length;
   jQuery(".slider-left-arrow").click(function () {
-    slideLeft();
+    slideLeft(sliderTotal);
   });
   jQuery(".slider-right-arrow").click(function () {
-    slideRight();
+    slideRight(sliderTotal);
   });
   jQuery(".slider-dot").click(function () {
     that = this;
@@ -29,14 +28,12 @@ jQuery(document).ready(function () {
   })
 });
 // 左箭头切换
-function slideLeft() {
-  var sliderTotal = jQuery(".slider-content").length;
-  var maxLeft = (1 - sliderTotal) * 100 + "%";
+function slideLeft(sliderTotal) {
   var contentId = jQuery(".dot-active").removeClass("dot-active").attr("data-content-id");
   if (contentId == 1) {
     var selector = ".slider-dot[data-content-id='" + sliderTotal + "']"
     jQuery(selector).addClass("dot-active");
-    jQuery(".slider-container").animate({ left: maxLeft }, "slow")
+    jQuery(".slider-container").animate({ left: (1 - sliderTotal) * 100 + "%" }, "slow")
   } else {
     var selector = ".slider-dot[data-content-id='" + (contentId - 1) + "']"
     jQuery(selector).addClass("dot-active");
@@ -44,9 +41,7 @@ function slideLeft() {
   }
 }
 // 右箭头切换
-function slideRight() {
-  var sliderTotal = jQuery(".slider-content").length;
-  var maxLeft = (1 - sliderTotal) * 100 + "%";
+function slideRight(sliderTotal) {
   var contentId = jQuery(".dot-active").removeClass("dot-active").attr("data-content-id");
   if (contentId == sliderTotal) {
     jQuery(".slider-dot[data-content-id='1']").addClass("dot-active");

@@ -143,7 +143,6 @@ display: inline-block;
 }
 
 .play-hint {
-  display: none;
   font-size: 10px;
   transform: scaleY(0.8);
   background-color: snow;
@@ -154,7 +153,12 @@ display: inline-block;
   position: absolute;
   bottom: 8px;
   left: 80px;
-  z-index: 1;
+  opacity: 0;
+}
+
+.video-list-item:hover .play-hint {
+  transition: opacity 0.5s;
+  opacity: 1;
 }
 
 .video-list-item section p {

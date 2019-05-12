@@ -2,7 +2,7 @@
   text-decoration: none;
 }
 
-#register-form-wrapper {
+.auth-page-wrapper {
   width: 96%;
   margin-left: 2%;
   display: flex;

@@ -2,11 +2,7 @@ jQuery(document).ready(function () {
   // 加载缩略图
   jQuery(".video-list-item").each(function () {
     var curItem = jQuery(this);
-    var folderName = curItem.attr("data-folder-name")
-    var videoName = curItem.attr("data-video-name");
-    var url = "/static/video/" + folderName + "/" + videoName;
-    var imgURL = url + ".jpg";
-    curItem.attr("data-url", url).find("img").attr("src", imgURL);
+    curItem.find("img").attr("src", curItem.attr("data-url") + ".jpg")
   });
   // 激活列表第一项
   var firstItem = jQuery(".video-list-item").first();
@@ -18,10 +14,6 @@ jQuery(document).ready(function () {
     + videoURL
     + '" type = "video/mp4">您的浏览器不支持video视频标签。</video>'
   jQuery(".video-player-body").html(html);
-  // 视频列表效果
-  jQuery(".video-list-item").hover(function () {
-    jQuery(this).children("i.play-hint").stop(false, true).fadeToggle("fast");
-  });
   // 切换视频
   jQuery(".video-list-item").click(function () {
     var curItem = jQuery(this);
