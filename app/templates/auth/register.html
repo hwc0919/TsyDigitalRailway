@@ -28,7 +28,7 @@
     <div class="panel-group">
       <div class="content-panel d-block" data-panel-name="register-panel">
         <div class="auth-page-wrapper" id="register-form-wrapper">
-          <form id="register-form">
+          <form class="auth-form" id="register-form">
             <div class="col" id="register-form-required">
               <div class="reg-form-group">
                 <label>用户名*<br><small>(3-20个字符)</small></label>
@@ -37,7 +37,7 @@
               </div>
               <div class="reg-form-group">
                 <label>电子邮箱*<br><small>(用于找回密码)</small></label>
-                <input type="text" class="input-required" id="reg-input-email" name="email">
+                <input type="email" class="input-required" id="reg-input-email" name="email">
                 <p class="feedback reg-feedback" id="email_field"></p>
               </div>
               <div class="reg-form-group">
@@ -82,7 +82,7 @@
                 <p class="feedback reg-feedback" id="department_field"></p>
               </div>
             </div>
-            <div class="col" id="register-form-optional">
+            <div class="col">
               <button type="button" class="primary-btn" onclick="register()">确认注册</button>
               <p class="feedback reg-feedback" id="overall_field"></p>
             </div>

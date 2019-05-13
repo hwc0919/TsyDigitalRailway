@@ -12,30 +12,15 @@ jQuery(document).ready(function () {
       jQuery("#reg-department-group").removeClass("d-none");
       jQuery("#reg-input-department").val("线站处");
     } else if (selection == "其他") {
-      jQuery("#reg-company-group").removeClass("d-none");
+      jQuery("#reg-company-group").removeClass("d-none").css("margin-top", "-10px");
       jQuery("#reg-input-company").val("");
       jQuery("#reg-department-group").removeClass("d-none");
       jQuery("#reg-input-department").val("");
     }
   });
-  jQuery("#reg-input-username").change(function () {
-    jQuery("#username_field").text("").removeClass("d-flex");
-  });
-  jQuery("#reg-input-email").change(function () {
-    jQuery("#email_field").text("").removeClass("d-flex");
-  });
-  jQuery("#reg-input-realname").change(function () {
-    jQuery("#realname_field").text("").removeClass("d-flex");
-  });
-  jQuery("#reg-input-password").change(function () {
-    jQuery("#password_field").text("").removeClass("d-flex");
-  });
-  jQuery("#reg-input-verify-password").change(function () {
-    jQuery("#verify_password_field").text("").removeClass("d-flex");
-  });
-  jQuery("#reg-input-phone").change(function () {
-    jQuery("#phone_field").text("").removeClass("d-flex");
-  });
+  jQuery("#register-form input").change(function () {
+    jQuery(this).next(".reg-feedback").text("").removeClass("d-flex");
+  })
 });
 
 function register() {

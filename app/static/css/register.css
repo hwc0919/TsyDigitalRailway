@@ -9,7 +9,7 @@
   justify-content: left;
 }
 
-#register-form {
+.auth-form {
   width: 940px;
   display: flex;
   justify-content: center;
@@ -17,7 +17,7 @@
   flex-wrap: wrap;
 }
 
-#register-form .col {
+.auth-form .col {
   width: 470px;
   display: flex;
   flex-direction: column;
@@ -53,10 +53,6 @@
 .reg-form-group select {
   padding: 0 10px;
   height: 30px;
-}
-
-#reg-company-group {
-  margin-top: -10px;
 }
 
 .reg-feedback {

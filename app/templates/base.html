@@ -29,7 +29,7 @@
           <a class="nav-link link-inactive" href="javascript:void(0);" onclick="redirectToProjects()">数字地球</a>
         </li>
       </ul>
-      <form id="search-form" class="navbar-item" action="/search" method="GET" onsubmit="return inputNotNull()">
+      <form id="search-form" class="navbar-item" onsubmit="search()">
         <input type="text" id="search-form-input" name="video_name" placeholder="搜索视频" required>
         <button class="submit-btn">Search</button>
       </form>
@@ -40,7 +40,7 @@
           {{ session.get("username", "访客") }}
         </span>
         <div class="userinfo-menu" id="userinfo-menu">
-          <a href="/account">
+          <a href={{ "/account/" + session.username }}>
             <i class="fa fa-user-o" aria-hidden="true"></i><span>个人信息</span>
           </a>
           <a href="javascript:void(0)" onclick="logout()">

@@ -18,13 +18,13 @@ jQuery(document).ready(function () {
     slideJump(that);
   });
   // 自动播放
-  var slideId = setInterval("slideRight()", 5000);
+  var slideId = setInterval(function () { slideRight(sliderTotal); }, 5000);
   // 悬浮暂停自动切换
   jQuery(".slider").mouseenter(function () {
     clearInterval(slideId);
   });
   jQuery(".slider").mouseleave(function () {
-    slideId = setInterval("slideRight()", 5000);
+    slideId = setInterval(function () { slideRight(sliderTotal); }, 5000);
   })
 });
 // 左箭头切换

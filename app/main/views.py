@@ -1,5 +1,6 @@
 import os
 import re
+import json
 from flask import render_template, redirect, url_for, session, request
 
 from . import main
@@ -54,7 +55,7 @@ def search():
         video_folders = [folder for folder in all_dirs if os.path.isdir(
             os.path.join(VIDEO_DIR, folder))]
     session['search_result'] = match(video_folders, keywords)
-    return redirect(url_for('.search'))
+    return json.dumps({'status': True, 'message': '搜索成功', 'url': '/search'})
 
 
 def match(folders, keywords, basedir=VIDEO_DIR, file_type='.mp4'):
@@ -73,7 +74,7 @@ def match(folders, keywords, basedir=VIDEO_DIR, file_type='.mp4'):
     return result
 
 
-@main.route('/result/')
+@main.route('/search/result')
 def search_result():
     result = session.get('search_result')
     session['search_result'] = None

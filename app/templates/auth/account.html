@@ -4,7 +4,8 @@
 
 {% block css %}
 {{ super() }}
-<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }} type="text/css">
+<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
+<link rel="stylesheet" href={{ url_for("static", filename="css/register.css")}}>
 <style>
   .auth-page-wrapper {
     width: 96%;
@@ -12,6 +13,14 @@
     display: flex;
     flex-direction: column;
     justify-content: left;
+  }
+
+  .auth-form .col {
+    width: 600px;
+  }
+
+  .reg-form-group input {
+    width: 200px;
   }
 
   .userinfo-table {
@@ -67,6 +76,29 @@
   .userinfo-info p {
     line-height: 30px;
   }
+
+  input.radio {
+    width: 16px;
+    margin: 0 0 0 20px;
+  }
+
+  .textarea-group {
+    height: auto;
+  }
+
+  .textarea-group label {
+    align-self: flex-start;
+  }
+
+  .reg-form-group textarea {
+    width: 400px;
+    height: 120px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 6px;
+    outline: none;
+    resize: none;
+  }
 </style>
 {% endblock %}
 
@@ -79,7 +111,7 @@
     <div class="left-menu-toggle-wrapper">
       <h1 class="left-menu-head">目录</h1>
       <ul class="left-menu-list">
-        <li class="left-menu-item menu-active" data-target-panel="userinfo-panel">个人信息</li>
+        <li class="left-menu-item menu-active" data-target-panel="profile-panel">个人信息</li>
         <li class="left-menu-item" data-target-panel="security-panel">账号安全</li>
         <a href="/">
           <li class="left-menu-item menu-inactive">回到主页</li>
@@ -89,11 +121,14 @@
   </div>
   <div class="right-content-col">
     <div class="panel-group">
-      <div class="content-panel d-block" data-panel-name="userinfo-panel">
-        <div class="auth-page-wrapper" id="userinfo-table-wrapper">
-          <table class="userinfo-table" id="userinfo-table">
+      <div class="content-panel d-block" data-panel-name="profile-panel">
+        <div class="auth-page-wrapper" id="profile-table-wrapper">
+          <table class="userinfo-table" id="profile-table">
             <caption>
-              <h4>个人信息</h4><a href="javascript:void(0)">修改</a>
+              <h4>个人信息</h4>
+              {% if user.id == session.user_id or session.role_name == 'Admin' %}
+              <a id="edit-profile-btn" href="javascript:void(0)">修改</a>
+              {% endif %}
               <hr>
             </caption>
             <tr>
@@ -134,6 +169,7 @@
         </div>
       </div>
       <div class="content-panel" data-panel-name="security-panel">
+        {% if user.id == session.user_id or session.role_name == 'Admin' %}
         <div class="auth-page-wrapper">
           <table class="userinfo-table">
             <caption>
@@ -166,6 +202,69 @@
             </tr>
           </table>
         </div>
+        {% else %}
+        <h1 class="placeholder">此页面只有本人才能查看</h1>
+        {% endif %}
+      </div>
+      <div class="content-panel" data-panel-name="edit-profile-panel">
+        {% if user.id == session.user_id or session.role_name == 'Admin' %}
+        <div class="auth-page-wrapper" id="profile-form-wrapper">
+          <form class="auth-form" id="profile-form">
+            <div class="col">
+              <div class="reg-form-group">
+                <label>用户名*<br><small>(3-20个字符)</small></label>
+                <input type="text" id="reg-input-username" name="username" value={{ user.username }}
+                  class="input-required" required>
+                <p class="feedback reg-feedback" id="username_field">aa</p>
+              </div>
+              <div class="reg-form-group">
+                <label>姓名*<br><small>(真实姓名)</small></label>
+                <input type="text" class="input-required" required id="reg-input-realname" name="realname"
+                  value={{ user.realname|default("", true) }}>
+                <p class="feedback reg-feedback" id="realname_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>单位<br><small>(公司名称)</small></label>
+                <input type="text" id="reg-input-company" name="company" value={{ user.company|default("", true) }}>
+                <p class="feedback reg-feedback" id="company_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>部门<br><small>(所在部门)</small></label>
+                <input type="text" id="reg-input-department" name="department"
+                  value={{ user.department|default("", true) }}>
+                <p class="feedback reg-feedback" id="department_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>职位<br><small></small></label>
+                <input type="text" id="reg-input-position" name="position" value={{ user.position|default("", true) }}>
+                <p class="feedback reg-feedback" id="position_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>性别<br><small></small></label>
+                <input class="radio" type="radio" name="gender" value=1
+                  {% if user.gender == 1 %}{{ "checked" }}{% endif %}>男
+                <input class="radio" type="radio" name="gender" value=2
+                  {% if user.gender == 2 %}{{ "checked" }}{% endif %}>女
+                <input class="radio" type="radio" name="gender" value=0
+                  {% if user.gender == 0 %}{{ "checked" }}{% endif %}>保密
+                <p class="feedback reg-feedback" id="gender_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>生日<br><small></small></label>
+                <input type="date" id="reg-input-birthday" name="birthday" value={{ user.birthday|default("", true) }}>
+                <p class="feedback reg-feedback" id="birthday_field"></p>
+              </div>
+              <div class="reg-form-group textarea-group">
+                <label>个人简介<br><small></small></label>
+                <textarea type="text" id="reg-input-description" name="description"
+                  }}>{{ user.description|default("", true) }}</textarea>
+              </div>
+              <button type="button" class="primary-btn" onclick="commitEdit()">提交修改</button>
+              <p class="feedback reg-feedback" id="overall_field"></p>
+            </div>
+          </form>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -177,7 +276,24 @@
 <script src={{ url_for("static", filename="js/index.js") }}></script>
 <script>
   jQuery("document").ready(function () {
-
+    jQuery("#edit-profile-btn").click(function () {
+      jQuery(".content-panel").removeClass("d-block");
+      jQuery(".content-panel[data-panel-name='edit-profile-panel']").addClass("d-block");
+    })
   });
+  function commitEdit() {
+    jQuery.ajax({
+      type: "POST",
+      dataType: "json",
+      url: "/account/edit_profile",
+      data: jQuery("#profile-form").serialize(),
+      success: function (json) {
+        console.log(json);
+      },
+      error: function () {
+        alert('error');
+      }
+    })
+  }
 </script>
 {% endblock %}

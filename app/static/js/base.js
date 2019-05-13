@@ -45,12 +45,32 @@ jQuery(document).ready(function () {
 })
 
 // 搜索表单notNull检查
-function inputNotNull() {
+function search() {
   if (jQuery("input#search-form-input").val().trim() == '') {
     alert("请输入搜索内容");
     return false;
   }
-  return true;
+  jQuery.ajax({
+    type: "GET",
+    dataType: "json",
+    url: "/search",
+    data: jQuery("#search-form").serialize(),
+    success: function (json) {
+      if (!json.status) {
+        alert(json.message);
+        return false;
+      } else {
+        window.open(json.url, "_self");
+      }
+    },
+    error: function () {
+      alert("网络错误, 搜索失败.");
+    }
+  })
+}
+
+function inputNotNull() {
+
 }
 //查看项目
 function redirectToProjects() {
@@ -71,7 +91,7 @@ function redirectToProjects() {
     }
   })
 }
-// 登录输入检查
+// 登录输入检查, 上传数据
 function login() {
   jQuery("#login-feedback").text("").removeClass("d-flex");
   if (jQuery("#input-username").val().trim() == ''
