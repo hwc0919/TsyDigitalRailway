@@ -111,7 +111,6 @@ function login() {
         } else if (json.status == true) {
           jQuery("#login-success-feedback").text(json.message).addClass("d-flex");
           setTimeout(function () { window.open(json.url, "_self"); }, 1000);
-
         } else {
           jQuery("#login-feedback").text("登录失败, 未知错误.").addClass("d-flex");
         }

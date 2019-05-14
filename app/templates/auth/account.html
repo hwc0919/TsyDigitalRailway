@@ -126,7 +126,7 @@
           <table class="userinfo-table" id="profile-table">
             <caption>
               <h4>个人信息</h4>
-              {% if user.id == session.user_id or session.role_name == 'Admin' %}
+              {% if editable %}
               <a id="edit-profile-btn" href="javascript:void(0)">修改</a>
               {% endif %}
               <hr>
@@ -142,7 +142,7 @@
             <tr>
             <tr>
               <td class="userinfo-title">性别</td>
-              <td class="userinfo-info">{{ user.gender|default("", true) }}</td>
+              <td class="userinfo-info">{{ ['', '男', '女'][user.gender] }}</td>
             </tr>
             <tr>
               <td class="userinfo-title">生日</td>
@@ -169,7 +169,7 @@
         </div>
       </div>
       <div class="content-panel" data-panel-name="security-panel">
-        {% if user.id == session.user_id or session.role_name == 'Admin' %}
+        {% if editable %}
         <div class="auth-page-wrapper">
           <table class="userinfo-table">
             <caption>
@@ -207,14 +207,14 @@
         {% endif %}
       </div>
       <div class="content-panel" data-panel-name="edit-profile-panel">
-        {% if user.id == session.user_id or session.role_name == 'Admin' %}
+        {% if editable %}
         <div class="auth-page-wrapper" id="profile-form-wrapper">
           <form class="auth-form" id="profile-form">
             <div class="col">
               <div class="reg-form-group">
                 <label>用户名*<br><small>(3-20个字符)</small></label>
                 <input type="text" id="reg-input-username" name="username" value={{ user.username }}
-                  class="input-required" required>
+                  class="input-required" disabled>
                 <p class="feedback reg-feedback" id="username_field">aa</p>
               </div>
               <div class="reg-form-group">
@@ -282,18 +282,37 @@
     })
   });
   function commitEdit() {
-    jQuery.ajax({
-      type: "POST",
-      dataType: "json",
-      url: "/account/edit_profile",
-      data: jQuery("#profile-form").serialize(),
+    var passFlag = true;
+    var name = jQuery("#reg-input-realname").val();
+    if (name[0] == " " || name[name.length - 1] == " ") {
+      passFlag = false;
+      jQuery("#realname_field").text("首尾不能为空格").addClass("d-flex");
+    } else if (name.length < 2) {
+      passFlag = false;
+      jQuery("#realname_field").text("姓名长度至少为2").addClass("d-flex");
+    }
+    if (!passFlag) {
+      return false;
+    } else {
+      jQuery.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/account/edit_profile/" + {{ user.id }},
+    data: jQuery("#profile-form").serialize(),
       success: function (json) {
-        console.log(json);
+        if (json.status == true) {
+          alert(json.message);
+          window.open(json.url, "_self");
+        }
+        else {
+          alert(json.message);
+        }
       },
-      error: function () {
-        alert('error');
-      }
-    })
+    error: function () {
+      alert('网络错误, 修改失败');
+    }
+  });
+    }
   }
 </script>
 {% endblock %}

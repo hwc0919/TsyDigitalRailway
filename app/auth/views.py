@@ -23,34 +23,30 @@ def login():
         log = Log(username=username, log_type='login', content='user login')
         db.session.add(log)
         db.session.commit()
-        session['login_status'] = True
-        session['user_id'] = User.query.filter_by(
-            username=username, delete=False).first().id
-        session['username'] = username
-        session['role_name'] = user.role.name
+        session['user'] = {'login_status': True,
+                           'id': user.id,
+                           'username': username,
+                           'role_name': user.role.name,
+                           'is_admin': user.is_admin()}
         return json.dumps({'status': True, 'message': '登陆成功, 即将自动跳转', 'url': '/video'})
 
 
 # 响应注销ajax请求
 @auth.route('/auth/logout/')
 def logout():
-    login_status = session.get('login_status', False)
+    login_status = session.get("user", {}).get('login_status', False)
+    session['user'] = {}
     if not login_status:
         return json.dumps({'status': False, 'message': '尚未登录!', 'url': None})
-    session['login_status'] = False
-    session['user_id'] = None
-    session['username'] = None
-    session['role_name'] = None
     return json.dumps({'status': True, 'message': '退出成功', 'url': '/video'})
 
 
 # 响应权限检查ajax请求
 @auth.route('/auth/check_auth', methods=['GET', 'POST'])
 def check_auth():
-    role = session.get('role_name', 'Guest')
-    status = False
-    message = role + '权限'
-    status = (role == 'Admin')
+    role_name = session.get('user', {}).get('role_name', 'Guest')
+    message = role_name + '权限'
+    status = Role.query.filter_by(name=role_name).first().is_admin()
     return json.dumps({'status': status, 'message': message, 'url': '/projects'})
 
 
@@ -87,10 +83,11 @@ def register():
                   log_type='register', content=message)
         db.session.add(log)
         db.session.commit()
-        session['login_status'] = True
-        session['user_id'] = new_user.id
-        session['username'] = username
-        session['role_name'] = new_user.role.name    # 默认权限
+        session['user'] = {'login_status': True,
+                           'id': new_user.id,
+                           'username': username,
+                           'role_name': new_user.role.name,
+                           'is_admin': new_user.is_admin()}
         return json.dumps({'status': True,
                            'message': '注册成功',
                            'url': '/video'})
@@ -102,17 +99,31 @@ def account(username):
     user = User.query.filter_by(username=username, delete=False).first()
     if not user:
         return render_template('error/404.html'), 404
-    return render_template('auth/account.html', user=user)
+    editable = user.id == session.get('user', {}).get('id') or \
+        session.get('user', {}).get('is_admin', False)
+    return render_template('auth/account.html', user=user, editable=editable)
 
 
 # 修改用户信息
-@auth.route('/account/edit_profile', methods=['GET', 'POST'])
-def edit_profile():
+@auth.route('/account/edit_profile/<user_id>', methods=['GET', 'POST'])
+def edit_profile(user_id):
+    if not (user_id == session.get('user', {}).get('id') or
+            session.get('user', {}).get('is_admin', False)):
+        return json.dumps({'status': False, 'message': '没有修改权限'})
+    user = User.query.filter_by(id=user_id).first()
     form = request.form
-    print(form)
-    information = {}
+    user.realname = form.get("realname")
+    user.company = form.get("company")
+    user.department = form.get("department")
+    user.position = form.get("position")
+    user.gender = int(form.get("gender"))
+    user.description = form.get("description")
     if form.get('birthday') != '':
         birthday = datetime.datetime.strptime(
             form.get('birthday'), '%Y-%m-%d').date()
-        information['birthday'] = birthday
-    return json.dumps({'message': 'test'})
+        user.birthday = birthday
+    else:
+        user.birthday = None
+    db.session.add(user)
+    db.session.commit()
+    return json.dumps({'status': True, 'message': '修改成功', 'url': '/account/' + user.username})

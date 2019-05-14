@@ -56,7 +56,7 @@ function register() {
   if (name[0] == " " || name[name.length - 1] == " ") {
     passFlag = false;
     jQuery("#realname_field").text("首尾不能为空格").addClass("d-flex");
-  } else if (username.length < 2) {
+  } else if (name.length < 2) {
     passFlag = false;
     jQuery("#realname_field").text("姓名长度至少为2").addClass("d-flex");
   }

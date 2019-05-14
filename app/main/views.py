@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, session, request
 
 from . import main
 from .. import db, HOST, BASE_DIR, VIDEO_DIR, OVERVIEW_DIR
-from ..models import User
+from ..models import User, Role
 
 
 @main.route('/')
@@ -85,7 +85,8 @@ def search_result():
 
 @main.route('/projects')
 def projects():
-    if session.get('role') != 'Admin':
+    role_name = session.get('user', {}).get('role_name', 'Guest')
+    if not Role.query.filter_by(name=role_name).first().is_admin():
         return '<h1>权限不足!</h1>'
     else:
         return redirect("http://192.10.15.156:8080/webrim/#/home")

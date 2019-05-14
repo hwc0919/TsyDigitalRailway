@@ -61,7 +61,8 @@ class User(db.Model):
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-        self.role_id = Role.query.filter_by(default=True).first().id
+        if self.role is None:
+            self.role = Role.query.filter_by(default=True).first()
 
     @property
     def password(self):
@@ -75,7 +76,7 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
     def is_admin(self):
-        return self.role.name == 'Admin'
+        return self.role.is_admin()
 
     def __repr__(self):
         return '<User, username: {}, role_id: {}>'.format(self.username, self.role_id)
