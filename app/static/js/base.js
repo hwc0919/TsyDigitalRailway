@@ -7,40 +7,24 @@ jQuery(document).ready(function () {
     var content = "width=device-width, initial-scale=1.0, user-scalable=no";
   }
   jQuery("#viewport").attr("content", content);
-  // 显示用户面板
-  flag = setTimeout(function () { }, 0);
-  jQuery(".userinfo-group").mouseenter(function () {
-    clearTimeout(flag);
-    jQuery("#userinfo-menu").fadeIn("fast");
-  });
-  // 关闭用户面板
-  jQuery(".userinfo-group").mouseleave(function () {
-    flag = setTimeout(function () { jQuery("#userinfo-menu").fadeOut("fast"); }, 100);
-  });
-  jQuery("#userinfo-menu").mouseenter(function () {
-    clearTimeout(flag);
-  });
-  jQuery("#userinfo-menu").mouseleave(function () {
-    jQuery(this).fadeOut("fast");
-  })
   // (折叠状态时)显示导航栏菜单
   jQuery(".navbar-toggle-btn").click(function () {
-    jQuery(".navbar-toggle-wrapper").toggleClass("d-flex");
+    jQuery(".navbar-toggle-wrapper").toggleClass("d-flex-with-animation");
   });
   // 折叠导航栏菜单
-  jQuery(".navbar-toggle-wrapper").mouseleave(function () {
-    jQuery(this).toggleClass("d-flex");
+  jQuery(".navbar").mouseleave(function () {
+    jQuery(".navbar-toggle-wrapper").removeClass("d-flex-with-animation");
   })
   // 显示登录窗口
   jQuery(".show-login-window").click(function () {
-    jQuery(".login-window-wrapper").addClass("d-flex-with-animation", true);
+    jQuery(".login-window-wrapper").addClass("d-flex-with-animation");
   })
   // 关闭登录窗口
   jQuery("#close-window-btn").click(function () {
     jQuery("#login-feedback").text("").removeClass("d-flex");
     jQuery("#input-username").val("");
     jQuery("#input-password").val("");
-    jQuery(".login-window-wrapper").removeClass("d-flex-with-animation", false);
+    jQuery(".login-window-wrapper").removeClass("d-flex-with-animation").hide();
   })
 })
 
@@ -69,9 +53,6 @@ function search() {
   })
 }
 
-function inputNotNull() {
-
-}
 //查看项目
 function redirectToProjects() {
   jQuery.ajax({
@@ -83,7 +64,7 @@ function redirectToProjects() {
         alert(json.message + '. 权限不足, 无法查看项目.');
         return false;
       } else {
-        window.open(json.url, "_blank");
+        window.open(json.url, "_self");
       }
     },
     error: function () {

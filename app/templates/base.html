@@ -15,31 +15,46 @@
 </head>
 
 <body>
+  {% block navbar %}
   <nav class="navbar noselect">
-    <a class="navbar-item navbar-brand" href="/">线路室视频站</a>
+    <div class="navbar-item navbar-brand">
+      <a href="/">
+        <img src={{ url_for("static", filename="images/navbar_brand.png") }} height=40px>
+      </a>
+      三维数字铁路网络应用系统
+    </div>
     <button type="button" class="navbar-toggle-btn">
       <i class="fa fa-bars" aria-hidden="true"></i>
     </button>
     <div class="navbar-toggle-wrapper">
       <ul class="navbar-item navbar-menu">
+        {% block navbar_menu_items %}
         <li class="navbar-menu-item">
-          <a class="nav-link" href="/">项目视频</a>
+          <a class="nav-link nav-link-abled" href="/">项目展示</a>
         </li>
         <li class="navbar-menu-item">
-          <a class="nav-link link-inactive" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a>
+          <a class="nav-link  nav-link-abled" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a>
         </li>
+        {% if session.get("user", {}).get("is_admin", False) %}
+        <li class="navbar-menu-item">
+          <a class="nav-link nav-link-abled" href="/">人员管理</a>
+        </li>
+        {% endif %}
+        {% endblock %}
       </ul>
+      {% block search_form %}
       <form id="search-form" class="navbar-item" onsubmit="search()">
         <input type="text" id="search-form-input" name="video_name" placeholder="搜索视频" required>
         <button class="submit-btn">Search</button>
       </form>
+      {% endblock %}
       {% if session.get("user", {}).login_status %}
-      <div class="navbar-item userinfo-group">
+      <div class="navbar-item userinfo-group hover-toggle-btn">
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
         <span id="navbar-username">
           {{ session.user.username }}
         </span>
-        <div class="userinfo-menu" id="userinfo-menu">
+        <div class="userinfo-menu cascade-menu" id="userinfo-menu">
           <a href={{ "/account/" + session.user.username }}>
             <i class="fa fa-user-o" aria-hidden="true"></i><span>个人信息</span>
           </a>
@@ -56,13 +71,14 @@
       {% endif %}
     </div>
   </nav>
+  {% endblock %}
 
   {% block container %}
   {% endblock %}
 
   <!-- 登录窗口 -->
   {% block login %}
-  <div class="login-window-wrapper">
+  <div class="login-window-wrapper" {% if show_login %} style="display:flex" {% endif %}>
     <div id="login-window">
       <form id="login-form">
         <i id="close-window-btn" class="fa fa-times" aria-hidden="true"></i>

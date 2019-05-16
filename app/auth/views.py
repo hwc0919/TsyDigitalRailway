@@ -4,12 +4,17 @@ import json
 from flask import redirect, render_template, request, session, url_for, flash
 
 from ..models import db, Role, User, Log
+from .. import HOST, login_required
 from . import auth
 
 
+@auth.route('/login_required/')
+def login():
+    return render_template('index.html', base_tag=HOST, show_login=True)
+
 # 响应登录ajax请求
 @auth.route('/auth/login', methods=['POST'])
-def login():
+def login_handler():
     username = request.form['username']
     password = request.form['password']
     user = User.query.filter_by(username=username, delete=False).first()
@@ -109,7 +114,7 @@ def account(username):
 def edit_profile(user_id):
     if not (user_id == session.get('user', {}).get('id') or
             session.get('user', {}).get('is_admin', False)):
-        return json.dumps({'status': False, 'message': '没有修改权限'})
+        return json.dumps({'status': False, 'message': 'Not authorized'})
     user = User.query.filter_by(id=user_id).first()
     form = request.form
     user.realname = form.get("realname")

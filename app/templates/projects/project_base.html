@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+
+{% block css %}
+{{ super() }}
+<style>
+  .navbar-submenu {
+    background: snow;
+    color: gray;
+    list-style: none;
+    position: absolute;
+    top: 60px;
+    left: -10px;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    align-items: flex-start;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-top: none;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+
+    transform: scaleY(0);
+    opacity: 0;
+    transform-origin: top;
+    transition: 0.3s;
+    transition-delay: 0.2s;
+  }
+
+  .toggle-indicator {
+    transition: 0.3s;
+    transition-delay: 0.2s;
+  }
+
+  .hover-toggle-btn:hover .toggle-indicator {
+    transform: rotateZ(-90deg);
+  }
+
+  .navbar-submenu li {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    line-height: 35px;
+    padding: 0 15px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .navbar-submenu li a {
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .navbar-submenu li a i {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .navbar-submenu li:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    text-shadow: 0 0 1px gray;
+  }
+
+  .navbar-submenu h5 {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    line-height: 35px;
+    font-size: 14px;
+    padding: 0 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2)
+  }
+</style>
+{% endblock %}
+
+{% block navbar_menu_items %}
+<li class="navbar-menu-item">
+  <a class="nav-link" href="/projects"><i class="fa fa-home" aria-hidden="true"></i>首页</a>
+</li>
+<li class="navbar-menu-item hover-toggle-btn">
+  <a class="nav-link" href="javascript:void(0)">
+    <i class="fa fa-globe" aria-hidden="true"></i>方案管理
+    <i class="fa fa-angle-left toggle-indicator"></i>
+  </a>
+  <ul class="navbar-submenu cascade-menu">
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>项目展示</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>保存项目</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>查看纵断面</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>提取横断面</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>提取地面线</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>查看工程数量</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>生成行政区划表</span>
+      </a></li>
+  </ul>
+</li>
+<li class="navbar-menu-item hover-toggle-btn">
+  <a class="nav-link" href="javascript:void(0)">
+    <i class="fa fa-database" aria-hidden="true"></i>数据源
+    <i class="fa fa-angle-left toggle-indicator"></i>
+  </a>
+  <ul class="navbar-submenu cascade-menu">
+    <h5>加载</h5>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>加载网络地图</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>加载KML/FLY文件</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>从服务器加载...</span>
+      </a></li>
+    <h5>导出</h5>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>导出KML</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>导出FLY</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>更新Logo</span>
+      </a></li>
+  </ul>
+</li>
+<li class="navbar-menu-item hover-toggle-btn">
+  <a class="nav-link" href="javascript:void(0)">
+    <i class="fa fa-plane" aria-hidden="true"></i>动态模拟
+    <i class="fa fa-angle-left toggle-indicator"></i>
+  </a>
+  <ul class="navbar-submenu cascade-menu">
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>横剖面图</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>交通模拟</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>飞行鸟瞰</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>进度模拟</span>
+      </a></li>
+  </ul>
+</li>
+<li class="navbar-menu-item">
+  <a class="nav-link" href="javascript:void(0)"><i class="fa fa-users" aria-hidden="true"></i>人员管理</a>
+</li>
+{% endblock %}
+
+{% block search_form %}
+<!-- 不提供搜索 -->
+{% endblock %}
+
+{% block login %}
+<!-- 登录后才能访问，不提供登录 -->
+{% endblock %}
+
+{% block container %}
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<script>
+  jQuery(document).ready(function () {
+    jQuery("ul.navbar-submenu li").mouseenter(function () {
+      jQuery(this).find("i.fa-bookmark-o").removeClass("fa-bookmark-o").addClass("fa-bookmark");
+    })
+    jQuery("ul.navbar-submenu li").mouseleave(function () {
+      jQuery(this).find("i.fa-bookmark").addClass("fa-bookmark-o").removeClass("fa-bookmark");
+    })
+  })
+</script>
+{% endblock %}

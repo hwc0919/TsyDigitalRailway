@@ -71,12 +71,13 @@ a {
   width: 100%;
   min-width: 700px;
   height: 60px;
-  background-color: #0984e3;
+  background-color: rgba(12, 99, 175, 1);
   position: fixed;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   text-align: center;
+  white-space: nowrap;
   z-index: 2;
 }
 
@@ -84,17 +85,27 @@ a {
   text-decoration: none;
 }
 
+.navbar i {
+  margin-right: 5px;
+}
+
 .navbar-brand {
+  display: flex;
+  align-items: center;
   color: snow;
-  font-size: 24px;
-  min-width: 160px;
-  margin-left: 50px !important;
+  font-size: 20px;
+  width: 320px;
+  min-width: 320px;
+}
+
+.navbar-brand img {
+  margin: 10px;
 }
 
 .navbar-toggle-btn {
   display: none;
   background: none;
-  margin: 50px;
+  margin: 0 50px;
   border: none;
   color: snow;
   cursor: pointer;
@@ -104,22 +115,27 @@ a {
 
 .navbar-toggle-wrapper {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   text-align: center;
-  padding: 10px 0;
 }
 
 .navbar-menu {
-  margin: 0 10px 0 50px;
+  height: 100%;
+  display: flex;
+  margin: 0 10px 0 30px;
 }
 
 .navbar-menu-item {
-  display: inline-block;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
   list-style: none;
   margin-right: 20px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .nav-link {
@@ -142,12 +158,12 @@ a {
 /* #################### 搜索组 #################### */
 
 #search-form {
-  margin-right: auto;
+  margin-right: 30px;
 }
 
 #search-form input {
   height: 32px;
-  width: 160px;
+  width: 140px;
   border-width: 1px;
   border-radius: 6px;
   padding: 10px;
@@ -193,8 +209,13 @@ a {
 /* #################### 用户组 #################### */
 
 .userinfo-group {
+  height: 100%;
+  display: flex;
+  position: relative;
+  align-items: center;
   text-align: center;
   color: #ecf0f1;
+  margin-left: auto;
   margin-right: 50px;
   cursor: pointer;
 }
@@ -202,22 +223,29 @@ a {
 .userinfo-group>i {
   font-size: 30px;
 }
+
 .userinfo-group>span{
   font-size: 16px;
-  position: relative;
-  top: -5px;
-  left: 5px;
 }
 
 .userinfo-menu {
   background: #3498db;
-  width: 120px;
   position: absolute;
+  top: 60px;
+  left: -48px;
+  display: flex;
+  flex-direction: column;
   border-radius: 6px;
   box-shadow: 0px 0px 5px #3498db;
   padding: 0;
-  transform: translate(-40px, 12px);
-  display: none;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: 0.2s;
+}
+
+.hover-toggle-btn:hover .cascade-menu {
+  transform: scaleY(1);
+  opacity: 1;
 }
 
 .userinfo-menu::before {
@@ -234,7 +262,9 @@ a {
 
 .userinfo-menu a {
   display: block;
-  margin: 1px 4px;
+  white-space: nowrap;
+  margin: 2px 4px;
+  padding: 0 10px;
   border-radius: 6px;
   color: snow;
   transition: all 0.3s;
@@ -386,15 +416,11 @@ a {
     justify-content: left;
     position: absolute;
     top: 60px;
-    background-color: #2980b9;
+    background-color: #0984e3;
   }
 
   .navbar-brand {
     margin-right: auto;
-  }
-
-  #search-form input {
-    width: 100px;
   }
   
   .navbar-toggle-btn {

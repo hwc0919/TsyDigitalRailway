@@ -19,7 +19,7 @@ def index():
     video_folders = [folder for folder in all_dirs if os.path.isdir(
         os.path.join(VIDEO_DIR, folder))]
     session['video_folders'] = video_folders
-    return render_template('index.html', base_tag=HOST)
+    return render_template('index.html', base_tag=HOST, show_login=False)
 
 
 @main.route('/overview/')
@@ -81,12 +81,3 @@ def search_result():
     if not result:
         return '<h1 class="placeholder">没有找到相关视频...</h1>'
     return render_template('video.html', video_list=result)
-
-
-@main.route('/projects')
-def projects():
-    role_name = session.get('user', {}).get('role_name', 'Guest')
-    if not Role.query.filter_by(name=role_name).first().is_admin():
-        return '<h1>权限不足!</h1>'
-    else:
-        return redirect("http://192.10.15.156:8080/webrim/#/home")
