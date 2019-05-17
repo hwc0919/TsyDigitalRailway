@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}404 Not Found{% endblock %}
+{% block title %}
+{% if title %}
+{{ title }}
+{% else %}
+404 Not Found
+{% endif %}
+{% endblock %}
 
 {% block css %}
 {{ super() }}
@@ -26,7 +32,13 @@
     <div class="panel-group">
       <div class="content-panel d-block" data-panel-name="404-panel">
         <section class="no-content">
-          <h1 class="placeholder">资源不存在...</h1>
+          <h1 class="placeholder">
+            {% if error_message %}
+            {{ error_message }}
+            {% else %}
+            资源不存在...
+            {% endif %}
+          </h1>
           <p class="placeholder">
             <span class="count-down">3</span>s后自动跳转到首页(<a style="display:inline" href="/">立即跳转</a>)
           </p>

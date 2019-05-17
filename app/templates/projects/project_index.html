@@ -29,9 +29,31 @@
     min-width: 300px;
     height: 300px;
     margin: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    position: relative;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+  }
+
+  .project-plate::after {
+    content: "打开项目";
+    position: absolute;
+    top: 65px;
+    left: 15px;
+    background-color: snow;
+    padding: 3px;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .project-plate:hover {
+    box-shadow: 0 0 3px 1px black;
+  }
+
+  .project-plate:hover::after {
+    opacity: 1;
   }
 
   .empty-plate {
@@ -85,7 +107,7 @@
 {% block container %}
 <div class="container">
   <div class="project-list">
-    <div class="project-plate">
+    <div class="project-plate" data-target-url="/projects/explore/project1">
       <div class="project-plate-header">
         <i class="fa fa-file-text-o" aria-hidden="true"></i>
         <h4>项目1标题项目1标题项目1标题项目1标题项目1标题项目1标题项目1标题</h4>
@@ -98,7 +120,7 @@
     <div class="project-plate">
       <div class="project-plate-header">
         <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        <h4>项目2标题</h4>
+        <h4>项目22标题</h4>
       </div>
       <div class="project-plate-body">
         <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
@@ -147,4 +169,13 @@
 
 {% block js %}
 {{ super() }}
+<script>
+  jQuery(document).ready(function () {
+    jQuery(".project-plate").click(function () {
+      url = jQuery(this).attr("data-target-url");
+      window.open(url, "_blank");
+    })
+  })
+
+</script>
 {% endblock %}

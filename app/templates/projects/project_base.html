@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 
+{% block title %}三维数字铁路网络应用系统-浏览项目{% endblock %}
+
+
 {% block css %}
 {{ super() }}
 <style>
@@ -44,6 +47,7 @@
     padding: 0 15px;
     border-radius: 3px;
     cursor: pointer;
+    transition: 0.3s;
   }
 
   .navbar-submenu li a {
@@ -51,7 +55,7 @@
   }
 
   .navbar-submenu li a i {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.2);
   }
 
   .navbar-submenu li:hover {
@@ -82,25 +86,25 @@
   </a>
   <ul class="navbar-submenu cascade-menu">
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>项目展示</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>项目展示</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>保存项目</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>保存项目</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>查看纵断面</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>查看纵断面</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>提取横断面</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>提取横断面</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>提取地面线</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>提取地面线</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>查看工程数量</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>查看工程数量</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>生成行政区划表</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>生成行政区划表</span>
       </a></li>
   </ul>
 </li>
@@ -112,23 +116,23 @@
   <ul class="navbar-submenu cascade-menu">
     <h5>加载</h5>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>加载网络地图</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>加载网络地图</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>加载KML/FLY文件</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>加载KML/FLY文件</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>从服务器加载...</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>从服务器加载...</span>
       </a></li>
     <h5>导出</h5>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>导出KML</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>导出KML</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>导出FLY</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>导出FLY</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>更新Logo</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>更新Logo</span>
       </a></li>
   </ul>
 </li>
@@ -139,16 +143,16 @@
   </a>
   <ul class="navbar-submenu cascade-menu">
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>横剖面图</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>横剖面图</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>交通模拟</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>交通模拟</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>飞行鸟瞰</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>飞行鸟瞰</span>
       </a></li>
     <li><a href="#">
-        <i class="fa fa-bookmark-o" aria-hidden="true"></i><span>进度模拟</span>
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>进度模拟</span>
       </a></li>
   </ul>
 </li>
@@ -157,27 +161,21 @@
 </li>
 {% endblock %}
 
+
 {% block search_form %}
 <!-- 不提供搜索 -->
 {% endblock %}
+
 
 {% block login %}
 <!-- 登录后才能访问，不提供登录 -->
 {% endblock %}
 
+
 {% block container %}
 {% endblock %}
 
+
 {% block js %}
 {{ super() }}
-<script>
-  jQuery(document).ready(function () {
-    jQuery("ul.navbar-submenu li").mouseenter(function () {
-      jQuery(this).find("i.fa-bookmark-o").removeClass("fa-bookmark-o").addClass("fa-bookmark");
-    })
-    jQuery("ul.navbar-submenu li").mouseleave(function () {
-      jQuery(this).find("i.fa-bookmark").addClass("fa-bookmark-o").removeClass("fa-bookmark");
-    })
-  })
-</script>
 {% endblock %}

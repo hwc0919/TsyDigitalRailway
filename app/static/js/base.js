@@ -20,7 +20,7 @@ jQuery(document).ready(function () {
     jQuery(".login-window-wrapper").addClass("d-flex-with-animation");
   })
   // 关闭登录窗口
-  jQuery("#close-window-btn").click(function () {
+  jQuery("#close-login-window-btn").click(function () {
     jQuery("#login-feedback").text("").removeClass("d-flex");
     jQuery("#input-username").val("");
     jQuery("#input-password").val("");

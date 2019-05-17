@@ -302,7 +302,7 @@ a {
   border-radius: 5px;
 }
 
-#close-window-btn {
+.close-window-btn {
   position: absolute;
   right: 34px;
   top: 20px;
@@ -313,7 +313,7 @@ a {
   transition: all 0.3s;
 }
 
-#close-window-btn:hover {
+.close-window-btn:hover {
   color: black;
 }
 
