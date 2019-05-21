@@ -49,11 +49,15 @@
   }
 
   .project-plate:hover {
-    box-shadow: 0 0 3px 1px black;
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   .project-plate:hover::after {
     opacity: 1;
+  }
+
+  .project-plate:active {
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2)
   }
 
   .empty-plate {
@@ -101,6 +105,21 @@
     word-break: break-all;
   }
 </style>
+{% endblock %}
+
+
+{% block navbar_menu_items %}
+<li class="navbar-menu-item">
+  <a class="nav-link link-inactive" href="/" target="_self">项目展示</a>
+</li>
+<li class="navbar-menu-item">
+  <a class="nav-link" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a>
+</li>
+{% if session.get("user", {}).get("is_admin", False) %}
+<li class="navbar-menu-item">
+  <a class="nav-link link-inactive" href="/admin" target="_blank">人员管理</a>
+</li>
+{% endif %}
 {% endblock %}
 
 
@@ -176,6 +195,5 @@
       window.open(url, "_blank");
     })
   })
-
 </script>
 {% endblock %}

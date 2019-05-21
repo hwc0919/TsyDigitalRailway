@@ -22,21 +22,24 @@
     border-top: none;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-
     transform: scaleY(0);
     opacity: 0;
     transform-origin: top;
     transition: 0.3s;
-    transition-delay: 0.2s;
+    /* transition-delay: 0.2s; */
   }
 
   .toggle-indicator {
     transition: 0.3s;
-    transition-delay: 0.2s;
+    /* transition-delay: 0.2s; */
   }
 
   .hover-toggle-btn:hover .toggle-indicator {
     transform: rotateZ(-90deg);
+  }
+
+  .hover-toggle-btn:hover .cascade-menu .iframe-placeholder {
+    display: block;
   }
 
   .navbar-submenu li {
@@ -72,12 +75,32 @@
     padding: 0 15px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2)
   }
+
+  .iframe-placeholder {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border: none;
+    display: none;
+  }
 </style>
 {% endblock %}
 
+
+{% block iframe_placeholder %}
+<iframe class="iframe-placeholder" style="display: block;"></iframe>
+{% endblock %}
+
+
 {% block navbar_menu_items %}
 <li class="navbar-menu-item">
-  <a class="nav-link" href="/projects"><i class="fa fa-home" aria-hidden="true"></i>首页</a>
+  <a class="nav-link" href="/projects" target="_self">
+    <i class="fa fa-home" aria-hidden="true"></i>首页
+  </a>
 </li>
 <li class="navbar-menu-item hover-toggle-btn">
   <a class="nav-link" href="javascript:void(0)">
@@ -85,6 +108,7 @@
     <i class="fa fa-angle-left toggle-indicator"></i>
   </a>
   <ul class="navbar-submenu cascade-menu">
+    <iframe class="iframe-placeholder"></iframe>
     <li><a href="#">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>项目展示</span>
       </a></li>
@@ -114,6 +138,7 @@
     <i class="fa fa-angle-left toggle-indicator"></i>
   </a>
   <ul class="navbar-submenu cascade-menu">
+    <iframe class="iframe-placeholder"></iframe>
     <h5>加载</h5>
     <li><a href="#">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>加载网络地图</span>
@@ -142,6 +167,7 @@
     <i class="fa fa-angle-left toggle-indicator"></i>
   </a>
   <ul class="navbar-submenu cascade-menu">
+    <iframe class="iframe-placeholder"></iframe>
     <li><a href="#">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>横剖面图</span>
       </a></li>

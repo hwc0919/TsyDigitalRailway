@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 
 <head>
   <meta charset="utf-8">
@@ -17,6 +17,7 @@
 <body>
   {% block navbar %}
   <nav class="navbar noselect">
+    {% block iframe_placeholder %}{% endblock %}
     <div class="navbar-item navbar-brand">
       <a href="/">
         <img src={{ url_for("static", filename="images/navbar_brand.png") }} height=40px>
@@ -30,14 +31,14 @@
       <ul class="navbar-item navbar-menu">
         {% block navbar_menu_items %}
         <li class="navbar-menu-item">
-          <a class="nav-link nav-link-abled" href="/" target="_self">项目展示</a>
+          <a class="nav-link" href="/" target="_self">项目展示</a>
         </li>
         <li class="navbar-menu-item">
-          <a class="nav-link  nav-link-abled" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a>
+          <a class="nav-link link-inactive" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a>
         </li>
         {% if session.get("user", {}).get("is_admin", False) %}
         <li class="navbar-menu-item">
-          <a class="nav-link nav-link-abled" href="/admin" target="_blank">人员管理</a>
+          <a class="nav-link link-inactive" href="/admin" target="_blank">人员管理</a>
         </li>
         {% endif %}
         {% endblock %}

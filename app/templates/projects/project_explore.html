@@ -10,6 +10,7 @@
     padding-top: 60px;
     display: flex;
     justify-content: stretch;
+    flex-wrap: nowrap;
   }
 
   a {
@@ -22,8 +23,24 @@
   }
 
   .ITEinfowindow-wrapper {
-    flex: 20%;
+    flex: 19%;
     min-width: 200px;
+    height: 100%;
+  }
+
+  .sidebar-placeholder {
+    display: block;
+    flex: 1%;
+    min-width: 5px;
+    max-width: 5px;
+    visibility: hidden;
+  }
+
+  .ITEwindow,
+  .ITEinfowindow {
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
 
   .sidebar-indicator {
@@ -122,11 +139,6 @@
     transition: all 0.3s;
   }
 
-  .submenu-visible {
-    transform: scaleY(1) !important;
-    height: auto !important;
-  }
-
   .sidebar-row ul li {
     display: block;
     width: 68px;
@@ -152,10 +164,18 @@
 
 {% block container %}
 <div class="container">
-  <div class="ITEwindow-wrapper"></div>
-  <div class="ITEinfowindow-wrapper"></div>
+  <div class="ITEwindow-wrapper">
+    <object class="ITEwindow" id="TerraExplorer3DWindowEx"
+      classid="clsid:3a4f9196-65a8-11d5-85c1-0001023952c1"></object>
+  </div>
+  <div class="ITEinfowindow-wrapper">
+    <object class="ITEinfowindow" id="TerraExplorerInformationWindowEx"
+      classid="clsid:3a4f919b-65a8-11d5-85c1-0001023952c1"></object>
+  </div>
+  <div class="sidebar-placeholder"></div>
   <div class="sidebar-indicator"></div>
   <div class="sidebar noselect">
+    <iframe class="iframe-placeholder"></iframe>
     <div class="sidebar-header">
       <i class="fa fa-wrench" aria-hidden="true"></i>
       <h4>控制面板</h4>
@@ -188,28 +208,34 @@
 <script>
   jQuery(document).ready(function () {
     jQuery(".sidebar-indicator").mouseenter(function () {
-      jQuery(".sidebar").css("transform", "scaleX(1)");
+      jQuery(".sidebar").css("transform", "scaleX(1)")
+        .children(".iframe-placeholder").css("display", "block");
     })
-    // jQuery(".sidebar-submenu-btn").click(function () {
-    //   jQuery(this).next().fadeToggle();
-    // })
 
     jQuery("#close-sidebar-btn").click(function () {
-      jQuery(".sidebar").css("transform", "scaleX(0)");
+      jQuery(".sidebar").css("transform", "scaleX(0)")
+        .children(".iframe-placeholder").css("display", "none");
     })
 
     jQuery(".sidebar-submenu-btn").click(function () {
       var cur = jQuery(this);
       if (cur.next("ul").hasClass("submenu-visible")) {
-        cur.next("ul").removeClass("submenu-visible");
+        cur.next("ul").removeClass("submenu-visible")
+          .css({ "transform": "scaleY(0)", "height": "0" });
         cur.children("i.fa-angle-right").css("transform", "rotate(0)");
       } else {
         jQuery("ul.submenu-visible").removeClass("submenu-visible")
+          .css({ "transform": "scaleY(0)", "height": "0" })
           .prev().children("i.fa-angle-right").css("transform", "rotate(0)");
         cur.children("i.fa-angle-right").css("transform", "rotate(90deg)");
-        cur.next("ul").addClass("submenu-visible");
+        cur.next("ul").addClass("submenu-visible")
+          .css({ "transform": "scaleY(1)", "height": "auto" });
+        jQuery("ul.submenu-visible").css("height", jQuery("ul.submenu-visible").height())
       }
     })
+    TerraExplorerInformationWindowEx.AttachTo3dWindow(TerraExplorer3DWindowEx);
+    SGWorld = TerraExplorer3DWindowEx.CreateInstance("TerraExplorerX.SGWorld701");
+    SGWorld.Project.open("\\\\192.10.15.200\\FLYProject\\太仓港支线铁路\\main.FLY");
   })
 </script>
 
