@@ -8,10 +8,6 @@ from flask_sqlalchemy import SQLAlchemy
 from config import config
 
 
-IP = socket.gethostbyname(socket.gethostname())
-PORT = os.environ.get('FLASK_PORT') or 80
-HOST = 'http://' + IP + ':' + str(PORT)
-
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 VIDEO_DIR = os.path.join(BASE_DIR, 'static/video')
 OVERVIEW_DIR = os.path.join(BASE_DIR, 'static/images/风采展示')

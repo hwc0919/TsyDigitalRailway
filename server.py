@@ -1,6 +1,5 @@
 import os
-
-from app import create_app, db, IP, PORT
+from app import create_app, db
 from app.models import User, Role, Log
 
 
@@ -13,4 +12,4 @@ def make_shell_context():
 
 
 if __name__ == '__main__':
-    app.run(host=IP, port=PORT, debug=1)
+    app.run(host='0.0.0.0', port=5000, debug=1, threaded=False)

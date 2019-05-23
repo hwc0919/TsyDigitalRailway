@@ -4,13 +4,13 @@ import json
 from flask import redirect, render_template, request, session, url_for, flash
 
 from ..models import db, Role, User, Log
-from .. import HOST, login_required
+from .. import login_required
 from . import auth
 
 
 @auth.route('/login_required/')
 def login():
-    return render_template('index.html', base_tag=HOST, show_login=True)
+    return render_template('index.html', show_login=True)
 
 # 响应登录ajax请求
 @auth.route('/auth/login', methods=['POST'])

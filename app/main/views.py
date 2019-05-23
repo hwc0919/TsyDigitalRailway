@@ -1,10 +1,11 @@
 import os
 import re
 import json
-from flask import render_template, redirect, url_for, session, request
+import time
+from flask import render_template, redirect, url_for, session, request, abort
 
 from . import main
-from .. import db, HOST, BASE_DIR, VIDEO_DIR, OVERVIEW_DIR
+from .. import db, BASE_DIR, VIDEO_DIR, OVERVIEW_DIR
 from ..models import User, Role
 
 
@@ -15,11 +16,14 @@ def _index():
 
 @main.route('/video/')
 def index():
+    for i in range(5):
+        print(i)
+        time.sleep(1)
     all_dirs = os.listdir(VIDEO_DIR)
     video_folders = [folder for folder in all_dirs if os.path.isdir(
         os.path.join(VIDEO_DIR, folder))]
     session['video_folders'] = video_folders
-    return render_template('index.html', base_tag=HOST, show_login=False)
+    return render_template('index.html', show_login=False)
 
 
 @main.route('/overview/')
@@ -32,6 +36,9 @@ def overview():
 
 @main.route('/video/<folder>/')
 def explore_folder(folder):
+    folder_dir = os.path.join(VIDEO_DIR, folder)
+    if not os.path.isdir(folder_dir):
+        return abort(404)
     files = os.listdir(os.path.join(VIDEO_DIR, folder))
     if not files:
         return '<h1 class="placeholder">该文件夹没有视频...</h1>'
