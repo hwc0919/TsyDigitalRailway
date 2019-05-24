@@ -2,7 +2,7 @@
 
 {% block css %}
 {{ super() }}
-<link rel="stylesheet" href={{url_for("static", filename="css/overview.css")}} type="text/css">
+<link rel="stylesheet" href={{ url_for("static", filename="css/overview.css") }} type="text/css">
 {% endblock %}
 
 {% block content_mid_col_wrapper %}

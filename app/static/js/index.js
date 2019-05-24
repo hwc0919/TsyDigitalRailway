@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
   // 加载首页
-  jQuery(".content-panel[data-panel-name='overview-panel']").load('/overview', function (response, status, xhr) {
+  jQuery(".content-panel[data-panel-name='overview-panel']").load('/ajax_load/overview', function (response, status, xhr) {
     if (status == "error") {
       jQuery(this).html('<h1 class="placeholder">内容加载失败</h1>');
     }
@@ -12,7 +12,7 @@ jQuery(document).ready(function () {
     var targetPanel = jQuery(this).attr("data-target-panel");
     if (targetPanel == "video-panel") {
       folderName = jQuery(this).attr("data-folder-name");
-      var url = '/video/' + folderName;
+      var url = '/ajax_load/video/' + folderName;
       jQuery(".content-panel[data-panel-name='video-panel']").load(url, function (response, status, xhr) {
         if (status == "error") {
           jQuery(this).html('<h1 class="placeholder">内容加载失败</h1>');
@@ -20,6 +20,6 @@ jQuery(document).ready(function () {
       });
     }
     jQuery(".content-panel").removeClass("d-block");
-    jQuery(".content-panel[data-panel-name=" + targetPanel + "]").addClass("d-block");
+    setTimeout(function () { jQuery(".content-panel[data-panel-name=" + targetPanel + "]").addClass("d-block"); }, 100);
   });
 })

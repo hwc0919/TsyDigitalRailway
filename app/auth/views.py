@@ -10,7 +10,7 @@ from . import auth
 
 @auth.route('/login_required/')
 def login():
-    return render_template('index.html', show_login=True)
+    return redirect(url_for('main.index', show_login=True))
 
 # 响应登录ajax请求
 @auth.route('/auth/login', methods=['POST'])
@@ -33,7 +33,7 @@ def login_handler():
                            'username': username,
                            'role_name': user.role.name,
                            'is_admin': user.is_admin()}
-        return json.dumps({'status': True, 'message': '登陆成功, 即将自动跳转', 'url': '/video'})
+        return json.dumps({'status': True, 'message': '登陆成功, 即将自动跳转', 'url': '/'})
 
 
 # 响应注销ajax请求
@@ -43,7 +43,7 @@ def logout():
     session['user'] = {}
     if not login_status:
         return json.dumps({'status': False, 'message': '尚未登录!', 'url': None})
-    return json.dumps({'status': True, 'message': '退出成功', 'url': '/video'})
+    return json.dumps({'status': True, 'message': '退出成功', 'url': '/'})
 
 
 # 响应权限检查ajax请求

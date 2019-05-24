@@ -113,19 +113,27 @@
   <a class="nav-link link-inactive" href="/" target="_self">项目展示</a>
 </li>
 <li class="navbar-menu-item">
-  <a class="nav-link" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a>
+  <a class="nav-link" href="javascript:void(0);">数字铁路</a>
 </li>
-{% if session.get("user", {}).get("is_admin", False) %}
-<li class="navbar-menu-item">
-  <a class="nav-link link-inactive" href="/admin" target="_blank">人员管理</a>
-</li>
-{% endif %}
 {% endblock %}
 
 
 {% block container %}
 <div class="container">
   <div class="project-list">
+    {% for name, url in fly_list %}
+    <div class="project-plate" data-target-url={{ url }}>
+      <div class="project-plate-header">
+        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+        <h4>{{ name }}</h4>
+      </div>
+      <div class="project-plate-body">
+        <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
+      </div>
+      <p class="project-plate-footer">项目的描述</p>
+    </div>
+    {% endfor %}
+
     <div class="project-plate" data-target-url="/projects/explore/project1">
       <div class="project-plate-header">
         <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -136,47 +144,6 @@
       </div>
       <p class="project-plate-footer">项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述</p>
     </div>
-    <div class="project-plate">
-      <div class="project-plate-header">
-        <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        <h4>项目22标题</h4>
-      </div>
-      <div class="project-plate-body">
-        <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
-      </div>
-      <p class="project-plate-footer">项目2的描述</p>
-    </div>
-    <div class="project-plate">
-      <div class="project-plate-header">
-        <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        <h4>项目3标题</h4>
-      </div>
-      <div class="project-plate-body">
-        <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
-      </div>
-      <p class="project-plate-footer">项目3的描述</p>
-    </div>
-    <div class="project-plate">
-      <div class="project-plate-header">
-        <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        <h4>项目4标题</h4>
-      </div>
-      <div class="project-plate-body">
-        <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
-      </div>
-      <p class="project-plate-footer">项目4的描述</p>
-    </div>
-    <div class="project-plate">
-      <div class="project-plate-header">
-        <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        <h4>项目5标题</h4>
-      </div>
-      <div class="project-plate-body">
-        <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
-      </div>
-      <p class="project-plate-footer">项目5的描述</p>
-    </div>
-
 
     <div class="project-plate empty-plate"></div>
     <div class="project-plate empty-plate"></div>
@@ -191,7 +158,7 @@
 <script>
   jQuery(document).ready(function () {
     jQuery(".project-plate").click(function () {
-      url = jQuery(this).attr("data-target-url");
+      url = "/projects/explore/" + jQuery(this).attr("data-target-url");
       window.open(url, "_blank");
     })
   })

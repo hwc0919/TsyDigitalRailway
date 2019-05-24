@@ -165,7 +165,7 @@
 {% block container %}
 <div class="container">
   <div class="ITEwindow-wrapper">
-    <object class="ITEwindow" id="TerraExplorer3DWindowEx"
+    <object class="ITEwindow" id="TerraExplorer3DWindowEx" data-project-url={{ project_url }}
       classid="clsid:3a4f9196-65a8-11d5-85c1-0001023952c1"></object>
   </div>
   <div class="ITEinfowindow-wrapper">
@@ -235,8 +235,12 @@
     })
     TerraExplorerInformationWindowEx.AttachTo3dWindow(TerraExplorer3DWindowEx);
     SGWorld = TerraExplorer3DWindowEx.CreateInstance("TerraExplorerX.SGWorld701");
-    SGWorld.Project.open("\\\\192.10.15.200\\FLYProject\\太仓港支线铁路\\main.FLY");
+    var project_url = jQuery("#TerraExplorer3DWindowEx").attr("data-project-url");
+    project_url = "\\\\192.10.15.200\\FLYProject\\太仓港支线铁路\\main.fly";
+    // project_url = "http://192.10.15.156/static/fly_projects/太仓港支线铁路/main.fly";
+    SGWorld.Project.open(project_url);
   })
 </script>
+<script src="/static/js/run_command.js"></script>
 
 {% endblock %}

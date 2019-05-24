@@ -8,13 +8,20 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    permission = db.Column(db.BigInteger, default=0)
+    permission = db.Column(db.Text, default='0')
     description = db.Column(db.String(128))
     users = db.relationship('User', backref='role', lazy='dynamic')
     default = db.Column(db.Boolean, default=False)
 
     def is_admin(self):
-        return self.name == 'Admin'
+        return self.permission == '-1'
+
+    def set_permission(self, *pjid):
+        permission = sum((2**i for i in pjid))
+        self.permission = str(permission)
+
+    def check_permission(self, pjid):
+        return int(self.permission) & pjid != 0
 
     def __repr__(self):
         return '<Role, name: {}, id: {}>'.format(self.name, self.id)
@@ -22,20 +29,16 @@ class Role(db.Model):
     @staticmethod
     def add_test_data():
         admin_role = Role(
-            name='Admin', description='Administration authority, have access to all.')
-        mod_role = Role(
-            name='Moderator', description='Moderate authority, have rights to alter data.')
+            name='Admin', description='Administration authority, have access to all.', permission='-1')
         user_role = Role(
-            name='User', description='User authority, have read-only access to data.')
-        guest_role = Role(name='Guest', default=True,
-                          description='Guest authority, only have access to videos.')
+            name='User', description='User authority, have read-only access to data.', default=True)
         system_user = User(username='system',
-                           password='system', role=admin_role)
+                           password='tsy1418system', role=admin_role)
         server_user = User(username='server',
-                           password='server', role=admin_role)
-        guest_user = User(username='guest', password='guest', role=guest_role)
+                           password='tsy1418server', role=admin_role)
+        guest_user = User(username='guest', password='guest', role=user_role)
         db.session.add_all(
-            [admin_role, mod_role, user_role, guest_role, system_user, server_user, guest_user])
+            [admin_role, user_role, system_user, server_user, guest_user])
         db.session.commit()
 
 
@@ -58,6 +61,7 @@ class User(db.Model):
     register_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     active = db.Column(db.Boolean, default=False)
     delete = db.Column(db.Boolean, default=False)
+    permission = db.Column(db.Text, default='1')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -78,20 +82,26 @@ class User(db.Model):
     def is_admin(self):
         return self.role.is_admin()
 
+    def set_permission(self, *pjid):
+        permission = sum((2**i for i in pjid))
+        self.permission = str(permission)
+
+    def check_permission(self, pjid):
+        return int(self.permission) & (2 ** pjid) != 0 or\
+            self.role.check_permission(pjid)
+
     def __repr__(self):
         return '<User, username: {}, role_id: {}>'.format(self.username, self.role_id)
 
     @staticmethod
     def add_test_data():
         admin_role = Role.query.filter_by(name='Admin').first()
-        mod_role = Role.query.filter_by(name='Moderator').first()
         user_role = Role.query.filter_by(name='User').first()
         admin = User(username='admin', password='admin', role=admin_role)
-        mod = User(username='mod', password='mod', role=mod_role)
         user = User(username='user', password='user', role=user_role)
         hwc = User(username='hwc0919', password='123456', realname='何莞晨',
                    email='hwc14@qq.com', phone='17888830919', role=admin_role)
-        db.session.add_all([admin, mod, user, hwc])
+        db.session.add_all([admin, user, hwc])
         db.session.commit()
 
 
@@ -105,3 +115,13 @@ class Log(db.Model):
 
     def __repr__(self):
         return '<Log, time: {}, username: {}, log_type: {}, content: {}...>'.format(self.time, self.username, self.log_type, self.content[:10])
+
+
+class Project(db.Model):
+    __tablename__ = 'projects'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), nullable=False)
+    description = db.Column(db.Text)
+
+    def __repr__(self):
+        return '<Project, id: {}, name: {}>'.format(self.id, self.name)

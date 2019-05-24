@@ -33,7 +33,8 @@
           <a class="nav-link" href="/" target="_self">项目展示</a>
         </li>
         <li class="navbar-menu-item">
-          <a class="nav-link link-inactive" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a>
+          <!-- <a class="nav-link link-inactive" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a> -->
+          <a class="nav-link link-inactive" href="/projects">数字铁路</a>
         </li>
         {% if session.get("user", {}).get("is_admin", False) %}
         <li class="navbar-menu-item">
@@ -43,9 +44,9 @@
         {% endblock %}
       </ul>
       {% block search_form %}
-      <form id="search-form" class="navbar-item" onsubmit="search()">
-        <input type="text" id="search-form-input" name="video_name" placeholder="搜索视频" required>
-        <button class="submit-btn">Search</button>
+      <form id="search-form" class="navbar-item" action="/search" method="POST">
+        <input type="text" id="search-form-input" name="keywords" placeholder="搜索视频" required>
+        <button type="submit" class="submit-btn">Search</button>
       </form>
       {% endblock %}
       {% if session.get("user", {}).login_status %}
@@ -58,6 +59,11 @@
           <a href={{ "/account/" + session.user.username }}>
             <i class="fa fa-user-o" aria-hidden="true"></i><span>个人信息</span>
           </a>
+          {% if session.get("user", {}).get("is_admin", False) %}
+          <a href="javascript:void(0)">
+            <i class="fa fa-cog" aria-hidden="true"></i><span>后台管理</span>
+          </a>
+          {% endif %}
           <a href="javascript:void(0)" onclick="logout()">
             <i class="fa fa-power-off" aria-hidden="true"></i><span>退出登录</span>
           </a>

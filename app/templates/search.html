@@ -3,7 +3,7 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
-<link rel="stylesheet" href={{url_for("static", filename="css/content_base.css")}}>
+<link rel="stylesheet" href={{ url_for("static", filename="css/content_base.css") }}>
 <style>
   .left-menu-list a {
     text-decoration: none;
@@ -40,7 +40,7 @@
 {{ super() }}
 <script>
   jQuery(document).ready(function () {
-    jQuery(".content-panel").load("/search/result");
+    jQuery(".content-panel").load("/ajax_load/search_result");
   })
 </script>
 {% endblock %}

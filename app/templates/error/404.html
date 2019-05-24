@@ -56,7 +56,7 @@
   var count = jQuery(".count-down").text();
   function countDown() {
     if (count == 0) {
-      window.location.href = '/video';
+      window.location.href = "/";
     }
     jQuery(".count-down").text(count--);
     setTimeout("countDown()", 1000);

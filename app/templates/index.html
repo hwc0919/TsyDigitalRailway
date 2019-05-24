@@ -20,7 +20,7 @@
       <h1 class="left-menu-head">目录</h1>
       <ul class="left-menu-list">
         <li class="left-menu-item menu-active" data-target-panel="overview-panel">风采展示</li>
-        {% for folder in session.video_folders %}
+        {% for folder in video_folders %}
         <li class="left-menu-item" data-target-panel="video-panel" data-folder-name={{ folder.replace(" ", "%20") }}>
           {{ folder }}
         </li>
