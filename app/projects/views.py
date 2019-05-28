@@ -1,11 +1,11 @@
-import os
 import datetime
 import json
+import os
 
 from flask import redirect, render_template, request, session, url_for
 
-from .. import login_required, FLY_DIR
-from ..models import db, Role, User, Project
+from .. import FLY_DIR, login_required
+from ..models import Project, Role, User, db
 from . import projects
 from .sidebar_menu import ITEMS
 
@@ -30,7 +30,7 @@ def project_index():
     for folder in all_folders:
         project_url = os.path.join('static/fly_projects', folder, 'main.fly')
         project_list.append((folder, project_url))
-    return render_template("projects/projects.html", fly_list=project_list)
+    return render_template("projects/project_index.html", fly_list=project_list)
 
 
 @projects.route('/explore/<path:project_url>/')

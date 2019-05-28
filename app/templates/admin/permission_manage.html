@@ -1,0 +1,61 @@
+<table class="manage-table" id="permission-manage-table">
+  <thead>
+    <tr>
+      <th class="th-id">uid</th>
+      <th class="th-realname">姓名</th>
+      <th class="th-username">用户名</th>
+      <th class="th-company">单位</th>
+      <th class="th-department">部门</th>
+      <th class="th-role">用户组</th>
+      <th class="th-role-editor">
+        <button type="button" class="btn btn-default editor-btn" data-target-editor="user-role">修改</button>
+        <div class="hidden-btn">
+          <button type="button" class="btn btn-primary confirm-btn">确认</button>
+          <button type="button" class="btn btn-default cancel-btn">取消</button>
+        </div>
+      </th>
+      <th class="th-role-permission">用户组权限</th>
+      <th class="th-user-permission">用户权限</th>
+      <th class="th-permission-editor">
+        <button type="button" class="btn btn-default editor-btn" data-target-editor="user-permission">修改</button>
+        <div class="hidden-btn">
+          <button type="button" class="btn btn-primary confirm-btn">确认</button>
+          <button type="button" class="btn btn-default cancel-btn">取消</button>
+        </div>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for user in user_list %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.realname | default("", True) }}</td>
+      <td>{{ user.username | default("", True) }}</td>
+      <td>{{ user.company | default("", True) }}</td>
+      <td>{{ user.department | default("", True) }}</td>
+      <td>{{ user.role.name }}</td>
+      <td>
+        <select class="editor-input" name={{ user.id }} data-editor-name="user-role">
+          {% for role in role_list %}
+          <option {% if user.role.name == role.name %}{{"selected"}}{% endif %}>{{ role.name }}</option>
+          {% endfor %}
+        </select>
+      </td>
+      <td>{{ user.role.permission }}</td>
+      <td>{{ user.permission }}</td>
+      <td>
+        <input class="editor-input" type="text" name={{ user.id }} data-editor-name="user-permission"
+          value={{ user.permission }}>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<button class="primary-btn update-btn">更新</button>
+
+<script>
+  jQuery(document).ready(function () {
+
+  })
+</script>

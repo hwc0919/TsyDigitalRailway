@@ -55,7 +55,7 @@ class User(db.Model):
     company = db.Column(db.String(64))
     department = db.Column(db.String(64))
     gender = db.Column(db.SmallInteger, default=0)    # 0: 保密 1: 男 2: 女
-    birthday = db.Column(db.Date)
+    age = db.Column(db.SmallInteger)
     position = db.Column(db.String(64))
     description = db.Column(db.Text)
     register_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)

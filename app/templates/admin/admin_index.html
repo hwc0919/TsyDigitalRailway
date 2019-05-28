@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+
+{% block title %}后台管理-三维数字铁路应用系统{% endblock title %}
+
+
+{% block css %}
+{{ super() }}
+<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
+<link rel="stylesheet" href={{ url_for("static", filename="css/admin.css") }}>
+{% endblock %}
+
+
+{% block navbar_brand %}数字铁路后台管理系统{% endblock navbar_brand %}
+
+
+{% block navbar_menu_items %}
+<li class="navbar-menu-item">
+  <a class="nav-link" href="/" target="_self">回到主页</a>
+</li>
+{% endblock navbar_menu_items %}
+
+
+{% block search_form %}
+{% endblock search_form %}
+
+
+{% block container %}
+<div class="container">
+  <div class="left-menu-col noselect">
+    <button type="button" class="left-menu-toggle-btn">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+    <div class="left-menu-toggle-wrapper">
+      <h1 class="left-menu-head">目录</h1>
+      <ul class="left-menu-list">
+        <li class="left-menu-item" data-target-panel="user-manage-panel">用户管理</li>
+        <li class="left-menu-item" data-target-panel="role-manage-panel">组别管理</li>
+        <li class="left-menu-item" data-target-panel="permission-manage-panel">权限管理</li>
+        <li class="left-menu-item" data-target-panel="project-manage-panel">项目管理</li>
+        <li class="left-menu-item" data-target-panel="video-manage-panel">视频管理</li>
+      </ul>
+    </div>
+  </div>
+  <div class="right-content-col">
+    <div class="panel-group">
+      <div class="content-panel manage-panel" data-panel-name="user-manage-panel"
+        data-target-url="/admin/ajax_load/user_manage">
+        <!-- ajax load data-target-url -->
+      </div>
+      <div class="content-panel manage-panel" data-panel-name="role-manage-panel"
+        data-target-url="/admin/ajax_load/role_manage">
+        <!-- ajax load data-target-url -->
+      </div>
+      <div class="content-panel manage-panel" data-panel-name="permission-manage-panel"
+        data-target-url="/admin/ajax_load/permission_manage">
+        <!-- ajax load data-target-url -->
+      </div>
+      <div class="content-panel manage-panel" data-panel-name="project-manage-panel"
+        data-target-url="/admin/ajax_load/project_manage">
+        <!-- ajax load data-target-url -->
+      </div>
+      <div class="content-panel manage-panel" data-panel-name="video-manage-panel"
+        data-target-url="/admin/ajax_load/video_manage">
+        <!-- ajax load data-target-url -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock container %}
+
+
+
+
+{% block js %}
+{{ super() }}
+<script src={{ url_for("static", filename="js/index.js") }}></script>
+<script src={{ url_for("static", filename="js/admin.js") }}></script>
+{% endblock js %}

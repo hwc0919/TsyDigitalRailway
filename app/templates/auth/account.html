@@ -145,8 +145,8 @@
               <td class="userinfo-info">{{ ['', '男', '女'][user.gender] }}</td>
             </tr>
             <tr>
-              <td class="userinfo-title">生日</td>
-              <td class="userinfo-info">{{ user.birthday|default("", true) }}</td>
+              <td class="userinfo-title">年龄</td>
+              <td class="userinfo-info">{{ user.age|default("", true) }}</td>
             </tr>
             <td class="userinfo-title">单位</td>
             <td class="userinfo-info">{{ user.company|default("", true) }}</td>
@@ -250,14 +250,13 @@
                 <p class="feedback reg-feedback" id="gender_field"></p>
               </div>
               <div class="reg-form-group">
-                <label>生日<br><small></small></label>
-                <input type="date" id="reg-input-birthday" name="birthday" value={{ user.birthday|default("", true) }}>
-                <p class="feedback reg-feedback" id="birthday_field"></p>
+                <label>年龄<br><small></small></label>
+                <input type="text" id="reg-input-age" name="age" value={{ user.age|default("", true) }}>
+                <p class="feedback reg-feedback" id="age_field"></p>
               </div>
               <div class="reg-form-group textarea-group">
                 <label>个人简介<br><small></small></label>
-                <textarea type="text" id="reg-input-description" name="description"
-                  }}>{{ user.description|default("", true) }}</textarea>
+                <textarea type="text" id="reg-input-description" name="description">{{ user.description|default("", true) }}</textarea>
               </div>
               <button type="button" class="primary-btn" onclick="commitEdit()">提交修改</button>
               <p class="feedback reg-feedback" id="overall_field"></p>

@@ -1,0 +1,38 @@
+<table class="manage-table" id="role-manage-table">
+  <thead>
+    <tr>
+      <th class="th-id">rid</th>
+      <th class="th-name">名称</th>
+      <th class="th-description">描述</th>
+      <th class="th-permission">权限</th>
+      <th class="th-permission">
+        <button type="button" class="btn btn-default editor-btn" data-target-editor="role-permission">修改</button>
+        <div class="hidden-btn">
+          <button type="button" class="btn btn-primary confirm-btn">确认</button>
+          <button type="button" class="btn btn-default cancel-btn">取消</button>
+        </div>
+      </th>
+      <th class="th-default">默认</th>
+      <th class="th-default">&nbsp;删除</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for role in role_list %}
+    <tr data-role-id={{ role.id }}>
+      <td>{{ role.id }}</td>
+      <td>{{ role.name }}</td>
+      <td>{{ role.description }}</td>
+      <td>{{ role.permission }}</td>
+      <td>
+        <input class="editor-input" type="text" name={{ role.id }} data-editor-name="role-permission"
+          value={{ role.permission }}>
+      </td>
+      <td>{{ role.default | default("", True) }}</td>
+      <td><button type="button" class="btn btn-default delete-btn">删除</button></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<button class="primary-btn update-btn">更新</button>
+<button class="primary-btn append-btn">添加</button>

@@ -95,7 +95,7 @@ def register():
                            'is_admin': new_user.is_admin()}
         return json.dumps({'status': True,
                            'message': '注册成功',
-                           'url': '/video'})
+                           'url': '/'})
 
 
 # 返回用户个人中心
@@ -108,27 +108,37 @@ def account(username):
         session.get('user', {}).get('is_admin', False)
     return render_template('auth/account.html', user=user, editable=editable)
 
+# 通过id访问
+@auth.route('/account/<int:id>')
+def account_by_id(id):
+    user = User.query.filter_by(id=id).first()
+    if not user:
+        return render_template('error/404.html', error_message='该用户不存在'), 404
+    editable = user.id == session.get('user', {}).get('id') or \
+        session.get('user', {}).get('is_admin', False)
+    return render_template('auth/account.html', user=user, editable=editable)
+
 
 # 修改用户信息
-@auth.route('/account/edit_profile/<user_id>', methods=['GET', 'POST'])
+@auth.route('/account/edit_profile/<int:user_id>', methods=['GET', 'POST'])
 def edit_profile(user_id):
+    print(session['user']['id'])
+    print(user_id)
+    print(session.get('user', {}).get('id'))
     if not (user_id == session.get('user', {}).get('id') or
             session.get('user', {}).get('is_admin', False)):
         return json.dumps({'status': False, 'message': 'Not authorized'})
-    user = User.query.filter_by(id=user_id).first()
+    user = User.query.filter_by(id=user_id, delete=False).first()
     form = request.form
     user.realname = form.get("realname")
     user.company = form.get("company")
     user.department = form.get("department")
     user.position = form.get("position")
     user.gender = int(form.get("gender"))
+    if form.get("age"):
+        user.age = int(form.get("age"))
     user.description = form.get("description")
-    if form.get('birthday') != '':
-        birthday = datetime.datetime.strptime(
-            form.get('birthday'), '%Y-%m-%d').date()
-        user.birthday = birthday
-    else:
-        user.birthday = None
+
     db.session.add(user)
     db.session.commit()
     return json.dumps({'status': True, 'message': '修改成功', 'url': '/account/' + user.username})

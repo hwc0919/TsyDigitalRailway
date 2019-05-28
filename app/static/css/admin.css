@@ -1,0 +1,214 @@
+.content-panel:target {
+  display: block;
+}
+
+.manage-panel {
+  padding: 0 50px;
+}
+
+.manage-table {
+  text-align: left;
+  width: 1120px;
+  border-collapse: collapse;
+  display: block;
+}
+
+.manage-table tbody {
+  max-height: 640px;
+  overflow-y: auto;
+  display: block;
+}
+
+.update-btn {
+  margin-top: 2px;
+  margin: 10px;
+  margin-left: 0;
+}
+
+.manage-table thead tr {
+  background-color: #0984e3aa;
+  color: white;
+  line-height: 40px;
+  border: 1px solid #0984e3;
+  border-width: 1px 0 0 0;
+}
+
+.manage-table thead th {
+  font-weight: normal;
+}
+
+.manage-table tbody {
+  border-bottom: 1px solid #0984e3;
+}
+
+.manage-table tbody tr {
+  height: 40px;
+  line-height: 20px;
+  color: rgba(0,0,0,0.8)
+}
+
+
+.manage-table tbody tr:nth-child(even) {
+  background-color: #74b9ff66; 
+}
+
+.manage-table tbody tr:nth-child(odd) {
+  color: #636e72;  
+}
+
+
+.manage-table th,
+.manage-table td {
+  padding-left: 10px;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.hidden-btn {
+  display: none;
+}
+
+
+.editor-input {
+  visibility: hidden;
+  width: 100px;
+}
+
+.manage-table input {
+  height: 30px;
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 130px;
+}
+
+/* #################### 用户信息表尺寸 #################### */
+
+#user-manage-table th:nth-child(1),
+#user-manage-table td:nth-child(1),
+#user-manage-table th:nth-child(8),
+#user-manage-table td:nth-child(8),
+#user-manage-table th:nth-child(9),
+#user-manage-table td:nth-child(9),
+#user-manage-table th:nth-child(11),
+#user-manage-table td:nth-child(11),
+#user-manage-table th:nth-child(12),
+#user-manage-table td:nth-child(12),
+#user-manage-table th:nth-child(13),
+#user-manage-table td:nth-child(13) {
+  width: 50px;
+  min-width: 50px;
+}
+
+#user-manage-table th:nth-child(2),
+#user-manage-table td:nth-child(2) {
+  width: 80px;
+  min-width: 80px;
+}
+
+#user-manage-table th:nth-child(3),
+#user-manage-table td:nth-child(3),
+#user-manage-table th:nth-child(4),
+#user-manage-table td:nth-child(4),
+#user-manage-table th:nth-child(5),
+#user-manage-table td:nth-child(5) {
+  width: 100px;
+  min-width: 100px;
+}
+
+#user-manage-table th:nth-child(6),
+#user-manage-table td:nth-child(6) {
+  width: 120px;
+  min-width: 120px;
+}
+
+#user-manage-table th:nth-child(7),
+#user-manage-table td:nth-child(7) {
+  width: 200px;
+  min-width: 200px;
+}
+
+#user-manage-table th:nth-child(10),
+#user-manage-table td:nth-child(10) {
+  width: 100px;
+  min-width: 100px;
+}
+
+
+/* #################### 组别表尺寸 #################### */
+
+#role-manage-table {
+  width: 1090px;
+}
+
+#role-manage-table th,
+#role-manage-table td {
+  width: 150px;
+  min-width: 150px;
+}
+
+#role-manage-table th:nth-child(1),
+#role-manage-table td:nth-child(1),
+#role-manage-table th:nth-child(6),
+#role-manage-table td:nth-child(6),
+#role-manage-table th:nth-child(7),
+#role-manage-table td:nth-child(7) {
+  width: 80px;
+  min-width: 80px;
+}
+
+#role-manage-table th:nth-child(3),
+#role-manage-table td:nth-child(3) {
+  width: 400px;
+  min-width: 400px;
+}
+
+tr td:nth-child(1) input {
+  width: 50px;
+}
+
+tr td:nth-child(3) input {
+  width: 380px;
+}
+
+/* #################### 权限表尺寸 #################### */
+
+#permission-manage-table th:nth-child(1),
+#permission-manage-table td:nth-child(1) {
+  width: 50px;
+  min-width: 50px;
+}
+
+#permission-manage-table th:nth-child(2),
+#permission-manage-table td:nth-child(2) {
+  width: 80px;
+  min-width: 80px;
+}
+
+#permission-manage-table th:nth-child(3),
+#permission-manage-table td:nth-child(3),
+#permission-manage-table th:nth-child(4),
+#permission-manage-table td:nth-child(4),
+#permission-manage-table th:nth-child(5),
+#permission-manage-table td:nth-child(5),
+#permission-manage-table th:nth-child(6),
+#permission-manage-table td:nth-child(6) {
+  width: 100px;
+  min-width: 100px;
+}
+
+#permission-manage-table th:nth-child(7),
+#permission-manage-table td:nth-child(7) {
+  width: 120px;
+  min-width: 120px;
+}
+
+#permission-manage-table th:nth-child(8),
+#permission-manage-table td:nth-child(8),
+#permission-manage-table th:nth-child(9),
+#permission-manage-table td:nth-child(9),
+#permission-manage-table th:nth-child(10),
+#permission-manage-table td:nth-child(10) {
+  width: 150px;
+  min-width: 150px;
+}

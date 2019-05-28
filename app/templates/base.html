@@ -5,23 +5,24 @@
   <meta charset="utf-8">
   <meta id="viewport" name="viewport"
     content="width=device-width, minimum-scale=0.5, maximum-scale=1.5, initial-scale=1.0">
-  <title>{% block title %}三维数字铁路网络应用系统{% endblock %}</title>
+  <title>{% block title %}三维数字铁路网络应用系统{% endblock title %}</title>
   {% block css %}
   <link rel="shortcut icon" href={{ url_for("static", filename="images/favicon.ico") }} type="image/x-icon">
-  <link rel="stylesheet" href={{ url_for("static", filename="css/base.css") }}>
   <link rel="stylesheet" href={{ url_for("static", filename="css/font-awesome/css/font-awesome.min.css") }}>
-  {% endblock %}
+  <link rel="stylesheet" href={{ url_for("static", filename="css/base.css") }}>
+  <link rel="stylesheet" href={{ url_for("static", filename="css/my_framework.css") }}>
+  {% endblock css %}
 </head>
 
 <body>
   {% block navbar %}
   <nav class="navbar noselect">
-    {% block iframe_placeholder %}{% endblock %}
+    {% block iframe_placeholder %}{% endblock iframe_placeholder %}
     <div class="navbar-item navbar-brand">
       <a href="/">
         <img src={{ url_for("static", filename="images/navbar_brand.png") }} height=40px>
       </a>
-      三维数字铁路网络应用系统
+      {% block navbar_brand %}三维数字铁路网络应用系统{% endblock navbar_brand %}
     </div>
     <button type="button" class="navbar-toggle-btn">
       <i class="fa fa-bars" aria-hidden="true"></i>
@@ -34,21 +35,16 @@
         </li>
         <li class="navbar-menu-item">
           <!-- <a class="nav-link link-inactive" href="javascript:void(0);" onclick="redirectToProjects()">数字铁路</a> -->
-          <a class="nav-link link-inactive" href="/projects">数字铁路</a>
+          <a class="nav-link link-inactive" href="/projects" target="_self">数字铁路</a>
         </li>
-        {% if session.get("user", {}).get("is_admin", False) %}
-        <li class="navbar-menu-item">
-          <a class="nav-link link-inactive" href="/admin" target="_blank">人员管理</a>
-        </li>
-        {% endif %}
-        {% endblock %}
+        {% endblock navbar_menu_items %}
       </ul>
       {% block search_form %}
       <form id="search-form" class="navbar-item" action="/search" method="POST">
         <input type="text" id="search-form-input" name="keywords" placeholder="搜索视频" required>
         <button type="submit" class="submit-btn">Search</button>
       </form>
-      {% endblock %}
+      {% endblock search_form %}
       {% if session.get("user", {}).login_status %}
       <div class="navbar-item userinfo-group hover-toggle-btn">
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
@@ -60,7 +56,7 @@
             <i class="fa fa-user-o" aria-hidden="true"></i><span>个人信息</span>
           </a>
           {% if session.get("user", {}).get("is_admin", False) %}
-          <a href="javascript:void(0)">
+          <a href="/admin" target="_blank">
             <i class="fa fa-cog" aria-hidden="true"></i><span>后台管理</span>
           </a>
           {% endif %}

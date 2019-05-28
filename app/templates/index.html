@@ -6,7 +6,7 @@
 
 {% block css %}
 {{ super() }}
-<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }} type="text/css">
+<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
 {% endblock %}
 
 
@@ -19,7 +19,7 @@
     <div class="left-menu-toggle-wrapper">
       <h1 class="left-menu-head">目录</h1>
       <ul class="left-menu-list">
-        <li class="left-menu-item menu-active" data-target-panel="overview-panel">风采展示</li>
+        <li class="left-menu-item" data-target-panel="overview-panel">风采展示</li>
         {% for folder in video_folders %}
         <li class="left-menu-item" data-target-panel="video-panel" data-folder-name={{ folder.replace(" ", "%20") }}>
           {{ folder }}
@@ -30,7 +30,7 @@
   </div>
   <div class="right-content-col">
     <div class="panel-group">
-      <div class="content-panel d-block" data-panel-name="overview-panel">
+      <div class="content-panel" data-panel-name="overview-panel">
         <!-- jQuery loads /overview -->
       </div>
       <div class="content-panel" data-panel-name="video-panel">

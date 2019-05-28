@@ -1,0 +1,41 @@
+<table class="manage-table" id="user-manage-table">
+  <thead>
+    <tr>
+      <th class="th-id">uid</th>
+      <th class="th-realname">姓名</th>
+      <th class="th-username">用户名</th>
+      <th class="th-company">单位</th>
+      <th class="th-department">部门</th>
+      <th class="th-phone">电话</th>
+      <th class="th-email">邮箱</th>
+      <th class="th-gender">性别</th>
+      <th class="th-age">年龄</th>
+      <th class="th-role">用户组</th>
+      <th class="th-active">激活</th>
+      <th class="th-delete">弃用</th>
+      <th class="th-detail">详情</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for user in user_list %}
+    <tr>
+      <td>{{ user.id }}</td>
+      <td>{{ user.realname | default("", True) }}</td>
+      <td>{{ user.username | default("", True) }}</td>
+      <td>{{ user.company | default("", True) }}</td>
+      <td>{{ user.department | default("", True) }}</td>
+      <td>{{ user.phone | default("", True) }}</td>
+      <td>{{ user.email | default("", True) }}</td>
+      <td>{{ user.gender | default("", True) }}</td>
+      <td>{{ user.age | default("", True) }}</td>
+      <td>{{ user.role.name }}</td>
+      <td>{{ user.active | default("", True) }}</td>
+      <td>{{ user.delete | default("", True) }}</td>
+      <td><a href={{ "/account/{}".format(user.id) }} target="_blank">详情</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<button class="primary-btn update-btn">更新</button>

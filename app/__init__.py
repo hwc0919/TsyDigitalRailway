@@ -33,6 +33,9 @@ def create_app(config_name):
     from .projects import projects as projects_blueprint
     app.register_blueprint(projects_blueprint, url_prefix='/projects')
 
+    from .admin import admin as admin_blueprint
+    app.register_blueprint(admin_blueprint, url_prefix='/admin')
+
     return app
 
 

@@ -1,12 +1,13 @@
+import json
 import os
 import re
-import json
 import time
-from flask import render_template, redirect, url_for, session, request, abort
 
+from flask import abort, redirect, render_template, request, session, url_for
+
+from .. import BASE_DIR, OVERVIEW_DIR, VIDEO_DIR, db
+from ..models import Role, User
 from . import main
-from .. import db, BASE_DIR, VIDEO_DIR, OVERVIEW_DIR
-from ..models import User, Role
 
 
 @main.route('/')
