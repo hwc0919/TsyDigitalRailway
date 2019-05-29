@@ -113,9 +113,7 @@
       <ul class="left-menu-list">
         <li class="left-menu-item menu-active" data-target-panel="profile-panel">个人信息</li>
         <li class="left-menu-item" data-target-panel="security-panel">账号安全</li>
-        <a href="/">
-          <li class="left-menu-item menu-inactive">回到主页</li>
-        </a>
+        <li class="left-menu-item home-page-btn">回到主页</li>
       </ul>
     </div>
   </div>
@@ -256,7 +254,8 @@
               </div>
               <div class="reg-form-group textarea-group">
                 <label>个人简介<br><small></small></label>
-                <textarea type="text" id="reg-input-description" name="description">{{ user.description|default("", true) }}</textarea>
+                <textarea type="text" id="reg-input-description"
+                  name="description">{{ user.description|default("", true) }}</textarea>
               </div>
               <button type="button" class="primary-btn" onclick="commitEdit()">提交修改</button>
               <p class="feedback reg-feedback" id="overall_field"></p>
@@ -278,6 +277,9 @@
     jQuery("#edit-profile-btn").click(function () {
       jQuery(".content-panel").removeClass("d-block");
       jQuery(".content-panel[data-panel-name='edit-profile-panel']").addClass("d-block");
+    });
+    jQuery('.home-page-btn').click(function () {
+      window.open("/", "_self");
     })
   });
   function commitEdit() {

@@ -3,108 +3,7 @@
 
 {% block css %}
 {{ super() }}
-<style>
-  .container {
-    padding-top: 60px;
-    width: 100%;
-    max-width: 1700px;
-    margin: 0 auto;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: nowrap;
-  }
-
-  .project-list {
-    max-width: 1360px;
-    min-width: 1080px;
-    display: flex;
-    justify-content: center;
-    align-content: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .project-plate {
-    width: 300px;
-    min-width: 300px;
-    height: 300px;
-    margin: 20px;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-  }
-
-  .project-plate::after {
-    content: "打开项目";
-    position: absolute;
-    top: 65px;
-    left: 15px;
-    background-color: snow;
-    padding: 3px;
-    border-radius: 3px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .project-plate:hover {
-    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.5);
-  }
-
-  .project-plate:hover::after {
-    opacity: 1;
-  }
-
-  .project-plate:active {
-    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.2)
-  }
-
-  .empty-plate {
-    visibility: hidden;
-  }
-
-  .project-plate-header {
-    width: 100%;
-    height: 50px;
-    padding: 12px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-  }
-
-  .project-plate-header i {
-    margin-right: 5px;
-  }
-
-  .project-plate-header h4 {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .project-plate-body {
-    height: 200px;
-    padding: 12px;
-  }
-
-  .project-plate-body img {
-    width: 100%;
-    height: 100%;
-  }
-
-  .project-plate-footer {
-    height: 50px;
-    padding: 3px 12px;
-    overflow: hidden;
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    word-break: break-all;
-  }
-</style>
+<link rel="stylesheet" href={{ url_for("static", filename="css/projects/project_index.css") }}>
 {% endblock %}
 
 
@@ -121,8 +20,11 @@
 {% block container %}
 <div class="container">
   <div class="project-list">
-    {% for name, url in fly_list %}
-    <div class="project-plate" data-target-url={{ url }}>
+    {% if not project_list %}
+    <h1 class="placeholder"><br>没有对应权限的项目可供浏览, 请联系管理员</h1>
+    {% endif %}
+    {% for pid, name, description in project_list %}
+    <div class="project-plate" data-project-id={{ pid }}>
       <div class="project-plate-header">
         <i class="fa fa-file-text-o" aria-hidden="true"></i>
         <h4>{{ name }}</h4>
@@ -130,21 +32,9 @@
       <div class="project-plate-body">
         <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
       </div>
-      <p class="project-plate-footer">项目的描述</p>
+      <p class="project-plate-footer">{{ description | default("", True) }}</p>
     </div>
     {% endfor %}
-
-    <div class="project-plate" data-target-url="/projects/explore/project1">
-      <div class="project-plate-header">
-        <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        <h4>项目1标题项目1标题项目1标题项目1标题项目1标题项目1标题项目1标题</h4>
-      </div>
-      <div class="project-plate-body">
-        <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
-      </div>
-      <p class="project-plate-footer">项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述项目1的描述</p>
-    </div>
-
     <div class="project-plate empty-plate"></div>
     <div class="project-plate empty-plate"></div>
     <div class="project-plate empty-plate"></div>
@@ -158,7 +48,7 @@
 <script>
   jQuery(document).ready(function () {
     jQuery(".project-plate").click(function () {
-      url = "/projects/explore/" + jQuery(this).attr("data-target-url");
+      url = "/projects/explore?pid=" + jQuery(this).attr("data-project-id");
       window.open(url, "_blank");
     })
   })

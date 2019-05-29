@@ -45,7 +45,7 @@
         <button type="submit" class="submit-btn">Search</button>
       </form>
       {% endblock search_form %}
-      {% if session.get("user", {}).login_status %}
+      {% if session.login_status %}
       <div class="navbar-item userinfo-group hover-toggle-btn">
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
         <span id="navbar-username">
@@ -80,6 +80,7 @@
 
   <!-- 登录窗口 -->
   {% block login %}
+  {% if not session.login_status %}
   <div class="login-window-wrapper" {% if show_login %} style="display:flex" {% endif %}>
     <div id="login-window">
       <form id="login-form">
@@ -104,6 +105,7 @@
       </form>
     </div>
   </div>
+  {% endif %}
   {% endblock %}
 
   {% block js %}

@@ -8,20 +8,31 @@ class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    permission = db.Column(db.Text, default='0')
+    permission = db.Column(db.Text)
+    permission_integration = db.Column(db.Text)
     description = db.Column(db.String(128))
     users = db.relationship('User', backref='role', lazy='dynamic')
     default = db.Column(db.Boolean, default=False)
 
+    def __init__(self, **kwargs):
+        super(Role, self).__init__(**kwargs)
+        if self.permission is None or self.permission == '':
+            self.permission = '1'
+        self.set_permission()
+
     def is_admin(self):
         return self.permission == '-1'
 
-    def set_permission(self, *pjid):
-        permission = sum((2**i for i in pjid))
-        self.permission = str(permission)
+    def set_permission(self):
+        pjid = self.permission.split('.')
+        if '-1' in pjid:
+            permission_integration = '-1'
+        else:
+            permission_integration = sum((2**int(i) for i in pjid))
+        self.permission_integration = str(permission_integration)
 
     def check_permission(self, pjid):
-        return int(self.permission) & pjid != 0
+        return int(self.permission_integration) & (2 ** pjid) != 0
 
     def __repr__(self):
         return '<Role, name: {}, id: {}>'.format(self.name, self.id)
@@ -49,8 +60,7 @@ class User(db.Model):
     email = db.Column(db.String(64), index=True)
     realname = db.Column(db.String(20))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    password_hash = db.Column(db.String(128), nullable=False,
-                              default=generate_password_hash('watermelon2019'))
+    password_hash = db.Column(db.String(128), nullable=False)
     phone = db.Column(db.String(20))
     company = db.Column(db.String(64))
     department = db.Column(db.String(64))
@@ -61,12 +71,18 @@ class User(db.Model):
     register_time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     active = db.Column(db.Boolean, default=False)
     delete = db.Column(db.Boolean, default=False)
-    permission = db.Column(db.Text, default='1')
+    permission = db.Column(db.Text)
+    permission_integration = db.Column(db.Text)
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if self.role is None:
             self.role = Role.query.filter_by(default=True).first()
+        if self.password_hash is None:
+            self.password = self.username + '1418'
+        if self.permission is None or self.permission == '':
+            self.permission = '1'
+        self.set_permission()
 
     @property
     def password(self):
@@ -82,12 +98,16 @@ class User(db.Model):
     def is_admin(self):
         return self.role.is_admin()
 
-    def set_permission(self, *pjid):
-        permission = sum((2**i for i in pjid))
-        self.permission = str(permission)
+    def set_permission(self):
+        pjid = self.permission.split('.')
+        if '-1' in pjid:
+            permission_integration = '-1'
+        else:
+            permission_integration = sum((2**int(i) for i in pjid))
+        self.permission_integration = permission_integration
 
     def check_permission(self, pjid):
-        return int(self.permission) & (2 ** pjid) != 0 or\
+        return int(self.permission_integration) & (2 ** pjid) != 0 or\
             self.role.check_permission(pjid)
 
     def __repr__(self):
@@ -122,6 +142,11 @@ class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
     description = db.Column(db.Text)
+    url = db.Column(db.String(128))
+    group = db.Column(db.Integer, default=2)
+
+    # def __init__(self, **kwargs):
+    #     super(Project, self).__init__(**kwargs)
 
     def __repr__(self):
-        return '<Project, id: {}, name: {}>'.format(self.id, self.name)
+        return '<Project, group: {}, name: {}>'.format(self.id, self.name)

@@ -2,7 +2,7 @@ import os
 import socket
 from datetime import timedelta
 from functools import wraps
-from flask import Flask, render_template, session, redirect, url_for
+from flask import Flask, render_template, session, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 from config import config
@@ -11,7 +11,9 @@ from config import config
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 VIDEO_DIR = os.path.join(BASE_DIR, 'static/video')
 OVERVIEW_DIR = os.path.join(BASE_DIR, 'static/images/风采展示')
-FLY_DIR = os.path.join(BASE_DIR, 'static/fly_projects')
+# FLY_DIR = os.path.join(BASE_DIR, 'static/fly_projects')
+FLY_DIR = "\\\\192.10.15.200\\FLYProject"
+
 
 db = SQLAlchemy()
 
@@ -43,7 +45,7 @@ def create_app(config_name):
 def login_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if session.get('user', {}).get('login_status', False):
+        if session.get('login_status', False):
             return func(*args, **kwargs)
         else:
             return redirect(url_for('auth.login'))
@@ -56,5 +58,5 @@ def admin_required(func):
         if session.get('user', {}).get('is_admin', False):
             return func(*args, **kwargs)
         else:
-            return False
+            return render_template('error/404.html', title='401 Not Authorized', error_message='没有权限')
     return wrapper

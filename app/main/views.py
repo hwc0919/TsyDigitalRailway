@@ -5,7 +5,7 @@ import time
 
 from flask import abort, redirect, render_template, request, session, url_for
 
-from .. import BASE_DIR, OVERVIEW_DIR, VIDEO_DIR, db
+from .. import OVERVIEW_DIR, VIDEO_DIR, db
 from ..models import Role, User
 from . import main
 

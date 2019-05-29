@@ -25,16 +25,25 @@
   margin-left: 0;
 }
 
-.manage-table thead tr {
-  background-color: #0984e3aa;
-  color: white;
-  line-height: 40px;
+.manage-table thead {
+  background-color: rgba(9,132,227, 0.8);
   border: 1px solid #0984e3;
   border-width: 1px 0 0 0;
 }
 
+.manage-table thead tr {
+  line-height: 40px;
+}
+
 .manage-table thead th {
+  color: white;
   font-weight: normal;
+  text-align: left;
+}
+
+.manage-table thead button {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .manage-table tbody {
@@ -43,13 +52,13 @@
 
 .manage-table tbody tr {
   height: 40px;
-  line-height: 20px;
-  color: rgba(0,0,0,0.8)
+  line-height: 18px;
+  color: rgba(0,0,0,0.9);
 }
 
 
 .manage-table tbody tr:nth-child(even) {
-  background-color: #74b9ff66; 
+  background-color: rgba(116,185,255, 0.2); 
 }
 
 .manage-table tbody tr:nth-child(odd) {
@@ -82,133 +91,36 @@
   width: 130px;
 }
 
-/* #################### 用户信息表尺寸 #################### */
 
-#user-manage-table th:nth-child(1),
-#user-manage-table td:nth-child(1),
-#user-manage-table th:nth-child(8),
-#user-manage-table td:nth-child(8),
-#user-manage-table th:nth-child(9),
-#user-manage-table td:nth-child(9),
-#user-manage-table th:nth-child(11),
-#user-manage-table td:nth-child(11),
-#user-manage-table th:nth-child(12),
-#user-manage-table td:nth-child(12),
-#user-manage-table th:nth-child(13),
-#user-manage-table td:nth-child(13) {
-  width: 50px;
-  min-width: 50px;
+/* #################### 提示信息 #################### */
+
+th {
+  position: relative;
 }
 
-#user-manage-table th:nth-child(2),
-#user-manage-table td:nth-child(2) {
-  width: 80px;
-  min-width: 80px;
+.th-user-permission::after,
+.th-role-permission::after {
+  content: "整数, 用.隔开, 对应项目的分组.  例如 1.2.10.15 (管理员权限为-1)";
+  background-color: snow;
+  color: gray;
+  width: 170px;
+  height: 40px;
+  line-height:20px;
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  font-size: 10px;
+  position: absolute;
+  top: -40px;
+  left: -40px;
+  visibility: hidden;
+  z-index: 2;
+  opacity: 0;
+  transition: 0.5s;
 }
 
-#user-manage-table th:nth-child(3),
-#user-manage-table td:nth-child(3),
-#user-manage-table th:nth-child(4),
-#user-manage-table td:nth-child(4),
-#user-manage-table th:nth-child(5),
-#user-manage-table td:nth-child(5) {
-  width: 100px;
-  min-width: 100px;
-}
-
-#user-manage-table th:nth-child(6),
-#user-manage-table td:nth-child(6) {
-  width: 120px;
-  min-width: 120px;
-}
-
-#user-manage-table th:nth-child(7),
-#user-manage-table td:nth-child(7) {
-  width: 200px;
-  min-width: 200px;
-}
-
-#user-manage-table th:nth-child(10),
-#user-manage-table td:nth-child(10) {
-  width: 100px;
-  min-width: 100px;
-}
-
-
-/* #################### 组别表尺寸 #################### */
-
-#role-manage-table {
-  width: 1090px;
-}
-
-#role-manage-table th,
-#role-manage-table td {
-  width: 150px;
-  min-width: 150px;
-}
-
-#role-manage-table th:nth-child(1),
-#role-manage-table td:nth-child(1),
-#role-manage-table th:nth-child(6),
-#role-manage-table td:nth-child(6),
-#role-manage-table th:nth-child(7),
-#role-manage-table td:nth-child(7) {
-  width: 80px;
-  min-width: 80px;
-}
-
-#role-manage-table th:nth-child(3),
-#role-manage-table td:nth-child(3) {
-  width: 400px;
-  min-width: 400px;
-}
-
-tr td:nth-child(1) input {
-  width: 50px;
-}
-
-tr td:nth-child(3) input {
-  width: 380px;
-}
-
-/* #################### 权限表尺寸 #################### */
-
-#permission-manage-table th:nth-child(1),
-#permission-manage-table td:nth-child(1) {
-  width: 50px;
-  min-width: 50px;
-}
-
-#permission-manage-table th:nth-child(2),
-#permission-manage-table td:nth-child(2) {
-  width: 80px;
-  min-width: 80px;
-}
-
-#permission-manage-table th:nth-child(3),
-#permission-manage-table td:nth-child(3),
-#permission-manage-table th:nth-child(4),
-#permission-manage-table td:nth-child(4),
-#permission-manage-table th:nth-child(5),
-#permission-manage-table td:nth-child(5),
-#permission-manage-table th:nth-child(6),
-#permission-manage-table td:nth-child(6) {
-  width: 100px;
-  min-width: 100px;
-}
-
-#permission-manage-table th:nth-child(7),
-#permission-manage-table td:nth-child(7) {
-  width: 120px;
-  min-width: 120px;
-}
-
-#permission-manage-table th:nth-child(8),
-#permission-manage-table td:nth-child(8),
-#permission-manage-table th:nth-child(9),
-#permission-manage-table td:nth-child(9),
-#permission-manage-table th:nth-child(10),
-#permission-manage-table td:nth-child(10) {
-  width: 150px;
-  min-width: 150px;
+.th-user-permission:hover::after,
+.th-role-permission:hover::after {
+  visibility: visible;
+  opacity: 1;
 }

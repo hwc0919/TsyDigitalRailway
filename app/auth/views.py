@@ -28,8 +28,8 @@ def login_handler():
         log = Log(username=username, log_type='login', content='user login')
         db.session.add(log)
         db.session.commit()
-        session['user'] = {'login_status': True,
-                           'id': user.id,
+        session['login_status'] = True
+        session['user'] = {'id': user.id,
                            'username': username,
                            'role_name': user.role.name,
                            'is_admin': user.is_admin()}
@@ -39,10 +39,10 @@ def login_handler():
 # 响应注销ajax请求
 @auth.route('/auth/logout/')
 def logout():
-    login_status = session.get("user", {}).get('login_status', False)
-    session['user'] = {}
+    login_status = session.get('login_status', False)
+    session.clear()
     if not login_status:
-        return json.dumps({'status': False, 'message': '尚未登录!', 'url': None})
+        return json.dumps({'status': False, 'message': '尚未登录!'})
     return json.dumps({'status': True, 'message': '退出成功', 'url': '/'})
 
 
@@ -88,8 +88,8 @@ def register():
                   log_type='register', content=message)
         db.session.add(log)
         db.session.commit()
-        session['user'] = {'login_status': True,
-                           'id': new_user.id,
+        session['login_status'] = True
+        session['user'] = {'id': new_user.id,
                            'username': username,
                            'role_name': new_user.role.name,
                            'is_admin': new_user.is_admin()}
@@ -109,9 +109,9 @@ def account(username):
     return render_template('auth/account.html', user=user, editable=editable)
 
 # 通过id访问
-@auth.route('/account/<int:id>')
-def account_by_id(id):
-    user = User.query.filter_by(id=id).first()
+@auth.route('/account/<int:uid>')
+def account_by_id(uid):
+    user = User.query.filter_by(id=uid).first()
     if not user:
         return render_template('error/404.html', error_message='该用户不存在'), 404
     editable = user.id == session.get('user', {}).get('id') or \

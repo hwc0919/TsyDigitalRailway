@@ -1,0 +1,195 @@
+/* #################### 用户信息表尺寸 #################### */
+
+#user-manage-table {
+  width: 1100px;
+  min-width: 1100px;
+}
+
+#user-manage-table th:nth-child(1),
+#user-manage-table td:nth-child(1),
+#user-manage-table th:nth-child(8),
+#user-manage-table td:nth-child(8),
+#user-manage-table th:nth-child(9),
+#user-manage-table td:nth-child(9),
+#user-manage-table th:nth-child(11),
+#user-manage-table td:nth-child(11),
+#user-manage-table th:nth-child(12),
+#user-manage-table td:nth-child(12),
+#user-manage-table th:nth-child(13),
+#user-manage-table td:nth-child(13) {
+  width: 50px;
+  min-width: 50px;
+}
+
+#user-manage-table th:nth-child(2),
+#user-manage-table td:nth-child(2) {
+  width: 80px;
+  min-width: 80px;
+}
+
+#user-manage-table th:nth-child(3),
+#user-manage-table td:nth-child(3),
+#user-manage-table th:nth-child(4),
+#user-manage-table td:nth-child(4),
+#user-manage-table th:nth-child(5),
+#user-manage-table td:nth-child(5) {
+  width: 100px;
+  min-width: 100px;
+}
+
+#user-manage-table th:nth-child(6),
+#user-manage-table td:nth-child(6) {
+  width: 120px;
+  min-width: 120px;
+}
+
+#user-manage-table th:nth-child(7),
+#user-manage-table td:nth-child(7) {
+  width: 200px;
+  min-width: 200px;
+}
+
+#user-manage-table th:nth-child(10),
+#user-manage-table td:nth-child(10) {
+  width: 100px;
+  min-width: 100px;
+}
+
+
+/* #################### 组别表尺寸 #################### */
+
+#role-manage-table {
+  width: 1090px;
+  min-width: 1090px;
+}
+
+#role-manage-table th,
+#role-manage-table td {
+  width: 150px;
+  min-width: 150px;
+}
+
+#role-manage-table th:nth-child(1),
+#role-manage-table td:nth-child(1),
+#role-manage-table th:nth-child(6),
+#role-manage-table td:nth-child(6),
+#role-manage-table th:nth-child(7),
+#role-manage-table td:nth-child(7) {
+  width: 80px;
+  min-width: 80px;
+}
+
+#role-manage-table th:nth-child(3),
+#role-manage-table td:nth-child(3) {
+  width: 400px;
+  min-width: 400px;
+}
+
+tr td:nth-child(1) input {
+  width: 50px;
+}
+
+tr td:nth-child(3) input {
+  width: 380px;
+}
+
+/* #################### 权限表尺寸 #################### */
+
+#permission-manage-table {
+  width: 1100px;
+  min-width: 1100px;
+}
+
+
+#permission-manage-table th:nth-child(1),
+#permission-manage-table td:nth-child(1) {
+  width: 50px;
+  min-width: 50px;
+}
+
+#permission-manage-table th:nth-child(2),
+#permission-manage-table td:nth-child(2) {
+  width: 80px;
+  min-width: 80px;
+}
+
+#permission-manage-table th:nth-child(3),
+#permission-manage-table td:nth-child(3),
+#permission-manage-table th:nth-child(4),
+#permission-manage-table td:nth-child(4),
+#permission-manage-table th:nth-child(5),
+#permission-manage-table td:nth-child(5),
+#permission-manage-table th:nth-child(6),
+#permission-manage-table td:nth-child(6) {
+  width: 100px;
+  min-width: 100px;
+}
+
+#permission-manage-table th:nth-child(7),
+#permission-manage-table td:nth-child(7) {
+  width: 120px;
+  min-width: 120px;
+}
+
+#permission-manage-table th:nth-child(8),
+#permission-manage-table td:nth-child(8),
+#permission-manage-table th:nth-child(9),
+#permission-manage-table td:nth-child(9),
+#permission-manage-table th:nth-child(10),
+#permission-manage-table td:nth-child(10) {
+  width: 150px;
+  min-width: 150px;
+}
+
+
+/* #################### 项目表尺寸 #################### */
+
+#project-manage-table {
+  width: 1200px;
+}
+
+#project-manage-table th,
+#project-manage-table td {
+  width: 150px;
+  min-width: 150px;
+}
+
+#project-manage-table th:nth-child(1),
+#project-manage-table td:nth-child(1) {
+  width: 50px;
+  min-width: 50px;
+}
+
+#project-manage-table th:nth-child(2),
+#project-manage-table td:nth-child(2),
+#project-manage-table th:nth-child(3),
+#project-manage-table td:nth-child(3) {
+  width: 200px;
+  min-width: 200px;
+}
+
+#project-manage-table th:nth-child(5),
+#project-manage-table td:nth-child(5),
+#project-manage-table th:nth-child(7),
+#project-manage-table td:nth-child(7),
+#project-manage-table th:nth-child(8),
+#project-manage-table td:nth-child(8) {
+  width: 60px;
+  min-width: 60px;
+}
+
+#project-manage-table th:nth-child(4),
+#project-manage-table td:nth-child(4) {
+  width: 450px;
+  min-width: 450px;
+}
+
+#project-manage-table th:nth-child(6),
+#project-manage-table td:nth-child(6) {
+  width: 120px;
+  min-width: 120px;
+}
+
+#project-manage-table input {
+  width: 100px;
+}
