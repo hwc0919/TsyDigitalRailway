@@ -21,7 +21,7 @@
 .project-plate {
   width: 300px;
   min-width: 300px;
-  height: 300px;
+  height: 350px;
   margin: 20px;
   border: 2px solid rgba(0, 0, 0, 0.2);
   position: relative;
@@ -67,7 +67,9 @@
   align-items: center;
 }
 
-.project-plate-header i {
+.project-plate-header img {
+  width: 30px;
+  height: 30px;
   margin-right: 5px;
 }
 
@@ -75,6 +77,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: bold;
 }
 
 .project-plate-body {
@@ -88,12 +91,16 @@
 }
 
 .project-plate-footer {
-  height: 50px;
-  padding: 3px 12px;
+  height: 100px;
+  padding: 0 10px;
+  position: relative;
+  top: -5px;
+  font-size: 12px;
+  line-height: 20px;
   overflow: hidden;
   white-space: normal;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-break: break-all;
