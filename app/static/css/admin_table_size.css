@@ -1,8 +1,8 @@
 /* #################### 用户信息表尺寸 #################### */
 
 #user-manage-table {
-  width: 1100px;
-  min-width: 1100px;
+  width: 1115px;
+  min-width: 1115px;
 }
 
 #user-manage-table th:nth-child(1),
@@ -96,8 +96,8 @@ tr td:nth-child(3) input {
 /* #################### 权限表尺寸 #################### */
 
 #permission-manage-table {
-  width: 1100px;
-  min-width: 1100px;
+  width: 1115px;
+  min-width: 1115px;
 }
 
 
@@ -145,7 +145,8 @@ tr td:nth-child(3) input {
 /* #################### 项目表尺寸 #################### */
 
 #project-manage-table {
-  width: 1200px;
+  width: 1105px;
+  min-width: 1105px;
 }
 
 #project-manage-table th,
@@ -158,6 +159,7 @@ tr td:nth-child(3) input {
 #project-manage-table td:nth-child(1) {
   width: 50px;
   min-width: 50px;
+  display: none;
 }
 
 #project-manage-table th:nth-child(2),
@@ -171,9 +173,7 @@ tr td:nth-child(3) input {
 #project-manage-table th:nth-child(5),
 #project-manage-table td:nth-child(5),
 #project-manage-table th:nth-child(7),
-#project-manage-table td:nth-child(7),
-#project-manage-table th:nth-child(8),
-#project-manage-table td:nth-child(8) {
+#project-manage-table td:nth-child(7) {
   width: 60px;
   min-width: 60px;
 }

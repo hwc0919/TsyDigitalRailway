@@ -61,7 +61,7 @@
 .project-plate-header {
   width: 100%;
   height: 50px;
-  padding: 12px;
+  padding: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
@@ -82,7 +82,7 @@
 
 .project-plate-body {
   height: 200px;
-  padding: 12px;
+  padding: 8px;
 }
 
 .project-plate-body img {

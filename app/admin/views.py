@@ -149,9 +149,16 @@ def ajax_update_projects():
             project_list.append((folder, project_url))
     all_projects_names = db.session.query(Project.name).all()
     changes = []
-    for name, project_url in project_list:
-        if (name,) not in all_projects_names:
-            new_pj = Project(name=name, url=project_url)
+    for folder, project_url in project_list:
+        if (folder,) not in all_projects_names:
+            des_path = os.path.join(FLY_DIR, folder, 'note.txt')
+            if os.path.isfile(des_path):
+                with open(des_path, 'r', encoding='utf-8') as f:
+                    description = f.read()
+            else:
+                description = ""
+            new_pj = Project(name=folder, url=project_url,
+                             description=description)
             changes.append(new_pj)
     if not changes:
         return jsonify({'status': False, 'message': '没有改动'})

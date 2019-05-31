@@ -29,5 +29,4 @@ def project_index():
 def project_explore():
     pid = request.args['pid']
     project_url = Project.query.filter_by(id=pid).first().url
-    print(project_url)
     return render_template("projects/project_explore.html", sidebar_menu=ITEMS, project_url=project_url)

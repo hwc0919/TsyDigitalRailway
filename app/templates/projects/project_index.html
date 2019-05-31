@@ -30,9 +30,10 @@
         <h4>{{ name }}</h4>
       </div>
       <div class="project-plate-body">
-        <img src={{ url_for("static", filename="fly_projects/" + name + "/logo.jpg") }} alt="暂无图片">
+        <!-- <img src={{ url_for("static", filename="fly_projects/" + name + "/logo.jpg") }} alt="暂无图片"> -->
+        <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
       </div>
-      <p class="project-plate-footer" data-project-name={{ name }}>{{ description | default("", True) }}</p>
+      <p class="project-plate-footer">{{ description | default("", True) }}</p>
     </div>
     {% endfor %}
     <div class="project-plate empty-plate"></div>
@@ -50,10 +51,6 @@
     jQuery(".project-plate").click(function () {
       url = "/projects/explore?pid=" + jQuery(this).attr("data-project-id");
       window.open(url, "_blank");
-    })
-    jQuery(".project-plate-footer").each(function(){
-      var desUrl = "/static/fly_projects/" + jQuery(this).attr("data-project-name") + "/note.txt";
-      jQuery(this).load(desUrl);
     })
   })
 </script>

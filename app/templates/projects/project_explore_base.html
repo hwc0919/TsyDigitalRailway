@@ -21,16 +21,13 @@
     <i class="fa fa-home" aria-hidden="true"></i>首页
   </a>
 </li>
-<li class="navbar-menu-item hover-toggle-btn">
+<li class="navbar-menu-item hover-toggle-btn" onclick="func()">
   <a class="nav-link" href="javascript:void(0)">
     <i class="fa fa-globe" aria-hidden="true"></i>方案管理
     <i class="fa fa-angle-left toggle-indicator"></i>
   </a>
   <ul class="navbar-submenu cascade-menu">
     <iframe class="iframe-placeholder"></iframe>
-    <li><a href="#">
-        <i class="fa fa-bookmark" aria-hidden="true"></i><span>项目展示</span>
-      </a></li>
     <li><a href="#">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>保存项目</span>
       </a></li>
@@ -100,9 +97,6 @@
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>进度模拟</span>
       </a></li>
   </ul>
-</li>
-<li class="navbar-menu-item">
-  <a class="nav-link" href="javascript:void(0)"><i class="fa fa-users" aria-hidden="true"></i>人员管理</a>
 </li>
 {% endblock %}
 

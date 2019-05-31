@@ -1,5 +1,4 @@
 function Run(id) {
-  console.log(id);
   switch (id) {
     case "select":
       SGWorld.Command.Execute(1021, 0);
@@ -255,7 +254,7 @@ function Run(id) {
       //Globe Level--5
       //Country Level--4
       //State Level--3
-      //City Level--2
+      //City Level--2 
       //Street Level--1
       //House Level--0
       SGWorld.Command.Execute(1055, 5);

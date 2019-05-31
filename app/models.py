@@ -21,7 +21,7 @@ class Role(db.Model):
         self.set_permission()
 
     def is_admin(self):
-        return self.permission == '-1'
+        return self.name == 'Admin'
 
     def set_permission(self):
         pjid = self.permission.split('.')

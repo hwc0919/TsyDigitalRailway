@@ -13,7 +13,6 @@
           <button type="button" class="btn btn-default cancel-btn">取消</button>
         </div>
       </th>
-      <th class="th-project-invalid">失效</th>
       <th class="th-delete">&nbsp;删除</th>
     </tr>
   </thead>
@@ -22,13 +21,12 @@
     <tr data-project-id={{ pj.id }}>
       <td>{{ pj.id }}</td>
       <td>{{ pj.name }}</td>
-      <td>{{ pj.description | default("", True) }}</td>
+      <td class="td-description">{{ pj.description | default("", True) }}</td>
       <td>{{ pj.url }}</td>
       <td>{{ pj.group }}</td>
       <td>
         <input class="editor-input" type="text" name={{ pj.id }} data-editor-name="project-group" value={{ pj.group }}>
       </td>
-      <td>{{ pj.id }}</td>
       <td><button type="button" class="btn btn-default project-delete-btn">删除</button></td>
     </tr>
     {% endfor %}

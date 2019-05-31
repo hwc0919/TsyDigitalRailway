@@ -56,7 +56,6 @@
   color: rgba(0,0,0,0.9);
 }
 
-
 .manage-table tbody tr:nth-child(even) {
   background-color: rgba(116,185,255, 0.2); 
 }
@@ -91,6 +90,10 @@
   width: 130px;
 }
 
+td.td-description {
+  font-size: 6px;
+  line-height: 12px;
+}
 
 /* #################### 提示信息 #################### */
 
