@@ -40,7 +40,7 @@
             {% endif %}
           </h1>
           <p class="placeholder">
-            <span class="count-down">3</span>s后自动跳转到首页(<a style="display:inline" href="/">立即跳转</a>)
+            <span class="count-down">3</span>s后自动返回(<a style="display:inline" href="/">立即跳转</a>)
           </p>
         </section>
       </div>
@@ -56,7 +56,7 @@
   var count = jQuery(".count-down").text();
   function countDown() {
     if (count == 0) {
-      window.location.href = "/";
+      window.history.back();
     }
     jQuery(".count-down").text(count--);
     setTimeout("countDown()", 1000);

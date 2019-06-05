@@ -17,7 +17,7 @@
 <body>
   {% block navbar %}
   <nav class="navbar noselect">
-    {% block iframe_placeholder %}{% endblock iframe_placeholder %}
+    {% block iframe_placeholder %}{% endblock %}
     <div class="navbar-item navbar-brand">
       <a href="/">
         <img src={{ url_for("static", filename="images/navbar_brand.png") }} height=40px>
@@ -45,6 +45,8 @@
         <button type="submit" class="submit-btn">Search</button>
       </form>
       {% endblock search_form %}
+
+      {% block userinfo_group %}
       {% if session.login_status %}
       <div class="navbar-item userinfo-group hover-toggle-btn">
         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
@@ -52,6 +54,7 @@
           {{ session.user.username }}
         </span>
         <div class="userinfo-menu cascade-menu" id="userinfo-menu">
+          {% block iframe_placeholder2 %}{% endblock %}
           <a href={{ "/account/" + session.user.username }}>
             <i class="fa fa-user-o" aria-hidden="true"></i><span>个人信息</span>
           </a>
@@ -71,9 +74,10 @@
         <span>登录</span>
       </div>
       {% endif %}
+      {% endblock userinfo_group %}
     </div>
   </nav>
-  {% endblock %}
+  {% endblock navbar %}
 
   {% block container %}
   {% endblock %}

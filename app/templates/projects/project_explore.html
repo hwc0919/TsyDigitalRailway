@@ -1,10 +1,119 @@
-{% extends "projects/project_explore_base.html"%}
+{% extends "base.html" %}
+
+
+{% block title %}三维数字铁路网络应用系统-浏览项目{% endblock %}
 
 
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href={{ url_for("static", filename="css/projects/project_explore.css") }}>
 {% endblock %}
+
+
+{% block iframe_placeholder %}
+<iframe class="iframe-placeholder" style="display: block;"></iframe>
+{% endblock %}
+
+
+{% block iframe_placeholder2 %}
+<iframe class="iframe-placeholder"></iframe>
+{% endblock %}
+
+
+{% block navbar_menu_items %}
+<li class=" navbar-menu-item">
+  <a class="nav-link" href="/projects" target="_self">
+    <i class="fa fa-home" aria-hidden="true"></i>首页
+  </a>
+</li>
+<li class="navbar-menu-item hover-toggle-btn">
+  <a class="nav-link" href="javascript:void(0)">
+    <i class="fa fa-globe" aria-hidden="true"></i>方案管理
+    <i class="fa fa-angle-left toggle-indicator"></i>
+  </a>
+  <ul class="navbar-submenu cascade-menu">
+    <iframe class="iframe-placeholder"></iframe>
+    <li onclick="saveProject()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>保存项目</span>
+      </a></li>
+    <li onclick="viewVerticalSection()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>查看纵断面</span>
+      </a></li>
+    <li onclick="extractCrossSection()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>提取横断面</span>
+      </a></li>
+    <li onclick="extractVerticalSection()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>提取地面线</span>
+      </a></li>
+    <li onclick="checkProjectNumber()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>查看工程数量</span>
+      </a></li>
+    <li onclick="genAdministrativeDivisions()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>生成行政区划表</span>
+      </a></li>
+  </ul>
+</li>
+<li class="navbar-menu-item hover-toggle-btn">
+  <a class="nav-link" href="javascript:void(0)">
+    <i class="fa fa-database" aria-hidden="true"></i>数据源
+    <i class="fa fa-angle-left toggle-indicator"></i>
+  </a>
+  <ul class="navbar-submenu cascade-menu">
+    <iframe class="iframe-placeholder"></iframe>
+    <h5>加载</h5>
+    <li onclick="loadIMap()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>加载网络地图</span>
+      </a></li>
+    <li onclick="loadKmlFly()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>加载KML/FLY文件</span>
+      </a></li>
+    <li onclick="loadFromServer()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>从服务器加载...</span>
+      </a></li>
+    <h5>导出</h5>
+    <li onclick="exportKML()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>导出KML</span>
+      </a></li>
+    <li onclick="exportFLY()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>导出FLY</span>
+      </a></li>
+    <li onclick="CaptureLogo()"><a href="javascript:void(0)">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>更新Logo</span>
+      </a></li>
+  </ul>
+</li>
+<li class="navbar-menu-item hover-toggle-btn">
+  <a class="nav-link" href="javascript:void(0)">
+    <i class="fa fa-plane" aria-hidden="true"></i>动态模拟
+    <i class="fa fa-angle-left toggle-indicator"></i>
+  </a>
+  <ul class="navbar-submenu cascade-menu">
+    <iframe class="iframe-placeholder"></iframe>
+    <li><a href="#">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>横剖面图</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>交通模拟</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>飞行鸟瞰</span>
+      </a></li>
+    <li><a href="#">
+        <i class="fa fa-bookmark" aria-hidden="true"></i><span>进度模拟</span>
+      </a></li>
+  </ul>
+</li>
+{% endblock navbar_menu_items %}
+
+
+{% block search_form %}
+<!-- 不提供搜索 -->
+{% endblock search_form %}
+
+
+{% block login %}
+<!-- 登录后才能访问，不提供登录 -->
+{% endblock login %}
 
 
 {% block container %}
@@ -45,11 +154,19 @@
     </div>
   </div>
 </div>
-{% endblock %}
+<div class="prompt" id="hdm-prompt">
+  <iframe class="iframe-placeholder">
+  </iframe>数据计算中, 请稍后...</div>
+{% endblock container %}
 
 
 {% block js %}
 {{ super() }}
+<script src="/static/js/projects/js/DMXClass.js"></script>
+<script src="/static/js/projects/js/SKCommonTools.js"></script>
+<script src="/static/js/projects/run_command.js"></script>
+<script src="/static/js/projects/SGWorldEvents.js"></script>
+<script src="/static/js/projects/SGWorldNavbar.js"></script>
 <script>
   jQuery(document).ready(function () {
     jQuery(".sidebar-indicator").mouseenter(function () {
@@ -65,25 +182,23 @@
     jQuery(".sidebar-submenu-btn").click(function () {
       var cur = jQuery(this);
       if (cur.next("ul").hasClass("submenu-visible")) {
-        cur.next("ul").removeClass("submenu-visible")
-          .css({ "transform": "scaleY(0)", "height": "0" });
+        cur.next("ul").removeClass("submenu-visible");
         cur.children("i.fa-angle-right").css("transform", "rotate(0)");
       } else {
         jQuery("ul.submenu-visible").removeClass("submenu-visible")
-          .css({ "transform": "scaleY(0)", "height": "0" })
           .prev().children("i.fa-angle-right").css("transform", "rotate(0)");
         cur.children("i.fa-angle-right").css("transform", "rotate(90deg)");
-        cur.next("ul").addClass("submenu-visible")
-          .css({ "transform": "scaleY(1)", "height": "auto" });
-        jQuery("ul.submenu-visible").css("height", jQuery("ul.submenu-visible").height())
+        cur.next("ul").addClass("submenu-visible");
       }
     })
-    TerraExplorerInformationWindowEx.AttachTo3dWindow(TerraExplorer3DWindowEx);
-    SGWorld = TerraExplorer3DWindowEx.CreateInstance("TerraExplorerX.SGWorld701");
-    var project_url = jQuery("#TerraExplorer3DWindowEx").attr("data-project-url");
-    SGWorld.Project.open(project_url);
-  })
-</script>
-<script src="/static/js/run_command.js"></script>
 
-{% endblock %}
+    SGWorldInit();
+  })
+  function showPrompt() {
+    jQuery("#hdm-prompt").fadeIn().children(".iframe-placeholder").css("display", "block");
+    setTimeout(function () {
+      jQuery("#hdm-prompt").fadeOut().children(".iframe-placeholder").css("display", "none")
+    }, 1000);
+  }
+</script>
+{% endblock js %}
