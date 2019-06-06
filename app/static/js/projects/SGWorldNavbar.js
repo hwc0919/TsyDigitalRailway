@@ -172,61 +172,130 @@ function genAdministrativeDivisions() {
 // 加载网络地图
 function loadIMap() {
   if (SGWorld) {
-    alert('TO DO')
-    var url = originUrl + '/static/mapres/地理环境.fly'
-    alert(url);
+    var url = "\\\\192.10.15.200\\FLYProject\\全国基础地理信息数据\\地理环境.fly";
     SGWorld.ProjectTree.LoadFlyLayer(url);
   }
 }
 
+
 // 加载KML/FLY文件
-// function loadKmlFly() {
-//   if (SGWorld) {
-//     this.hostVue.$refs.TE3DExternal.style.display = 'none'
-//     this.hostVue.$Modal.confirm({
-//       title: '请选择加载文件',
-//       content: '<input id="loadKmlFly_filehd" type="file">',
-//       onOk: () => {
-//         let theFile = document.querySelector('#loadKmlFly_filehd').value
-//         this.hostVue.$refs.TE3DExternal.style.display = 'block'
-//         // this.sgWorld.Creator.CreateKMLLayer(theFile)
-//         alert(theFile)
-//         this.sgWorld.ProjectTree.LoadFlyLayer(theFile, "")
-//       },
-//       onCancel: () => {
-//         this.hostVue.$refs.TE3DExternal.style.display = 'block'
-//       }
-//     })
-//   }
-// }
+function loadKmlFly() {
+  if (true) {
+    setTimeout(function () {
+      jQuery("<iframe class='iframe-placeholder' style='display: block'></iframe>").insertBefore(".jconfirm-box");
+    }, 300);
+    jQuery.confirm({
+      title: "请选择加载文件",
+      content: "<input type='file' style='width:400px;'><p style='margin: 10px 0;'>请将完整路径复制到下方,或直接输入完整路径</p><input type='text' id='loadKmlFlyFile' style='width:400px;' required>",
+      type: 'blue',
+      buttons: {
+        ok: {
+          text: "ok",
+          btnClass: 'btn-primary',
+          keys: ['enter'],
+          action: function () {
+            var filename = document.querySelector('#loadKmlFlyFile').value;
+            if (filename != null && filename != "") {
+              SGWorld.Creator.CreateKMLLayer(filename);
+              SGWorld.ProjectTree.LoadFlyLayer(filename, "");
+            } else {
+              return false;
+            }
+          }
+        },
+        cancel: function () {
+        }
+      }
+    });
+  }
+}
+
 
 // 从服务器加载
 function loadFromServer() {
   if (SGWorld) {
-    SGWorld.Command.Execute(1143, 0);
+    // SGWorld.Command.Execute(1143, 0);
+    var url = "http://lidar/SG/admin/telayers.aspx";
+    var msg = SGWorld.Creator.CreatePopupMessage("从服务器加载", url, 1, SGWorld.Window.Rect.Height * 1 / 4, SGWorld.Window.Rect.Width - 2, SGWorld.Window.Rect.Height * 3 / 4, -1);
+    SGWorld.Window.showPopup(msg);
   }
 }
 
 // 导出KML
-function exportKML() {
+function exportAs(filetype) {
   if (SGWorld) {
     var mCurID = skTools.GetSelFeatureID();
     if (!SGWorld.ProjectTree.IsGroup(mCurID)) {
       mCurID = SGWorld.ProjectTree.GetNextItem(mCurID, 15);
     }
     if (mCurID) {
-      alert(5);
       var sn = SGWorld.ProjectTree.GetItemName(mCurID);
-      var path = SGWorld.ProjectTree.SaveAsKml(sn, mCurID);
+      if (filetype == 'kml') {
+        var path = SGWorld.ProjectTree.SaveAsKml(sn, mCurID);
+      } else if (filetype == 'fly') {
+        var path = SGWorld.ProjectTree.SaveAsFly(sn, mCurID);
+      }
       alert('已导出到文件: ' + path);
+    } else {
+      alert('未选择目标');
     }
-    alert('未选择目标');
   }
 }
 
-// 导出FLY
-function exportFLY() {
+
+// #################### 动态模拟 ####################
+// 横剖面图
+function analogCrossSectionMap() {
   if (SGWorld) {
-    SGWorld.ProjectTree.SaveAsFly()
+    alert(1);
+    var mHDMProfile = new HDMCrossBox(SGWorld)
+    alert(2);
+    mHDMProfile.Start()
   }
 }
+
+function ShowHDMCross(X, Y) {
+  alert('1');
+  console.log('showHDMCross');
+  let offset = 10.0;
+  let pt = dmx.GetBLPointByWxy(X, Y);
+  if (Math.abs(pt[1] - this.prelc) < 0.5) return;
+  this.prelc = pt[1];
+  offset = 80;
+
+  let lc = pt[1];
+  let mst = dmx.Get3DPointArray([lc, lc, lc - 100.0, lc - 100.0], [offset, -offset, -offset, offset]);
+  for (var k = 0; k < 4; k++) mst[3 * k + 2] = pt[0].Altitude - 100;
+  for (var k = 0; k < 4; k++) {
+    mst.push(mst[3 * k]);
+    mst.push(mst[3 * k + 1]);
+    mst.push(pt[0].Altitude + 100);
+  }
+  //mst.push(new Point3DF(mst[k].XB, mst[k].YL, pt.ZH + 100));
+
+  let geometry = SGWorld.Creator.GeometryCreator.CreateLineStringGeometry(mst);
+  SGWorld.Analysis.ShowCrossSectionBox(geometry, false, "#FFFF00FF");
+}
+
+
+// // 交通模拟
+// function analogTraffic() {
+//   if (this.sgWorld) {
+//     let mTrack = new MoniTrackor(this.sgWorld, null)
+//     mTrack.Run()
+//   }
+// }
+// // 飞行鸟瞰
+// function analogflight() {
+//   if (this.sgWorld) {
+//     let mTrack = new MoniTrackor(this.sgWorld, null)
+//     mTrack.Fly()
+//   }
+// }
+// // 进度模拟
+// function analogProgress() {
+//   if (this.sgWorld) {
+//     // let mShow = new TimeSliderBar();
+//     // mShow.Show();
+//   }
+// }

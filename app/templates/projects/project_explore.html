@@ -7,6 +7,7 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href={{ url_for("static", filename="css/projects/project_explore.css") }}>
+<link rel="stylesheet" href={{ url_for("static", filename="tools/jquery-confirm.min.css") }}>
 {% endblock %}
 
 
@@ -71,14 +72,11 @@
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>从服务器加载...</span>
       </a></li>
     <h5>导出</h5>
-    <li onclick="exportKML()"><a href="javascript:void(0)">
+    <li onclick="exportAs('kml')"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>导出KML</span>
       </a></li>
-    <li onclick="exportFLY()"><a href="javascript:void(0)">
+    <li onclick="exportAs('fly')"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>导出FLY</span>
-      </a></li>
-    <li onclick="CaptureLogo()"><a href="javascript:void(0)">
-        <i class="fa fa-bookmark" aria-hidden="true"></i><span>更新Logo</span>
       </a></li>
   </ul>
 </li>
@@ -89,16 +87,16 @@
   </a>
   <ul class="navbar-submenu cascade-menu">
     <iframe class="iframe-placeholder"></iframe>
-    <li><a href="#">
+    <li onclick="analogCrossSectionMap()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>横剖面图</span>
       </a></li>
-    <li><a href="#">
+    <li><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>交通模拟</span>
       </a></li>
-    <li><a href="#">
+    <li><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>飞行鸟瞰</span>
       </a></li>
-    <li><a href="#">
+    <li><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>进度模拟</span>
       </a></li>
   </ul>
@@ -156,7 +154,8 @@
 </div>
 <div class="prompt" id="hdm-prompt">
   <iframe class="iframe-placeholder">
-  </iframe>数据计算中, 请稍后...</div>
+  </iframe>数据计算中, 请稍后...
+</div>
 {% endblock container %}
 
 
@@ -164,9 +163,11 @@
 {{ super() }}
 <script src="/static/js/projects/js/DMXClass.js"></script>
 <script src="/static/js/projects/js/SKCommonTools.js"></script>
+<script src="/static/js/projects/js/HDMCrossBox.js"></script>
 <script src="/static/js/projects/run_command.js"></script>
 <script src="/static/js/projects/SGWorldEvents.js"></script>
 <script src="/static/js/projects/SGWorldNavbar.js"></script>
+<script src="/static/tools/jquery-confirm.min.js"></script>
 <script>
   jQuery(document).ready(function () {
     jQuery(".sidebar-indicator").mouseenter(function () {

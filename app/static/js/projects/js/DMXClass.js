@@ -99,28 +99,28 @@ var DMXClass = /** @class */ (function () {
         var len = this.gGridArray[0].length;
         var th, lc;
         this.gGridArray[3] = [];
-        for (var i_1 = 0; i_1 < len; i_1++) {
-            lc = this.gGridArray[0][i_1][0];
-            th = this.gGridArray[0][i_1][1] - 10 - 3 * Math.random();
-            this.gGridArray[3][i_1] = [lc, th];
+        for (var i = 0; i < len; i++) {
+            lc = this.gGridArray[0][i][0];
+            th = this.gGridArray[0][i][1] - 10 - 3 * Math.random();
+            this.gGridArray[3][i] = [lc, th];
         }
         this.gGridArray[4] = [];
-        for (var i_2 = 0; i_2 < len; i_2++) {
-            lc = this.gGridArray[0][i_2][0];
-            th = this.gGridArray[3][i_2][1] - 20 - 5 * Math.random();
-            this.gGridArray[4][i_2] = [lc, th];
+        for (var i = 0; i < len; i++) {
+            lc = this.gGridArray[0][i][0];
+            th = this.gGridArray[3][i][1] - 20 - 5 * Math.random();
+            this.gGridArray[4][i] = [lc, th];
         }
         this.gGridArray[5] = [];
-        for (var i_3 = 0; i_3 < len; i_3++) {
-            lc = this.gGridArray[0][i_3][0];
-            th = this.gGridArray[4][i_3][1] - 40 - 8 * Math.random();
-            this.gGridArray[5][i_3] = [lc, th];
+        for (var i = 0; i < len; i++) {
+            lc = this.gGridArray[0][i][0];
+            th = this.gGridArray[4][i][1] - 40 - 8 * Math.random();
+            this.gGridArray[5][i] = [lc, th];
         }
         this.gGridArray[6] = [];
-        for (var i_4 = 0; i_4 < len; i_4++) {
-            lc = this.gGridArray[0][i_4][0];
-            th = this.gGridArray[5][i_4][1] - 80 - 15 * Math.random();
-            this.gGridArray[6][i_4] = [lc, th];
+        for (var i = 0; i < len; i++) {
+            lc = this.gGridArray[0][i][0];
+            th = this.gGridArray[5][i][1] - 80 - 15 * Math.random();
+            this.gGridArray[6][i] = [lc, th];
         }
     };
     // 获取任何里程的地面高程
@@ -265,7 +265,7 @@ var DMXClass = /** @class */ (function () {
         var off = -range;
         //标题行
         var hdm = [];
-        hdm.push("里程\\左右距");
+        hdm.push("里程\左右距");
         while (off < range) {
             hdm.push(off.toFixed(1));
             off += sample;

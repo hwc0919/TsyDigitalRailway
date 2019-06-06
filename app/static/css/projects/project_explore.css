@@ -87,7 +87,7 @@
   height: 100%;
   padding-top: 60px;
   display: flex;
-  justify-content: stretch;
+  justify-content: center;
   flex-wrap: nowrap;
 }
 
