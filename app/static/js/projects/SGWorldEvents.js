@@ -21,9 +21,9 @@ function SGWorldInit() {
 }
 // OnLoadFinished
 function OnLoadFinished() {
+  dmx = new DMXClass(SGWorld);
+  skTools = new SKCommonTools(SGWorld);
   try {
-    dmx = new DMXClass(SGWorld);
-    skTools = new SKCommonTools(SGWorld);
     mCurCaseID = skTools.FindFirstCaseID();
     baselineID = skTools.FindFirstObjectID('基线', mCurCaseID);
   }

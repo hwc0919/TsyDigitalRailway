@@ -20,7 +20,6 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 
     db.init_app(app)
 

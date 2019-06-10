@@ -1,3 +1,6 @@
+var fovDegrees = [90.0, 70.0, 53.0, 45.0, 35.0, 25.0, 15.0]
+var fovIndex = 0
+
 function Run(id) {
   switch (id) {
     case "select":
@@ -7,19 +10,22 @@ function Run(id) {
       SGWorld.Command.Execute(1024, 0);
       break;
     case "pen":
-      alert("need work!");
+      showPrompt("请在专业版中使用此功能");
       break;
     case "undergroundmode":
       SGWorld.Command.Execute(1027, 0);
       break;
     case "location":
-      SGWorld.Command.Execute(1016, 0);
+      showPrompt("正在添加兴趣点...")
+      setTimeout(function () {
+        SGWorld.Command.Execute(1016, 0);
+      }, 300)
       break;
-    case "projectsettings":
+    case "projectsetting":
       SGWorld.Command.Execute(1020, 0);
       break;
     case "publish":
-      SGWorld.Command.Execute(1007, 0);
+      SGWorld.Command.Execute(1007, 0);           // 待检查
       break;
     case "query":
       SGWorld.Command.Execute(1023, 0);
@@ -28,10 +34,10 @@ function Run(id) {
       SGWorld.Command.Execute(1035, 0);
       break;
     case "Hdistance":
-      SGWorld.Command.Execute(1034, 0);
+      SGWorld.Command.Execute(1036, 0);
       break;
     case "3Ddistance":
-      SGWorld.Command.Execute(1036, 0);
+      SGWorld.Command.Execute(1034, 0);
       break;
     case "area":
       SGWorld.Command.Execute(1165, 0);
@@ -58,7 +64,8 @@ function Run(id) {
       SGWorld.Command.Execute(1042, 0);
       break;
     case "terrainprofile":
-      SGWorld.Command.Execute(1149, 28);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 28);
       break;
     case "flood":
       SGWorld.Command.Execute(1044, 0);
@@ -76,32 +83,38 @@ function Run(id) {
       SGWorld.Command.Execute(2002, 0);
       break;
     case "threatdome":
-      SGWorld.Command.Execute(1149, 33);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 33);
       break;
     case "shadow":
       SGWorld.Command.Execute(2118, 0);
       break;
-    case "selectionshadow":
+    case "selectionshadow":                        // 待检查
       SGWorld.Command.Execute(2119, 0);
+      SGWorld.Command.Execute(2123, 0);
       break;
     case "shadowquery":
-      SGWorld.Command.Execute(1149, 27);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 27);
       break;
     case "imagerycomparison":
-      SGWorld.Command.Execute(1149, 34);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 34);
       break;
     case "snapshotcomparison":
-      SGWorld.Command.Execute(1149, 35);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 35);
       break;
     case "loadlayer":
       SGWorld.Command.Execute(1013, 0);
       break;
     case "datalibrary":
-      SGWorld.Command.Execute(1149, 20);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 20);
       break;
     case "osmlayers":
+      showPrompt("请在专业版中使用此功能");
       //SGWorld.Command.Execute(N/A,N/A);
-      alert("No supported!");
       break;
     case "newlayer":
       SGWorld.Command.Execute(1013, 11);
@@ -116,7 +129,8 @@ function Run(id) {
       SGWorld.Command.Execute(2110, 0);
       break;
     case "bim":
-      SGWorld.Command.Execute(1149, 36);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 36);
       break;
     case "pointcloud":
       SGWorld.Command.Execute(1012, 25);
@@ -142,25 +156,30 @@ function Run(id) {
       SGWorld.Command.Execute(1014, 19);
       break;
     case "osmmap":
+      showPrompt("请在专业版中使用此功能");
       //SGWorld.Command.Execute(N/A,N/A);
-      alert("This is a dynamic menu coming from the server.");
+      // alert("This is a dynamic menu coming from the server.");
       break;
     case "make3dml":
-      SGWorld.Command.Execute(1149, 18);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 18);
       break;
-    case "makexpt":
-      SGWorld.Command.Execute(1149, 11);
+    case "makexpl":
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 11);
       break;
     case "makecpt":
-      SGWorld.Command.Execute(1149, 10);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 10);
       break;
     case "resolutionpyramid":
-      SGWorld.Command.Execute(1149, 12);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 12);
       break;
     case "text":
       SGWorld.Command.Execute(1012, 0);
       break;
-    case "iamge":
+    case "image":
       SGWorld.Command.Execute(1012, 1);
       break;
     case "videoonterrain":
@@ -235,11 +254,13 @@ function Run(id) {
     case "movebytime":
       SGWorld.Command.Execute(1012, 47);
       break;
-    case "datalibrary":
-      SGWorld.Command.Execute(1149, 13);
+    case "datalibrary":                          // 有两个datalibrary图标， 此处也有两个datalibrary case
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 13);
       break;
     case "sketchupwarehouse":
-      SGWorld.Command.Execute(1149, 15);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 15);
       break;
     case "3d":
       SGWorld.Command.Execute(1052, 0);
@@ -280,7 +301,7 @@ function Run(id) {
       //From Ground Location--11
       SGWorld.Command.Execute(1057, 1);
       break;
-    case "collisiondetection":
+    case "collisiondetection":                // 待检查
       SGWorld.Command.Execute(1140, 0);
       break;
     case "slidemode":
@@ -292,46 +313,56 @@ function Run(id) {
       SGWorld.Command.Execute(1058, 0);
       break;
     case "gps":
-      SGWorld.Command.Execute(1149, 1);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 1);
       break;
     case "target":
-      SGWorld.Command.Execute(1149, 2);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 2);
       break;
     case "multiplecoordsys":
-      SGWorld.Command.Execute(1149, 3);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 3);
       break;
     case "lookaround":
-      SGWorld.Command.Execute(1149, 37);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 37);
       break;
     case "hideterrain":
       //Null – Toggle
       //0 – Show
       //1 – Hide
-      SGWorld.Command.Execute(1059, 0);
+      SGWorld.Command.Execute(1059, null);
       break;
     case "fov":
       //Can be one of the following values: 90.0; 70.0; 53.0; 45.0; 35.0; 25.0; 15.0
-      SGWorld.Command.Execute(1066, 90.0);
+      showPrompt("fov: " + fovDegrees[fovIndex] + "°")
+      SGWorld.Command.Execute(1066, fovDegrees[fovIndex]);
+      fovIndex = (fovIndex + 1) % fovDegrees.length;
       break;
     case "snapshot":
       //Snapshot to New Window--1067
       //Snapshot to File--1068
       SGWorld.Command.Execute(1067, 0);
       break;
-    case "extracttompt":
+    case "extracttompt":                     // 待检查  HOME/
       SGWorld.Command.Execute(1141, 0);
+      showPrompt("提取成功");
       break;
-    case "extracttovrml":
+    case "extracttovrml":                    // 待检查  HOME/
       SGWorld.Command.Execute(1142, 0);
       break;
     case "collaboration":
-      SGWorld.Command.Execute(1149, 4);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 4);
       break;
     case "urbandesign":
-      SGWorld.Command.Execute(1149, 38);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 38);
       break;
     case "duplicateobjects":
-      SGWorld.Command.Execute(1149, 6);
+      showPrompt("请在专业版中使用此功能");
+      // SGWorld.Command.Execute(1149, 6);
       break;
     case "powerlines":
       SGWorld.Command.Execute(1149, 7);

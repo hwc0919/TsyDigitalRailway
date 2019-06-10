@@ -90,13 +90,13 @@
     <li onclick="analogCrossSectionMap()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>横剖面图</span>
       </a></li>
-    <li><a href="javascript:void(0)">
+    <li onclick="analogTraffic()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>交通模拟</span>
       </a></li>
-    <li><a href="javascript:void(0)">
+    <li onclick="analogflight()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>飞行鸟瞰</span>
       </a></li>
-    <li><a href="javascript:void(0)">
+    <li onclick="analogProgress()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>进度模拟</span>
       </a></li>
   </ul>
@@ -153,8 +153,8 @@
   </div>
 </div>
 <div class="prompt" id="hdm-prompt">
-  <iframe class="iframe-placeholder">
-  </iframe>数据计算中, 请稍后...
+  <iframe class="iframe-placeholder"></iframe>
+  <span>数据计算中, 请稍后...</span>
 </div>
 {% endblock container %}
 
@@ -163,7 +163,8 @@
 {{ super() }}
 <script src="/static/js/projects/js/DMXClass.js"></script>
 <script src="/static/js/projects/js/SKCommonTools.js"></script>
-<script src="/static/js/projects/js/HDMCrossBox.js"></script>
+<script src="/static/js/projects/HDMCrossBox.js"></script>
+<script src="/static/js/projects/MoniTrackor.js"></script>
 <script src="/static/js/projects/run_command.js"></script>
 <script src="/static/js/projects/SGWorldEvents.js"></script>
 <script src="/static/js/projects/SGWorldNavbar.js"></script>
@@ -195,11 +196,23 @@
 
     SGWorldInit();
   })
-  function showPrompt() {
-    jQuery("#hdm-prompt").fadeIn().children(".iframe-placeholder").css("display", "block");
-    setTimeout(function () {
+  function showPrompt(message) {
+    try {
+      clearTimeout(promptTimeout);
+    }
+    catch (err) {
+    }
+    var timeout = 1000;
+    if (arguments.length > 1) {
+      timeout = arguments[1];
+    }
+    if (message) {
+      jQuery("#hdm-prompt span").text(message);
+    }
+    jQuery("#hdm-prompt").fadeIn("fast").children(".iframe-placeholder").css("display", "block");
+    promptTimeout = setTimeout(function () {
       jQuery("#hdm-prompt").fadeOut().children(".iframe-placeholder").css("display", "none")
-    }, 1000);
+    }, timeout);
   }
 </script>
 {% endblock js %}

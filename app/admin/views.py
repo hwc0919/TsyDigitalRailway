@@ -153,8 +153,11 @@ def ajax_update_projects():
         if (folder,) not in all_projects_names:
             des_path = os.path.join(FLY_DIR, folder, 'note.txt')
             if os.path.isfile(des_path):
-                with open(des_path, 'r', encoding='utf-8') as f:
-                    description = f.read()
+                try:
+                    with open(des_path, 'r', encoding='utf-8') as f:
+                        description = f.read()
+                except:
+                    description = "(请使用utf-8编码)"
             else:
                 description = ""
             new_pj = Project(name=folder, url=project_url,

@@ -20,13 +20,18 @@ var _HTML_POPUP_FLAGS = {
 // 保存项目
 function saveProject() {
   if (SGWorld) {
-    var vid = skTools.FindFirstObjectID("视野", "");
-    if (vid != "") {
-      SGWorld.ProjectTree.DeleteItem(vid);
-    }
-    SGWorld.Creator.CreateLocationHere(SGWorld.ProjectTree.RootID, "视野");
-    SGWorld.Project.Save();
-    alert("保存成功");
+    showPrompt("项目保存中, 请稍后...");
+    setTimeout(function () {
+      var vid = skTools.FindFirstObjectID("视野", "");
+      if (vid != "") {
+        SGWorld.ProjectTree.DeleteItem(vid);
+      }
+      SGWorld.Creator.CreateLocationHere(SGWorld.ProjectTree.RootID, "视野");
+      SGWorld.Project.Save();
+      showPrompt("保存成功");
+    }, 100);
+  } else {
+    showPrompt("没有可保存的项目");
   }
 }
 // 查看纵断面
@@ -62,7 +67,7 @@ function extractCrossSection() {
   if (!SGWorld) {
     return;
   }
-  showPrompt();
+  showPrompt("数据计算中, 请稍后...");
   if (mCurCaseID != "") {
     var sn = SGWorld.ProjectTree.GetItemName(mCurCaseID);
     var slc, elc, step, range, sampe;
@@ -247,44 +252,25 @@ function exportAs(filetype) {
 // 横剖面图
 function analogCrossSectionMap() {
   if (SGWorld) {
-    alert(1);
-    var mHDMProfile = new HDMCrossBox(SGWorld)
-    alert(2);
-    mHDMProfile.Start()
+    HDM_Start()
   }
 }
 
-function ShowHDMCross(X, Y) {
-  alert('1');
-  console.log('showHDMCross');
-  let offset = 10.0;
-  let pt = dmx.GetBLPointByWxy(X, Y);
-  if (Math.abs(pt[1] - this.prelc) < 0.5) return;
-  this.prelc = pt[1];
-  offset = 80;
-
-  let lc = pt[1];
-  let mst = dmx.Get3DPointArray([lc, lc, lc - 100.0, lc - 100.0], [offset, -offset, -offset, offset]);
-  for (var k = 0; k < 4; k++) mst[3 * k + 2] = pt[0].Altitude - 100;
-  for (var k = 0; k < 4; k++) {
-    mst.push(mst[3 * k]);
-    mst.push(mst[3 * k + 1]);
-    mst.push(pt[0].Altitude + 100);
+// 交通模拟
+function analogTraffic() {
+  if (SGWorld) {
+    moniRun();
   }
-  //mst.push(new Point3DF(mst[k].XB, mst[k].YL, pt.ZH + 100));
-
-  let geometry = SGWorld.Creator.GeometryCreator.CreateLineStringGeometry(mst);
-  SGWorld.Analysis.ShowCrossSectionBox(geometry, false, "#FFFF00FF");
 }
 
-
-// // 交通模拟
-// function analogTraffic() {
-//   if (this.sgWorld) {
-//     let mTrack = new MoniTrackor(this.sgWorld, null)
-//     mTrack.Run()
+// // 飞行鸟瞰
+// function analogflight() {
+//   if (SGWorld) {
+//     moniFly();
 //   }
 // }
+
+
 // // 飞行鸟瞰
 // function analogflight() {
 //   if (this.sgWorld) {
