@@ -28,12 +28,13 @@ var DynamicObjectType = {
     DYNAMIC_VIRTUAL: 3
 };
 //= "模拟列车"= @"D:\铁路数据中心\Model\rail.dae"
-function AttachDynamicObject(lineID, sname, objfile, sc) {
+function AttachDynamicObject(lineID, sname, objfile, sc, altitude) {
+    var altitude = arguments[4] ? arguments[4] : 0;
     if (sc === void 0) { sc = 1.0; }
     try {
         var sNode = skTools.FindAndCreateGroup("", "展示批注");
         var gPolyObj = SGWorld.Creator.CreateDynamicObject(0, DynamicMotionStyle.MOTION_MANUAL, DynamicObjectType.DYNAMIC_3D_MODEL, objfile, sc, AltitudeTypeCode.ATC_TERRAIN_ABSOLUTE, sNode, sname);
-        gPolyObj.Attachment.AttachTo(lineID, 0, 0, 0, 0, 0, 0);
+        gPolyObj.Attachment.AttachTo(lineID, 0, 0, altitude, 0, 0, 0);
         gPolyObj.ShowTrack = false;
         gPolyObj.CircularRoute = CircularRouteType.CRT_JUMP_TO_START;
         gPolyObj.SaveInFlyFile = true;
@@ -45,7 +46,7 @@ function AttachDynamicObject(lineID, sname, objfile, sc) {
     }
 }
 
-function moniRun() {
+function simRun() {
     var routetype = SGWorld.ProjectTree.GetClientData(mCurCaseID, "RouteType");
     var str = "_" + SGWorld.ProjectTree.GetItemName(mCurCaseID) + "_" + Date.now().toString();
     var radNext = function (max) { return Math.round(Math.random() * 100) % max; };
@@ -80,6 +81,21 @@ function moniRun() {
             break;
     }
 }
+
+
+function simFly() {
+    var LineID = skTools.FindFirstObjectID("基线", mCurCaseID);
+    var str = "_" + SGWorld.ProjectTree.GetItemName(mCurCaseID) + "_" + Date.now().toString();
+    var mplane = AttachDynamicObject(LineID, "飞机巡航" + str, LibPath + "\\Common\\Boeing787.xpl2", 5.0, 1000);
+    var sNode = skTools.FindAndCreateGroup("", "展示批注");
+    var mV = SGWorld.Creator.CreateVideoOnTerrain(LibPath + "\\Common\\video\\LiDARScan.wmv", SGWorld.Creator.CreatePosition(), sNode, "扫描区域" + str);
+    mV.ShowProjectionLines = true;
+    mV.VideoOpacity = 0.3;
+    mV.UseTelemetry = false;
+    mV.Position.Pitch = -90;
+    mV.Attachment.AttachTo(mplane.ID, 0, 0, -1000, 0, 0, 0);
+}
+
 
 // function moniFly() {
 //     var str = Date.now().toString();

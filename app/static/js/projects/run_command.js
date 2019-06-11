@@ -1,6 +1,10 @@
 var fovDegrees = [90.0, 70.0, 53.0, 45.0, 35.0, 25.0, 15.0]
 var fovIndex = 0
 
+var smokeKinds = ["Chemney smoke white", "Chimney smoke grey", "Chimney smoke black",
+  "Chimney smoke thin", "Chimney smoke verticall gray",
+  "Chimney smoke vertical black", "Fire smoke white", "Fire smoke gray"]
+
 function Run(id) {
   switch (id) {
     case "select":
@@ -379,8 +383,52 @@ function Run(id) {
     case "blockwidth":
       SGWorld.Command.Execute(1149, 16);
       break;
+
+    // Animation
+    case "customanimation":
+      SGWorld.Command.Execute(1012, 101);
+      break;
+    case "chimneysmokewhite":
+      SGWorld.Command.Execute(1012, 48);
+      break;
+    case "chimneysmokeblack":
+      SGWorld.Command.Execute(1012, 50);
+      break;
+    case "firesmokewhite":
+      SGWorld.Command.Execute(1012, 54);
+      break;
+    case "firesmokeblack":
+      SGWorld.Command.Execute(1012, 56);
+      break;
+    case "bonfire":
+      SGWorld.Command.Execute(1012, 57);
+      break;
+    case "buildingfire":
+      SGWorld.Command.Execute(1012, 58);
+      break;
+    case "forestfire":
+      SGWorld.Command.Execute(1012, 62);
+      break;
+    case "groundexplosion":
+      SGWorld.Command.Execute(1012, 67);
+      break;
+    case "fireworkstwocolors":
+      SGWorld.Command.Execute(1012, 82);
+      break;
+    case "fireworksring":
+      SGWorld.Command.Execute(1012, 83);
+      break;
+    case "fountain":
+      SGWorld.Command.Execute(1012, 91);
+      break;
+    case "pipeburst":
+      SGWorld.Command.Execute(1012, 92);
+      break;
+    case "oceans":
+      SGWorld.Command.Execute(1155, 0);
+      break;
     default:
-      alert("NO Find!");
+      showPrompt("指令不存在!")
       break;
   }
 }

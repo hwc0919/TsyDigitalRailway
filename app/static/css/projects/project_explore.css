@@ -57,6 +57,20 @@
   text-shadow: 0 0 1px gray;
 }
 
+.navbar-submenu li.li-disable a {
+  color: rgb(200, 200, 200);
+}
+
+.navbar-submenu li.li-disable:hover {
+  background-color: snow !important;
+  cursor: not-allowed;
+  text-shadow: none;
+}
+
+.navbar-submenu li.li-disable a:hover {
+  cursor: not-allowed;
+}
+
 .navbar-submenu h5 {
   display: inline-block;
   width: 100%;

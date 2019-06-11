@@ -259,16 +259,16 @@ function analogCrossSectionMap() {
 // 交通模拟
 function analogTraffic() {
   if (SGWorld) {
-    moniRun();
+    simRun();
   }
 }
 
-// // 飞行鸟瞰
-// function analogflight() {
-//   if (SGWorld) {
-//     moniFly();
-//   }
-// }
+// 飞行鸟瞰
+function analogflight() {
+  if (SGWorld) {
+    simFly();
+  }
+}
 
 
 // // 飞行鸟瞰

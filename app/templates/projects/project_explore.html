@@ -46,10 +46,10 @@
     <li onclick="extractVerticalSection()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>提取地面线</span>
       </a></li>
-    <li onclick="checkProjectNumber()"><a href="javascript:void(0)">
+    <li class="li-disable" onclick="_checkProjectNumber()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>查看工程数量</span>
       </a></li>
-    <li onclick="genAdministrativeDivisions()"><a href="javascript:void(0)">
+    <li class="li-disable" onclick="_genAdministrativeDivisions()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>生成行政区划表</span>
       </a></li>
   </ul>
@@ -96,7 +96,7 @@
     <li onclick="analogflight()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>飞行鸟瞰</span>
       </a></li>
-    <li onclick="analogProgress()"><a href="javascript:void(0)">
+    <li class="li-disable" onclick="analogProgress()"><a href="javascript:void(0)">
         <i class="fa fa-bookmark" aria-hidden="true"></i><span>进度模拟</span>
       </a></li>
   </ul>
@@ -143,7 +143,7 @@
         <ul class="sidebar-submenu">
           {% for id, img in sidebar_menu[key] %}
           <li onclick="Run(id)" id={{ id }}>
-            <img src={{ url_for("static", filename="control_panel/img/" + img) }}>
+            <img src={{ url_for("static", filename="control_panel/img/" + img) }} alt={{ id }}>
           </li>
           {% endfor %}
         </ul>
