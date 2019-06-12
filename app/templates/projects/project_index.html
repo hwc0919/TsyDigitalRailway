@@ -30,8 +30,8 @@
         <h4>{{ name }}</h4>
       </div>
       <div class="project-plate-body">
-        <!-- <img src={{ url_for("static", filename="fly_projects/" + name + "/logo.jpg") }} alt="暂无图片"> -->
-        <img src={{ url_for("static", filename="images/project.jpg") }} alt="暂无图片">
+        <img src={{ url_for("static", filename="fly_projects/" + name + "/logo.jpg") }} onerror="setDefaultImage(this)"
+          alt="暂无图片">
       </div>
       <p class="project-plate-footer">{{ description | default("", True) }}</p>
     </div>
@@ -53,5 +53,9 @@
       window.open(url, "_blank");
     })
   })
+
+  function setDefaultImage(source) {
+    source.src = '{{ url_for("static", filename="images/project.jpg") }}';
+  }
 </script>
 {% endblock %}

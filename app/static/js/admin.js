@@ -41,7 +41,7 @@ jQuery(document).ready(function () {
     confirmAndUpdate(this, "delete-role", data);
   })
 
-  // Project 检查改动按钮
+  // Project 检查改动 按钮
   jQuery(".content-panel").on("click", ".check-file-btn", function () {
     jQuery.ajax({
       url: "/admin/ajax_update/projects",
@@ -59,7 +59,25 @@ jQuery(document).ready(function () {
     })
   })
 
-  // Project 删除按钮
+  // Project 更新描述 按钮
+  jQuery(".content-panel").on("click", ".update-description-btn", function () {
+    jQuery.ajax({
+      url: "/admin/ajax_update/project_description",
+      type: "GET",
+      dataType: "json",
+      success: function (resp) {
+        alert(resp.message);
+        if (resp.status == true) {
+          update(this);
+        }
+      },
+      error: function (resp) {
+        alert('网络错误, 操作失败');
+      }
+    })
+  })
+
+  // Project 删除 按钮
   jQuery(".content-panel").on("click", ".project-delete-btn", function () {
     if (confirm('确认删除?')) {
       var pid = jQuery(this).parents("tr").attr("data-project-id");
@@ -77,6 +95,7 @@ jQuery(document).ready(function () {
     jQuery(this).parents("table").find(".delete-btn").hide();
   })
 
+  // 取消 按钮
   jQuery(".content-panel").on("click", ".cancel-btn", function () {
     var targetEditor = jQuery(this).parent(".hidden-btn").hide()
       .prev().show().attr("data-target-editor");
@@ -88,6 +107,7 @@ jQuery(document).ready(function () {
     jQuery(selector).css("visibility", "hidden");
   })
 
+  // 确认 按钮
   jQuery(".content-panel").on("click", ".confirm-btn", function () {
     var targetEditor = jQuery(this).parent(".hidden-btn")
       .prev().attr("data-target-editor");
@@ -109,6 +129,7 @@ jQuery(document).ready(function () {
   })
 });
 
+// 确认改动并刷新页面
 function confirmAndUpdate(that, targetEditor, data) {
   jQuery.ajax({
     url: "/admin/ajax_edit/" + targetEditor,
@@ -132,6 +153,7 @@ function confirmAndUpdate(that, targetEditor, data) {
   update(that);
 }
 
+// 更新 按钮
 function update(that) {
   var targetPanel = jQuery(that).parents(".content-panel");
   targetPanel.load(targetPanel.attr("data-target-url"));

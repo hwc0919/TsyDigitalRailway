@@ -135,7 +135,7 @@ def ajax_edit_user_role(edit_type):
         return jsonify({'status': False, 'message': '操作失败, 原因: ' + str(err)})
 
 
-# 更新项目改动到数据库
+# 查询新增项目, 更新到数据库
 @admin.route('/ajax_update/projects')
 @admin_required
 def ajax_update_projects():
@@ -169,6 +169,33 @@ def ajax_update_projects():
         db.session.add_all(changes)
         db.session.commit()
         return jsonify({'status': True, 'message': '扫描完成,新增{}个项目'.format(len(changes))})
+    except Exception as err:
+        db.rollback()
+        return jsonify({'status': False, 'message': '操作失败, 原因: ' + str(err)})
+
+
+# 更新项目描述
+@admin.route('/ajax_update/project_description')
+@admin_required
+def ajax_update_project_description():
+    changes = []
+    all_projects = Project.query.all()
+    for project in all_projects:
+        des_path = os.path.join(FLY_DIR, project.name, 'note.txt')
+        if os.path.isfile(des_path):
+            try:
+                with open(des_path, 'r', encoding='utf-8') as f:
+                    description = f.read
+            except:
+                description = '(请使用utf-8编码)'
+        else:
+            description = '(暂无描述)'
+        if description != project.description:
+            changes.append(project)
+    try:
+        db.session.add_all(changes)
+        db.session.commit()
+        return jsonify({'status': True, 'message': '扫描完成, 更新{}个描述'.format(len(changes))})
     except Exception as err:
         db.rollback()
         return jsonify({'status': False, 'message': '操作失败, 原因: ' + str(err)})

@@ -5,101 +5,8 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
-<link rel="stylesheet" href={{ url_for("static", filename="css/register.css")}}>
-<style>
-  .auth-page-wrapper {
-    width: 96%;
-    margin-left: 2%;
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-  }
-
-  .auth-form .col {
-    width: 600px;
-  }
-
-  .reg-form-group input {
-    width: 200px;
-  }
-
-  .userinfo-table {
-    width: 80%;
-    margin-bottom: 50px;
-  }
-
-  .userinfo-table caption {
-    position: relative;
-    text-align: left;
-    font-size: 20px;
-    margin-left: 50px;
-  }
-
-  .userinfo-table caption h4,
-  .userinfo-table a {
-    display: inline-block;
-    margin: 10px;
-  }
-
-  .userinfo-table a {
-    font-size: 15px;
-    color: #0984e3;
-  }
-
-  .userinfo-table a:hover {
-    text-shadow: 0px 0px 1px gray;
-  }
-
-  .userinfo-table caption hr::before {
-    content: "";
-    width: 100px;
-    height: 1px;
-    position: absolute;
-    left: 0px;
-    background-color: gray;
-  }
-
-  .userinfo-title {
-    width: 200px;
-    line-height: 50px;
-    color: gray;
-    text-align: right;
-    vertical-align: text-top;
-  }
-
-  .userinfo-info {
-    text-align: left;
-    vertical-align: text-top;
-    padding-left: 20px;
-  }
-
-  .userinfo-info p {
-    line-height: 30px;
-  }
-
-  input.radio {
-    width: 16px;
-    margin: 0 0 0 20px;
-  }
-
-  .textarea-group {
-    height: auto;
-  }
-
-  .textarea-group label {
-    align-self: flex-start;
-  }
-
-  .reg-form-group textarea {
-    width: 400px;
-    height: 120px;
-    margin-bottom: 10px;
-    padding: 5px;
-    border-radius: 6px;
-    outline: none;
-    resize: none;
-  }
-</style>
+<link rel="stylesheet" href={{ url_for("static", filename="css/auth/register.css")}}>
+<link rel="stylesheet" href={{ url_for("static", filename="css/auth/account.css")}}>
 {% endblock %}
 
 {% block container %}
@@ -138,16 +45,16 @@
               <td class="userinfo-info">{{ user.realname|default("", true) }}</td>
             </tr>
             <tr>
-            <tr>
-              <td class="userinfo-title">性别</td>
-              <td class="userinfo-info">{{ ['', '男', '女'][user.gender] }}</td>
+              <td class="userinfo-title">邮箱</td>
+              <td class="userinfo-info">{{ user.email|default("", true) }}</td>
             </tr>
             <tr>
-              <td class="userinfo-title">年龄</td>
-              <td class="userinfo-info">{{ user.age|default("", true) }}</td>
+              <td class="userinfo-title">电话</td>
+              <td class="userinfo-info">{{ user.phone|default("", true) }}</td>
             </tr>
-            <td class="userinfo-title">单位</td>
-            <td class="userinfo-info">{{ user.company|default("", true) }}</td>
+            <tr>
+              <td class="userinfo-title">单位</td>
+              <td class="userinfo-info">{{ user.company|default("", true) }}</td>
             </tr>
             <tr>
               <td class="userinfo-title">部门</td>
@@ -156,6 +63,14 @@
             <tr>
               <td class="userinfo-title">职位</td>
               <td class="userinfo-info">{{ user.position|default("", true) }}</td>
+            </tr>
+            <tr>
+              <td class="userinfo-title">性别</td>
+              <td class="userinfo-info">{{ ['', '男', '女'][user.gender] }}</td>
+            </tr>
+            <tr>
+              <td class="userinfo-title">年龄</td>
+              <td class="userinfo-info">{{ user.age|default("", true) }}</td>
             </tr>
             <tr>
               <td class="userinfo-title">个人简介</td>
@@ -176,27 +91,7 @@
             </caption>
             <tr>
               <td class="userinfo-title">密码</td>
-              <td class="userinfo-info">******<a href="javascript:void(0)">修改密码</a></td>
-            </tr>
-          </table>
-          <table class="userinfo-table">
-            <caption>
-              <h4>绑定邮箱</h4>
-              <hr>
-            </caption>
-            <tr>
-              <td class="userinfo-title">邮箱</td>
-              <td class="userinfo-info">{{ user.email|default("", true) }}<a href="javascript:void(0)">修改邮箱</a></td>
-            </tr>
-          </table>
-          <table class="userinfo-table">
-            <caption>
-              <h4>绑定手机</h4>
-              <hr>
-            </caption>
-            <tr>
-              <td class="userinfo-title">电话</td>
-              <td class="userinfo-info">{{ user.phone|default("", true) }}<a href="javascript:void(0)">修改手机</a></td>
+              <td class="userinfo-info">******<a href="javascript:void(0)" id="change-passwd-btn">修改密码</a></td>
             </tr>
           </table>
         </div>
@@ -220,6 +115,17 @@
                 <input type="text" class="input-required" required id="reg-input-realname" name="realname"
                   value={{ user.realname|default("", true) }}>
                 <p class="feedback reg-feedback" id="realname_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>电子邮箱*<br></label>
+                <input type="email" class="input-required" id="reg-input-email" name="email"
+                  value={{ user.email|default("", true) }}>
+                <p class="feedback reg-feedback" id="email_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>电话号码<br><small>(11位手机号)</small></label>
+                <input type="text" id="reg-input-phone" name="phone" value={{ user.phone|default("", true) }}>
+                <p class="feedback reg-feedback" id="phone_field"></p>
               </div>
               <div class="reg-form-group">
                 <label>单位<br><small>(公司名称)</small></label>
@@ -249,7 +155,7 @@
               </div>
               <div class="reg-form-group">
                 <label>年龄<br><small></small></label>
-                <input type="text" id="reg-input-age" name="age" value={{ user.age|default("", true) }}>
+                <input type="number" id="reg-input-age" name="age" value={{ user.age|default("", true) }}>
                 <p class="feedback reg-feedback" id="age_field"></p>
               </div>
               <div class="reg-form-group textarea-group">
@@ -257,7 +163,36 @@
                 <textarea type="text" id="reg-input-description"
                   name="description">{{ user.description|default("", true) }}</textarea>
               </div>
-              <button type="button" class="primary-btn" onclick="commitEdit()">提交修改</button>
+              <button type="button" class="primary-btn"
+                onclick="commitEdit('register?type=edit&id=', '#profile-form')">提交修改</button>
+              <p class="feedback reg-feedback" id="overall_field"></p>
+            </div>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+      <div class="content-panel" data-panel-name="change-password-panel">
+        {% if editable %}
+        <div class="auth-page-wrapper" id="password-form-wrapper">
+          <form class="auth-form" id="password-form">
+            <div class="col">
+              <div class="reg-form-group">
+                <label>原密码*<br></label>
+                <input type="password" id="reg-input-old-password" name="old-password" class="input-required">
+                <p class="feedback reg-feedback" id="old_password_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>新密码*<br><small>(6-20个字符)</small></label>
+                <input type="password" id="reg-input-password" name="password" class="input-required">
+                <p class="feedback reg-feedback" id="password_field"></p>
+              </div>
+              <div class="reg-form-group">
+                <label>确认密码*<br></label>
+                <input type="password" id="reg-input-confirm-password" name="confirm-password" class="input-required">
+                <p class="feedback reg-feedback" id="confirm_password_field"></p>
+              </div>
+              <button type="button" class="primary-btn" style="width: 50%"
+                onclick="commitEdit('change_password/', '#password-form')">提交修改</button>
               <p class="feedback reg-feedback" id="overall_field"></p>
             </div>
           </form>
@@ -272,48 +207,5 @@
 {% block js %}
 {{ super() }}
 <script src={{ url_for("static", filename="js/index.js") }}></script>
-<script>
-  jQuery("document").ready(function () {
-    jQuery("#edit-profile-btn").click(function () {
-      jQuery(".content-panel").removeClass("d-block");
-      jQuery(".content-panel[data-panel-name='edit-profile-panel']").addClass("d-block");
-    });
-    jQuery('.home-page-btn').click(function () {
-      window.open("/", "_self");
-    })
-  });
-  function commitEdit() {
-    var passFlag = true;
-    var name = jQuery("#reg-input-realname").val();
-    if (name[0] == " " || name[name.length - 1] == " ") {
-      passFlag = false;
-      jQuery("#realname_field").text("首尾不能为空格").addClass("d-flex");
-    } else if (name.length < 2) {
-      passFlag = false;
-      jQuery("#realname_field").text("姓名长度至少为2").addClass("d-flex");
-    }
-    if (!passFlag) {
-      return false;
-    } else {
-      jQuery.ajax({
-        type: "POST",
-        dataType: "json",
-        url: "/account/edit_profile/" + {{ user.id }},
-    data: jQuery("#profile-form").serialize(),
-      success: function (json) {
-        if (json.status == true) {
-          alert(json.message);
-          window.open(json.url, "_self");
-        }
-        else {
-          alert(json.message);
-        }
-      },
-    error: function () {
-      alert('网络错误, 修改失败');
-    }
-  });
-    }
-  }
-</script>
+<script src={{ url_for("static", filename="js/auth/account.js") }}></script>
 {% endblock %}

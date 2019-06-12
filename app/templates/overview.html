@@ -10,9 +10,10 @@
   <div class="slider">
     <div class="slider-container">
       {% for image in images %}
-      <div class="slider-content" data-content-id={{ loop.index }}
-        data-image-url={{ url_for("static", filename=("images/风采展示/" + image)) }}>
-        <img class="slider-img" alt={{ image + " 加载失败" }}>
+      <div class="slider-content" data-content-id={{ loop.index }}>
+        <img class="slider-img" src={{ url_for("static", filename=("fly_projects/风采展示/" + image)) }}>
+        <!-- <img class="slider-img" src={{ url_for("static", filename=("images/风采展示/" + image)) }}> -->
+        <h6> {{ image[:-4] }}</h6>
       </div>
       {% endfor %}
     </div>

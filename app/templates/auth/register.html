@@ -5,7 +5,7 @@
 {% block css %}
 {{ super() }}
 <link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
-<link rel="stylesheet" href={{ url_for("static", filename="css/register.css")}}>
+<link rel="stylesheet" href={{ url_for("static", filename="css/auth/register.css")}}>
 {% endblock %}
 
 {% block container %}
@@ -96,5 +96,5 @@
 
 {% block js %}
 {{super()}}
-<script src={{ url_for("static", filename="js/register.js") }}></script>
+<script src={{ url_for("static", filename="js/auth/register.js") }}></script>
 {% endblock %}

@@ -391,4 +391,19 @@ class DMXClass {
   //   })
   //   return sxzh
   // }
+
+  GetWaypoints(relativeHeight) {
+    var poss = []
+    var step = Math.floor(this.gPositionsArray.length / 100);
+    for (let i = 0; i < this.gPositionsArray.length - 1; i += step) {
+      poss.push(this.gPositionsArray[i])
+    }
+    var Waypoints = [];
+    for (let i = 0; i < poss.length - 1; i++) {
+      var pos = poss[i].AimTo(poss[i + 1]);
+      let waypoint = this.SGWorld.Creator.CreateRouteWaypoint(pos.X, pos.Y, pos.Altitude + relativeHeight, 400, pos.Yaw - 90);
+      Waypoints.push(waypoint);
+    }
+    return Waypoints;
+  }
 }
