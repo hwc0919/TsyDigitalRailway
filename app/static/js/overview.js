@@ -1,9 +1,4 @@
 jQuery(document).ready(function () {
-  // 加载图片
-  jQuery(".slider-content").each(function () {
-    var curItem = jQuery(this);
-    curItem.children("img").attr("src", curItem.attr("data-image-url"));
-  });
   jQuery(".slider-dot[data-content-id='1']").addClass("dot-active");
   // 幻灯片切换控制
   var sliderTotal = jQuery(".slider-content").length;

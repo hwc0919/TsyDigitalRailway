@@ -318,5 +318,42 @@ var DMXClass = /** @class */ (function () {
         var lcoff = this.projectonline(mloc.Position);
         return [this.GetBLPoint(lcoff[0]), lcoff[0], lcoff[1]];
     };
+    // 根据里程得到行政区划名称
+    // GetXZQH(lc) {
+    //   let lp = this.GetBLPointByLc(lc)
+    //   return this.GetXZQHByBL(lp.YL.ToString(), lp.XB.ToString())
+    // }
+    // async GetXZQHByBL(lng, lat) {
+    //   var sxzh = ''
+    //   await this.vuecmp.$jsonp('http://api.map.baidu.com/geocoder/v2/', {
+    //     ak: '45Xv0NtLzjOGbLvR5yxvdyCtOGFHTNyu',
+    //     location: lat + ',' + lng,
+    //     output: 'json',
+    //     pois: 1
+    //   }).then(res => {
+    //     const data = res
+    //     if (data.status === 0) {
+    //       const ac = data.result.addressComponent
+    //       sxzh = ac.province + '|' + ac.city + '|' + ac.district + '|' + ac.town
+    //     }
+    //   }).catch(error => {
+    //     console.log(error)
+    //   })
+    //   return sxzh
+    // }
+    DMXClass.prototype.GetWaypoints = function (relativeHeight) {
+        var poss = [];
+        var step = Math.floor(this.gPositionsArray.length / 100);
+        for (var i = 0; i < this.gPositionsArray.length - 1; i += step) {
+            poss.push(this.gPositionsArray[i]);
+        }
+        var Waypoints = [];
+        for (var i = 0; i < poss.length - 1; i++) {
+            var pos = poss[i].AimTo(poss[i + 1]);
+            var waypoint = this.SGWorld.Creator.CreateRouteWaypoint(pos.X, pos.Y, pos.Altitude + relativeHeight, 400, pos.Yaw - 90);
+            Waypoints.push(waypoint);
+        }
+        return Waypoints;
+    };
     return DMXClass;
 }());

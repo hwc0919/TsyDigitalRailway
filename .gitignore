@@ -3,3 +3,4 @@ venv/
 __pycache__/
 video/
 fly_projects/
+upload/*

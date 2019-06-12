@@ -33,8 +33,8 @@ function AttachDynamicObject(lineID, sname, objfile, sc, altitude) {
     if (sc === void 0) { sc = 1.0; }
     try {
         var sNode = skTools.FindAndCreateGroup("", "展示批注");
-        var gPolyObj = SGWorld.Creator.CreateDynamicObject(0, DynamicMotionStyle.MOTION_MANUAL, DynamicObjectType.DYNAMIC_3D_MODEL, objfile, sc, AltitudeTypeCode.ATC_TERRAIN_ABSOLUTE, sNode, sname);
-        gPolyObj.Attachment.AttachTo(lineID, 0, 0, altitude, 0, 0, 0);
+        var waypoints = dmx.GetWaypoints(altitude);
+        var gPolyObj = SGWorld.Creator.CreateDynamicObject(waypoints, DynamicMotionStyle.MOTION_MANUAL, DynamicObjectType.DYNAMIC_3D_MODEL, objfile, sc, AltitudeTypeCode.ATC_TERRAIN_ABSOLUTE, sNode, sname);
         gPolyObj.ShowTrack = false;
         gPolyObj.CircularRoute = CircularRouteType.CRT_JUMP_TO_START;
         gPolyObj.SaveInFlyFile = true;
@@ -49,6 +49,7 @@ function AttachDynamicObject(lineID, sname, objfile, sc, altitude) {
 function simRun() {
     var routetype = SGWorld.ProjectTree.GetClientData(mCurCaseID, "RouteType");
     var str = "_" + SGWorld.ProjectTree.GetItemName(mCurCaseID) + "_" + Date.now().toString();
+
     var radNext = function (max) { return Math.round(Math.random() * 100) % max; };
     var c = 0;
     var carnum = 15;
@@ -88,27 +89,11 @@ function simFly() {
     var str = "_" + SGWorld.ProjectTree.GetItemName(mCurCaseID) + "_" + Date.now().toString();
     var mplane = AttachDynamicObject(LineID, "飞机巡航" + str, LibPath + "\\Common\\Boeing787.xpl2", 5.0, 1000);
     var sNode = skTools.FindAndCreateGroup("", "展示批注");
-    var mV = SGWorld.Creator.CreateVideoOnTerrain(LibPath + "\\Common\\video\\LiDARScan.wmv", SGWorld.Creator.CreatePosition(), sNode, "扫描区域" + str);
+    var mV = SGWorld.Creator.CreateVideoOnTerrain(LibPath + "\\Common\\video\\LiDARScan.wmv", SGWorld.Creator.CreatePosition(0, 0, 500), sNode, "扫描区域" + str);
     mV.ShowProjectionLines = true;
-    mV.VideoOpacity = 0.3;
+    mV.VideoOpacity = 0.5;
     mV.UseTelemetry = false;
     mV.Position.Pitch = -90;
-    mV.Attachment.AttachTo(mplane.ID, 0, 0, -1000, 0, 0, 0);
+    mV.Attachment.AttachTo(mplane.ID, 0, 0, 0, 0, 0, 0);
+    mV.PlayVideo();
 }
-
-
-// function moniFly() {
-//     var str = Date.now().toString();
-//     var mplane = skTools.CreateDynamicObject(mLinePos.mXYH_menterline, "飞机巡航" + str, LibPath + "Common\\Boeing787.xpl2", 500, mLinePos.mTool_xyH2BLH, 2000, 3);
-
-
-
-
-//     var sNode = skTools.FindAndCreateGroup("", "展示批注");
-//     var mV = SGWorld.Creator.CreateVideoOnTerrain(LibPath + "\\Common\\video\\LiDARScan.wmv", SGWorld.Creator.CreatePosition(), sNode, "扫描区域" + str);
-//     mV.ShowProjectionLines = true;
-//     mV.VideoOpacity = 0.3;
-//     mV.UseTelemetry = false;
-//     mV.Position.Pitch = -90;
-//     mV.Attachment.AttachTo(mplane.ID, 0, 0, 0, 0, 0, 0);
-// }
