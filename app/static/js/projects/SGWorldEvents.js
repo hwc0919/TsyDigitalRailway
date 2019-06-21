@@ -16,42 +16,49 @@ function SGWorldInit() {
     SGWorld.Project.open(project_url);
   }
   catch (err) {
-    alert('项目加载失败, 请检查资源是否存在.')
+    alert("项目加载失败, 请检查资源是否存在.");
   }
 }
 // OnLoadFinished
 function OnLoadFinished() {
   dmx = new DMXClass(SGWorld);
   skTools = new SKCommonTools(SGWorld);
+  mCurCaseID = "";
+  baselineID = "";
   try {
     mCurCaseID = skTools.FindFirstCaseID();
-    baselineID = skTools.FindFirstObjectID('基线', mCurCaseID);
+    baselineID = skTools.FindFirstObjectID("基线", mCurCaseID);
   }
   catch (err) {
-    alert('caseID查询失败');
+    showPrompt("caseID查询失败");
   }
   try {
     baselineObj = SGWorld.ProjectTree.GetObject(baselineID);
   } catch (err) {
-    alert('baselineObj 加载失败');
+    showPrompt("此项目不含线路");
+    baselineObj = null;
   }
   if (baselineObj) {
     try {
       dmx.DMX_DrawBySetLC(baselineObj);
       mileageReady = true;
-      // setMileageReady(true)  ???
     }
     catch (err) {
-      alert("dmx drawbysetlc 加载失败");
+      showPrompt("此项目不含线路, 无地面线");
+      mileageReady = false;
     }
   } else {
     mileageReady = false;
-    // this.setMileageReady(false) ???
   }
   //定位到默认位置
   let vid = skTools.FindFirstObjectID('视野', "");
   if (vid != "") {
     SGWorld.Navigate.FlyTo(vid, 0);
+  }
+  if (!mileageReady) {
+    jQuery("li[data-active='mileage']").addClass("li-disable");
+  } else {
+    jQuery("li[data-active='mileage']").removeClass("li-disable");
   }
   SGWorld.AttachEvent('OnLButtonClicked', onLButtonClicked);
   SGWorld.AttachEvent('OnProjectTreeAction', onProjectTreeAction);
@@ -108,10 +115,10 @@ function onProjectTreeAction(id, action) {
       return;
     }
     mCurCaseID = mcid;
-
     if (mCurCaseID == "") {
       //选择方案无效，应禁用部分菜单
       mileageReady = false;
+      jQuery("li[data-active='mileage']").addClass("li-disable");
       baselineID = skTools.FindFirstObjectID("基线", mCurCaseID);
       return;
     }
@@ -125,5 +132,12 @@ function onProjectTreeAction(id, action) {
       dmx.DMX_DrawBySetLC(baselineobj); //建立里程系
       mileageReady = true;
     }
+
+    if (!mileageReady) {
+      jQuery("li[data-active='mileage']").addClass("li-disable");
+    } else {
+      jQuery("li[data-active='mileage']").removeClass("li-disable");
+    }
+    showPrompt("切换完成!")
   }
 }

@@ -1,8 +1,8 @@
 /* #################### 用户信息表尺寸 #################### */
 
 #user-manage-table {
-  width: 1115px;
-  min-width: 1115px;
+  width: 1020px;
+  min-width: 1020px;
 }
 
 #user-manage-table th:nth-child(1),
@@ -12,11 +12,7 @@
 #user-manage-table th:nth-child(9),
 #user-manage-table td:nth-child(9),
 #user-manage-table th:nth-child(11),
-#user-manage-table td:nth-child(11),
-#user-manage-table th:nth-child(12),
-#user-manage-table td:nth-child(12),
-#user-manage-table th:nth-child(13),
-#user-manage-table td:nth-child(13) {
+#user-manage-table td:nth-child(11) {
   width: 50px;
   min-width: 50px;
 }
@@ -59,8 +55,8 @@
 /* #################### 组别表尺寸 #################### */
 
 #role-manage-table {
-  width: 1090px;
-  min-width: 1090px;
+  width: 1110px;
+  min-width: 1110px;
 }
 
 #role-manage-table th,
@@ -96,8 +92,8 @@ tr td:nth-child(3) input {
 /* #################### 权限表尺寸 #################### */
 
 #permission-manage-table {
-  width: 1115px;
-  min-width: 1115px;
+  width: 1120px;
+  min-width: 1120px;
 }
 
 
@@ -145,8 +141,8 @@ tr td:nth-child(3) input {
 /* #################### 项目表尺寸 #################### */
 
 #project-manage-table {
-  width: 1105px;
-  min-width: 1105px;
+  width: 1110px;
+  min-width: 1110px;
 }
 
 #project-manage-table th,

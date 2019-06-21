@@ -10,6 +10,7 @@ from .. import FLY_DIR, admin_required
 @admin.route('/')
 @admin_required
 def admin_index():
+    db.create_all()
     return render_template('admin/admin_index.html')
 
 
@@ -142,25 +143,29 @@ def ajax_update_projects():
     all_folders = os.listdir(FLY_DIR)
     project_list = []
     for folder in all_folders:
-        if not os.path.isdir(os.path.join(FLY_DIR, folder)):
+        folder_path = os.path.join(FLY_DIR, folder)
+        if not os.path.isdir(folder_path):
             continue
-        project_url = os.path.join(FLY_DIR, folder, 'main.fly')
-        if os.path.isfile(project_url):
-            project_list.append((folder, project_url))
+        pj_names = os.listdir(folder_path)
+        for pj_name in pj_names:
+            project_url = os.path.join(folder_path, pj_name, 'main.fly')
+            if os.path.isfile(project_url):
+                project_list.append(
+                    (folder, pj_name, project_url.replace(" ", "%20")))
     all_projects_names = db.session.query(Project.name).all()
     changes = []
-    for folder, project_url in project_list:
-        if (folder,) not in all_projects_names:
-            des_path = os.path.join(FLY_DIR, folder, 'note.txt')
+    for folder, pj_name, project_url in project_list:
+        if (pj_name,) not in all_projects_names:
+            des_path = os.path.join(FLY_DIR, folder, pj_name, 'note.txt')
             if os.path.isfile(des_path):
                 try:
                     with open(des_path, 'r', encoding='utf-8') as f:
                         description = f.read()
-                except:
+                except UnicodeDecodeError:
                     description = "(请使用utf-8编码)"
             else:
                 description = ""
-            new_pj = Project(name=folder, url=project_url,
+            new_pj = Project(name=pj_name, folder=folder, url=project_url,
                              description=description)
             changes.append(new_pj)
     if not changes:
@@ -181,12 +186,13 @@ def ajax_update_project_description():
     changes = []
     all_projects = Project.query.all()
     for project in all_projects:
-        des_path = os.path.join(FLY_DIR, project.name, 'note.txt')
+        des_path = os.path.join(FLY_DIR, project.folder,
+                                project.name, 'note.txt')
         if os.path.isfile(des_path):
             try:
                 with open(des_path, 'r', encoding='utf-8') as f:
                     description = f.read
-            except:
+            except UnicodeDecodeError:
                 description = '(请使用utf-8编码)'
         else:
             description = '(暂无描述)'
