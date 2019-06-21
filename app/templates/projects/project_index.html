@@ -49,11 +49,11 @@
               <img src={{ url_for("static", filename="images/pj_icon.png") }}>
               <h4 title={{ name }}>{{ name }}</h4>
               <!-- <a href={{ "https://www.baidu.com" }} target="_blank" onclick="stopBubble(event)">详情</a> -->
-              <a href={{ url_for("static", filename="fly_projects/" + name + "/statics.html") }} target="_blank"
-                onclick="stopBubble(event)">详情</a>
+              <a href={{ url_for("static", filename="fly_projects/" + folder + "/" + name + "/statics.html") }}
+                target="_blank" onclick="stopBubble(event)">详情</a>
             </div>
             <div class=" project-plate-body">
-              <img src={{ url_for("static", filename="fly_projects/" + name + "/logo.jpg") }}
+              <img src={{ url_for("static", filename="fly_projects/" + folder + "/" + name + "/logo.jpg") }}
                 onerror="setDefaultImage(this)" alt="暂无图片">
             </div>
             <p class="project-plate-footer">{{ description | default("", True) }}</p>
