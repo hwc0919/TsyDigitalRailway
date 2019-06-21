@@ -1,3 +1,4 @@
+from collections import defaultdict
 import datetime
 import os
 
@@ -12,14 +13,13 @@ from .sidebar_menu import ITEMS
 @projects.route('/')
 @login_required
 def project_index():
-    if 'project_list' in session:
-        project_list = session['project_list']
-    else:
-        cur_user = User.query.filter_by(id=session['user']['id']).first()
-        all_projects = Project.query.all()
-        project_list = [(pj.id, pj.name, pj.description) for pj in all_projects
-                        if cur_user.check_permission(pj.group)]
-        session['project_list'] = project_list
+    cur_user = User.query.filter_by(id=session['user']['id']).first()
+    all_projects = Project.query.all()
+    project_list = defaultdict(list)
+    for pj in all_projects:
+        if cur_user.check_permission(pj.group):
+            project_list[pj.folder].append(
+                (pj.id, pj.name, pj.description))
     return render_template("projects/project_index.html", project_list=project_list)
 
 

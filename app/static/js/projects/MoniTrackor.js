@@ -47,6 +47,10 @@ function AttachDynamicObject(lineID, sname, objfile, sc, altitude) {
 }
 
 function simRun() {
+    if (mCurCaseID == "") {
+        showPrompt("没有选择可用线路");
+        return;
+    }
     var routetype = SGWorld.ProjectTree.GetClientData(mCurCaseID, "RouteType");
     var str = "_" + SGWorld.ProjectTree.GetItemName(mCurCaseID) + "_" + Date.now().toString();
 
@@ -85,6 +89,10 @@ function simRun() {
 
 
 function simFly() {
+    if (mCurCaseID == "") {
+        showPrompt("没有选择可用线路");
+        return;
+    }
     var LineID = skTools.FindFirstObjectID("基线", mCurCaseID);
     var str = "_" + SGWorld.ProjectTree.GetItemName(mCurCaseID) + "_" + Date.now().toString();
     var mplane = AttachDynamicObject(LineID, "飞机巡航" + str, LibPath + "\\Common\\Boeing787.xpl2", 5.0, 1000);

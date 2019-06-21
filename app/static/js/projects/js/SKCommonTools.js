@@ -59,16 +59,16 @@ var SKCommonTools = /** @class */ (function () {
         for (var _i = 0, mRes_1 = mRes; _i < mRes_1.length; _i++) {
             var sid = mRes_1[_i];
             try {
-                mark = this.SGWorld.ProjectTree.GetClientData(sid, '节点类型');
+                mark = this.SGWorld.ProjectTree.GetClientData(sid, "节点类型");
             }
             catch (error) {
                 console.log(error);
             }
-            if (mark === '项目节点') {
+            if (mark === "项目节点") {
                 return sid;
             }
         }
-        return '';
+        return "";
     };
     // <summary>
     // 递归遍历查找ParentID节点下所有的节点名称为objName的所有ID

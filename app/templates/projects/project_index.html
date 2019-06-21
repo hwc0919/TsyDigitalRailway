@@ -3,6 +3,7 @@
 
 {% block css %}
 {{ super() }}
+<link rel="stylesheet" href={{ url_for("static", filename="css/index.css") }}>
 <link rel="stylesheet" href={{ url_for("static", filename="css/projects/project_index.css") }}>
 {% endblock %}
 
@@ -19,43 +20,82 @@
 
 {% block container %}
 <div class="container">
-  <div class="project-list">
-    {% if not project_list %}
-    <h1 class="placeholder"><br>没有对应权限的项目可供浏览, 请联系管理员</h1>
-    {% endif %}
-    {% for pid, name, description in project_list %}
-    <div class="project-plate" data-project-id={{ pid }}>
-      <div class="project-plate-header">
-        <img src={{ url_for("static", filename="images/pj_icon.png") }}>
-        <h4>{{ name }}</h4>
-      </div>
-      <div class="project-plate-body">
-        <img src={{ url_for("static", filename="fly_projects/" + name + "/logo.jpg") }} onerror="setDefaultImage(this)"
-          alt="暂无图片">
-      </div>
-      <p class="project-plate-footer">{{ description | default("", True) }}</p>
+  <div class="left-menu-col noselect">
+    <button type="button" class="left-menu-toggle-btn">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </button>
+    <div class="left-menu-toggle-wrapper">
+      <h1 class="left-menu-head">目录</h1>
+      <ul class="left-menu-list">
+        {% for folder in project_list %}
+        <li class="left-menu-item" data-target-panel={{ folder }} }}>
+          {{ folder }}
+        </li>
+        {% endfor %}
+      </ul>
     </div>
-    {% endfor %}
-    <div class="project-plate empty-plate"></div>
-    <div class="project-plate empty-plate"></div>
-    <div class="project-plate empty-plate"></div>
+  </div>
+  <div class="right-content-col">
+    <div class="panel-group">
+      {% if not project_list %}
+      <h1 class="placeholder"><br>没有对应权限的项目可供浏览, 请联系管理员</h1>
+      {% endif %}
+      {% for folder in project_list %}
+      <div class="content-panel projects-panel" data-panel-name={{ folder }}>
+        <div class="project-list">
+          {% for pid, name, description in project_list[folder] %}
+          <div class="project-plate" data-project-id={{ pid }}>
+            <div class="project-plate-header">
+              <img src={{ url_for("static", filename="images/pj_icon.png") }}>
+              <h4 title={{ name }}>{{ name }}</h4>
+              <!-- <a href={{ "https://www.baidu.com" }} target="_blank" onclick="stopBubble(event)">详情</a> -->
+              <a href={{ url_for("static", filename="fly_projects/" + name + "/statics.html") }} target="_blank"
+                onclick="stopBubble(event)">详情</a>
+            </div>
+            <div class=" project-plate-body">
+              <img src={{ url_for("static", filename="fly_projects/" + name + "/logo.jpg") }}
+                onerror="setDefaultImage(this)" alt="暂无图片">
+            </div>
+            <p class="project-plate-footer">{{ description | default("", True) }}</p>
+          </div>
+          {% endfor %}
+          <div class="project-plate empty-plate"></div>
+          <div class="project-plate empty-plate"></div>
+          <div class="project-plate empty-plate"></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
+
 {% endblock%}
 
 
 {% block js %}
 {{ super() }}
+<script src={{ url_for("static", filename="js/index.js") }}></script>
 <script>
   jQuery(document).ready(function () {
+    // 为项目设置链接
     jQuery(".project-plate").click(function () {
-      url = "/projects/explore?pid=" + jQuery(this).attr("data-project-id");
+      var url = "/projects/explore?pid=" + jQuery(this).attr("data-project-id");
       window.open(url, "_blank");
     })
   })
 
+  // 设置默认图片
   function setDefaultImage(source) {
     source.src = '{{ url_for("static", filename="images/project.jpg") }}';
+  }
+  function stopBubble(e) {
+    //如果提供了事件对象，则这是一个非IE浏览器 
+    if (e && e.stopPropagation)
+      //因此它支持W3C的stopPropagation()方法
+      e.stopPropagation();
+    else
+      //否则，我们需要使用IE的方式来取消事件冒泡 
+      window.event.cancelBubble = true;
   }
 </script>
 {% endblock %}

@@ -44,24 +44,6 @@ def ajax_load_folder(folder):
     return render_template('video.html', video_list=video_list)
 
 
-# @main.route('/search')
-# def search():
-#     result = session.get('search_result')
-#     if result is not None:
-#         return render_template('search.html')
-#     keywords = request.args.get('video_name')
-#     if keywords is None:
-#         return redirect(url_for('.index'))
-#     keywords = keywords.replace('+', ' ').strip()
-#     keywords = re.split(r'\s+', keywords)
-#     video_folders = session.get('video_folders')
-#     if not video_folders:
-#         all_dirs = os.listdir(VIDEO_DIR)
-#         video_folders = [folder for folder in all_dirs if os.path.isdir(
-#             os.path.join(VIDEO_DIR, folder))]
-#     session['search_result'] = match(video_folders, keywords)
-#     return json.dumps({'status': True, 'message': '搜索成功', 'url': '/search'})
-
 @main.route('/search', methods=['GET', 'POST'])
 def search():
     keywords = request.form.get('keywords').strip().replace('+', ' ').lower()
