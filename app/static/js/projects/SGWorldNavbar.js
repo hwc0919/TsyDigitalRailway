@@ -54,6 +54,10 @@ function viewVerticalSection() {
   else if (itemName.indexOf('隧道') > -1) {
     url = originUrl + "/static/plugins/ZDMDesigner/TunnelChart.html?ObjID=" + mCurID + '&Step=25&Caption=纵断面';
   }
+  else {
+    showPrompt("没有选择可用对象");
+    return;
+  }
   if (url !== "") {
     var msg = SGWorld.Creator.CreatePopupMessage("纵断面", url, 1, SGWorld.Window.Rect.Height * 2 / 3, SGWorld.Window.Rect.Width - 2, SGWorld.Window.Rect.Height / 3, -1);
     msg.Flags = flags;
@@ -65,10 +69,11 @@ function viewVerticalSection() {
 // 提取横断面
 function extractCrossSection() {
   if (!SGWorld) {
+    showPrompt("没有可用项目");
     return;
   }
-  showPrompt("数据计算中, 请稍后...");
   if (mCurCaseID != "") {
+    showPrompt("数据计算中, 请稍后...");
     var sn = SGWorld.ProjectTree.GetItemName(mCurCaseID);
     var slc, elc, step, range, sampe;
     slc = parseFloat(SGWorld.ProjectTree.GetClientData(mCurCaseID, "StartLC"));
@@ -103,14 +108,15 @@ function extractCrossSection() {
   }
   else {
     //对当前选择的线要素提取地面线
-    var mCurID = skTools.GetSelFeatureID();
-    var sn = SGWorld.ProjectTree.GetItemName(mCurID);
+    showPrompt("没有选择可用对象");
+    return
   }
 }
 
 // 提取地面线
 function extractVerticalSection() {
   if (!SGWorld) {
+    showPrompt("没有可用项目");
     return;
   }
   if (mCurCaseID != "") {
@@ -118,16 +124,7 @@ function extractVerticalSection() {
     export_array_to_csv(dmx.gGridArray[0], sn + '地面线.csv');
   }
   else {
-    //对当前选择的线要素提取地面线
-    var mCurID = skTools.GetSelFeatureID();
-    var sn_1 = SGWorld.ProjectTree.GetItemName(mCurID);
-    var obj = SGWorld.ProjectTree.GetObject(mCurID);
-    //  if(typeof(obj) ==  ITerrainPolyline70)
-    // {
-    // }
-    alert(typeof (obj));
-    // this.commonVar.dmx.DMX_DrawByDist();
-    alert("todo");
+    showPrompt("没有选择可用对象");
   }
 }
 
@@ -162,14 +159,14 @@ function export_array_to_csv(data, filename) {
 // 查看工程数量
 function checkProjectNumber() {
   if (SGWorld) {
-    alert('todo');
+    showPrompt("未启用");
   }
 }
 
 // 生成行政区划表
 function genAdministrativeDivisions() {
   if (SGWorld) {
-    alert('todo');
+    showPrompt("未启用");
   }
 }
 
@@ -177,7 +174,7 @@ function genAdministrativeDivisions() {
 // 加载网络地图
 function loadIMap() {
   if (SGWorld) {
-    var url = "\\\\192.10.15.200\\FLYProject\\全国基础地理信息数据\\地理环境.fly";
+    var url = "\\\\192.10.15.200\\FLYProject\\数字中国\\全国基础地理信息数据\\地理环境.fly";
     SGWorld.ProjectTree.LoadFlyLayer(url);
   }
 }
@@ -269,19 +266,3 @@ function analogflight() {
     simFly();
   }
 }
-
-
-// // 飞行鸟瞰
-// function analogflight() {
-//   if (this.sgWorld) {
-//     let mTrack = new MoniTrackor(this.sgWorld, null)
-//     mTrack.Fly()
-//   }
-// }
-// // 进度模拟
-// function analogProgress() {
-//   if (this.sgWorld) {
-//     // let mShow = new TimeSliderBar();
-//     // mShow.Show();
-//   }
-// }

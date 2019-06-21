@@ -141,9 +141,10 @@ class Project(db.Model):
     __tablename__ = 'projects'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)
+    folder = db.Column(db.String(20), nullable=False)
     description = db.Column(db.Text)
     url = db.Column(db.String(128))
-    group = db.Column(db.Integer, default=2)
+    group = db.Column(db.Integer, default=100)
 
     # def __init__(self, **kwargs):
     #     super(Project, self).__init__(**kwargs)

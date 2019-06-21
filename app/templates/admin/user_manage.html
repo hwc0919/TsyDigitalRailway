@@ -11,8 +11,6 @@
       <th class="th-gender">性别</th>
       <th class="th-age">年龄</th>
       <th class="th-role">用户组</th>
-      <th class="th-active">激活</th>
-      <th class="th-delete">弃用</th>
       <th class="th-detail">详情</th>
     </tr>
   </thead>
@@ -30,8 +28,6 @@
       <td>{{ user.gender | default("", True) }}</td>
       <td>{{ user.age | default("", True) }}</td>
       <td>{{ user.role.name }}</td>
-      <td>{{ user.active | default("", True) }}</td>
-      <td>{{ user.delete | default("", True) }}</td>
       <td><a href={{ "/account/{}".format(user.id) }} target="_blank">详情</a></td>
     </tr>
     {% endfor %}
