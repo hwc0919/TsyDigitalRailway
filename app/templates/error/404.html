@@ -55,8 +55,10 @@
   // 倒计时自动跳转
   var count = jQuery(".count-down").text();
   function countDown() {
-    if (count == 0) {
+    if (count <= 0) {
       window.history.back();
+      window.open('/');
+      return;
     }
     jQuery(".count-down").text(count--);
     setTimeout("countDown()", 1000);

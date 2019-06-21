@@ -1,8 +1,11 @@
 var HDM_isStart = false;
 var HDM_prelc = -1;
+
 function HDM_Start() {
-    if (!mileageReady)
+    if (!mileageReady) {
+        showPrompt("没有选择可用线路");
         return;
+    }
     SGWorld.AttachEvent('OnLButtonDown', MSGWorld_OnLButtonDown);
 }
 //  ITerrain3DRectBase70 mBox = null;
