@@ -11,7 +11,7 @@
     <div class="slider-container">
       {% for image in images %}
       <div class="slider-content" data-content-id={{ loop.index }}>
-        <img class="slider-img" src={{ url_for("static", filename=("fly_projects/风采展示/" + image)) }}>
+        <img class="slider-img" src={{ url_for("static", filename=("FLYProject/其他资源/风采展示/" + image)) }}>
         <h6>{{ image[:-4] }}</h6>
       </div>
       {% endfor %}

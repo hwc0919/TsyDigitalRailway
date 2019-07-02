@@ -10,7 +10,7 @@ from config import config
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 VIDEO_DIR = os.path.join(BASE_DIR, 'static/video')
-OVERVIEW_DIR = "\\\\192.10.15.200\\FLYProject\\风采展示"
+OVERVIEW_DIR = "\\\\192.10.15.200\\FLYProject\\其他资源\\风采展示"
 FLY_DIR = "\\\\192.10.15.200\\FLYProject"
 
 db = SQLAlchemy()

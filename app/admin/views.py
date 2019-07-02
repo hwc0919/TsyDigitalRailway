@@ -191,7 +191,7 @@ def ajax_update_project_description():
         if os.path.isfile(des_path):
             try:
                 with open(des_path, 'r', encoding='utf-8') as f:
-                    description = f.read
+                    description = f.read()
             except UnicodeDecodeError:
                 description = '(请使用utf-8编码)'
         else:

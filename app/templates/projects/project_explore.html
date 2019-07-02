@@ -161,26 +161,35 @@
 
 {% block js %}
 {{ super() }}
+<!-- 地面线类 -->
 <script src="/static/js/projects/js/DMXClass.js"></script>
+<!-- SKTools类 -->
 <script src="/static/js/projects/js/SKCommonTools.js"></script>
+<!-- 横断面相关函数 -->
 <script src="/static/js/projects/HDMCrossBox.js"></script>
+<!-- 飞行模拟, 列车模拟相关函数 -->
 <script src="/static/js/projects/MoniTrackor.js"></script>
+<!-- 右侧弹出菜单, SGWorld.Command.Excecute 接口 -->
 <script src="/static/js/projects/run_command.js"></script>
+<!-- SGWorld事件函数: init, onLoadFinished, onButtonClicked, onProjectTreeAction -->
 <script src="/static/js/projects/SGWorldEvents.js"></script>
+<!-- 顶部导航栏功能函数 -->
 <script src="/static/js/projects/SGWorldNavbar.js"></script>
+<!-- jquery确认框插件 -->
 <script src="/static/tools/jquery-confirm.min.js"></script>
 <script>
   jQuery(document).ready(function () {
+    // 显示右侧弹出菜单动画
     jQuery(".sidebar-indicator").mouseenter(function () {
       jQuery(".sidebar").css("transform", "scaleX(1)")
         .children(".iframe-placeholder").css("display", "block");
     })
-
+    // 关闭右侧菜单
     jQuery("#close-sidebar-btn").click(function () {
       jQuery(".sidebar").css("transform", "scaleX(0)")
         .children(".iframe-placeholder").css("display", "none");
     })
-
+    // 右侧菜单子菜单
     jQuery(".sidebar-submenu-btn").click(function () {
       var cur = jQuery(this);
       if (cur.next("ul").hasClass("submenu-visible")) {
@@ -193,18 +202,19 @@
         cur.next("ul").addClass("submenu-visible");
       }
     })
-
+    // 初始化SGWorld
     SGWorldInit();
   })
-  function showPrompt(message) {
+
+  // 自定义确认提示框，取代alert
+  function showPrompt(message, timeout) {
     try {
       clearTimeout(promptTimeout);
     }
     catch (err) {
     }
-    var timeout = 1000;
-    if (arguments.length > 1) {
-      timeout = arguments[1];
+    if (!timeout) {
+      var timeout = 1000;
     }
     if (message) {
       jQuery("#hdm-prompt span").text(message);

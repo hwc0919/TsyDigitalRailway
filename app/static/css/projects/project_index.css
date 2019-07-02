@@ -69,14 +69,16 @@
   font-weight: bold;
 }
 
-.project-plate-header a {
+.project-plate-header .project-detail-togle-btn {
+  height: 100%;
   margin-left: auto;
   min-width: 30px;
   font-size: 14px;
+  position: relative;
 }
 
-.project-plate-header a:hover {
-  text-decoration:underline
+.project-plate-header .project-detail-togle-btn h5 {
+  padding: 5px;
 }
 
 .project-plate-body {
@@ -103,4 +105,52 @@
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   word-break: break-all;
+}
+
+.project-detail-cascade-menu {
+  width: auto;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  list-style: none;
+  text-align: right;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: snow;
+  padding: 10px 15px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: 0.2s;
+  z-index: 2;
+}
+
+.project-detail-cascade-menu li {
+  width: auto;
+  white-space: nowrap;
+}
+
+.project-detail-cascade-menu::after {
+  content: "";
+  position: absolute;
+  background-color: snow;
+  border-top: 1px solid gray;
+  border-left: 1px solid gray;
+  z-index: -1;
+  width: 10px;
+  height: 10px;
+  top: -6px;
+  right: 20px;
+  transform: rotate(45deg);
+}
+
+.project-detail-cascade-menu a {
+  color: black;
+}
+
+.project-detail-cascade-menu a:hover {
+  text-decoration: underline;
+}
+
+.project-detail-togle-btn:hover .project-detail-cascade-menu {
+  transform: scaleY(1);
 }

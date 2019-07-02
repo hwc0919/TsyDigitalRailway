@@ -87,7 +87,6 @@ function simRun() {
     }
 }
 
-
 function simFly() {
     if (mCurCaseID == "") {
         showPrompt("没有选择可用线路");

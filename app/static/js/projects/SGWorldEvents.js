@@ -13,10 +13,13 @@ function SGWorldInit() {
   // 加载项目
   try {
     var project_url = jQuery("#TerraExplorer3DWindowEx").attr("data-project-url");
+    // alert(project_url);
     SGWorld.Project.open(project_url);
   }
   catch (err) {
+    alert(err);
     alert("项目加载失败, 请检查资源是否存在.");
+    return false;
   }
 }
 // OnLoadFinished

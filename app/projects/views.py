@@ -1,6 +1,7 @@
 from collections import defaultdict
 import datetime
 import os
+from urllib.parse import quote
 
 from flask import render_template, request, session, jsonify
 
@@ -18,8 +19,15 @@ def project_index():
     project_list = defaultdict(list)
     for pj in all_projects:
         if cur_user.check_permission(pj.group):
+            project_dir = os.path.join(FLY_DIR, pj.folder, pj.name)
+            lines = []
+            if os.path.exists(project_dir):
+                for line_dir in os.listdir(project_dir):
+                    if os.path.exists(os.path.join(project_dir, line_dir, 'statistics.html')):
+                        lines.append((line_dir, '/static/fly_projects/' + pj.folder +
+                                      '/' + pj.name + '/' + line_dir + '/' + 'statistics.html'))
             project_list[pj.folder].append(
-                (pj.id, pj.name, pj.description))
+                (pj.id, pj.name, pj.description, lines))
     return render_template("projects/project_index.html", project_list=project_list)
 
 

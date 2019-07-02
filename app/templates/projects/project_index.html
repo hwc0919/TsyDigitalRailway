@@ -43,17 +43,27 @@
       {% for folder in project_list %}
       <div class="content-panel projects-panel" data-panel-name={{ folder }}>
         <div class="project-list">
-          {% for pid, name, description in project_list[folder] %}
+          {% for pid, name, description, lines in project_list[folder] %}
           <div class="project-plate" data-project-id={{ pid }}>
             <div class="project-plate-header">
               <img src={{ url_for("static", filename="images/pj_icon.png") }}>
               <h4 title={{ name }}>{{ name }}</h4>
-              <!-- <a href={{ "https://www.baidu.com" }} target="_blank" onclick="stopBubble(event)">详情</a> -->
-              <a href={{ url_for("static", filename="fly_projects/" + folder + "/" + name + "/statics.html") }}
-                target="_blank" onclick="stopBubble(event)">详情</a>
+
+              {% if lines %}
+              <div class="project-detail-togle-btn" onclick="stopBubble(event)">
+                <h5>方案数量</h5>
+                <ul class="project-detail-cascade-menu">
+                  {% for name, url in lines %}
+                  <li><a href={{ url }}><span>{{ name }}</span>
+                    </a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+
             </div>
             <div class=" project-plate-body">
-              <img src={{ url_for("static", filename="fly_projects/" + folder + "/" + name + "/logo.jpg") }}
+              <img src={{ url_for("static", filename="FLYProject/" + folder + "/" + name + "/logo.jpg") }}
                 onerror="setDefaultImage(this)" alt="暂无图片">
             </div>
             <p class="project-plate-footer">{{ description | default("", True) }}</p>
@@ -68,7 +78,6 @@
     </div>
   </div>
 </div>
-
 {% endblock%}
 
 
