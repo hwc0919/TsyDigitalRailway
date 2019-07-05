@@ -11,6 +11,7 @@ os.chdir(base_dir)
 class Demon:
     def __init__(self, port):
         self.port = port
+        self.on = True
 
     def demon(self):
         print(f'\n数字铁路服务器守护进程运行中... {datetime.datetime.now()}')
@@ -18,9 +19,13 @@ class Demon:
         while True:
             result = os.popen(f'netstat -ano | findstr {self.port}')
             if not result.read():
+                if not self.on:
+                    print('Demon: 守护模式已关闭, 服务器不会重启')
+                    time.sleep(60)
+                    continue
                 os.system(f"pythonw server.py --host 0.0.0.0 -p {self.port}")
                 print(
-                    f'\nDemon: 服务器重启中 {datetime.datetime.now()}\n')
+                    f'\nDemon: 服务器重启 {datetime.datetime.now()}\n')
                 with open('logs/demon.log', 'a') as f:
                     f.write(f'restart server at {datetime.datetime.now()}\n')
             time.sleep(30)
@@ -37,14 +42,24 @@ class Demon:
                 find = True
                 print(f'找到进程: {line}')
         if not find:
-            print('没有找到监听 {self.port} 端口的进程(服务器重启可能存在延迟)')
+            print(f'没有找到监听 {self.port} 端口的进程')
 
     def kill(self, pid):
         os.system(f'taskkill /pid {pid} /F /t')
 
+    def start(self):
+        self.on = True
+        print('启动守护模式')
+
+    def stop(self):
+        self.on = False
+        print('停止守护模式')
+
     def print_help(self):
         print(f'\n输入 "search" 查询{self.port}端口已启动的服务器进程')
-        print('输入 "kill <进程号>" 终止已启动的服务器进程\n')
+        print('输入 "kill <进程号>" 终止已启动的服务器进程')
+        print('输入 "start" 启动守护模式(默认为启动状态)')
+        print('输入 "stop" 终止守护模式(配合kill使用可不再重启服务器)\n')
 
 
 def main():
@@ -73,6 +88,10 @@ def main():
         elif op.startswith('kill'):
             pid = op.split()[-1]
             demon.kill(pid)
+        elif op == 'start':
+            demon.start()
+        elif op == 'stop':
+            demon.stop()
         else:
             print('输入错误, 请重试')
 
