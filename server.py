@@ -1,10 +1,21 @@
 import argparse
+import logging
+import logging.handlers
 import os
+import sys
 
 from app import create_app, db
 from app.models import Log, Role, User
 
+f = open('logs/stdout.txt', 'a', encoding='utf-8')
+sys.stdout = f
+
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+
+logging.basicConfig(level=logging.DEBUG)
+filehandler = logging.handlers.TimedRotatingFileHandler(
+    "logs/flask.log", "M", 1, 0, encoding='utf-8')
+logging.getLogger().addHandler(filehandler)
 
 
 @app.shell_context_processor

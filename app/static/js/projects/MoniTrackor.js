@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-var LibPath = "\\\\192.10.15.200\\FLYProject";
+var LibPath = "\\\\192.10.15.200\\FLYProject\\其他资源";
 var mLinePos = null;
 var CircularRouteType = {
     CRT_STOP_AT_THE_END: 0,

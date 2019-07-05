@@ -4,3 +4,4 @@ __pycache__/
 video/
 FLYProject/
 upload/*
+logs/*

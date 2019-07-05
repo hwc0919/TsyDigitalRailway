@@ -193,13 +193,14 @@
     jQuery(".sidebar-submenu-btn").click(function () {
       var cur = jQuery(this);
       if (cur.next("ul").hasClass("submenu-visible")) {
-        cur.next("ul").removeClass("submenu-visible");
+        cur.next("ul").removeClass("submenu-visible").height(0);
         cur.children("i.fa-angle-right").css("transform", "rotate(0)");
       } else {
-        jQuery("ul.submenu-visible").removeClass("submenu-visible")
+        var height = Math.ceil(cur.next("ul").children("li").length / Math.floor(cur.next("ul").width() / 88)) * 88;
+        jQuery("ul.submenu-visible").removeClass("submenu-visible").height(0)
           .prev().children("i.fa-angle-right").css("transform", "rotate(0)");
         cur.children("i.fa-angle-right").css("transform", "rotate(90deg)");
-        cur.next("ul").addClass("submenu-visible");
+        cur.next("ul").addClass("submenu-visible").height(height + "px");
       }
     })
     // 初始化SGWorld

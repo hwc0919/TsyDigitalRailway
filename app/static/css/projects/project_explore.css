@@ -233,8 +233,6 @@ a {
 
 .submenu-visible {
   transform: scaleY(1) !important;
-  height: auto !important;
-  overflow: visible;
 }
 
 .sidebar-row ul li {

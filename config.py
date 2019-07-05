@@ -27,18 +27,12 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('PRODUCTION_DATABASE_URL') or \
-        'postgresql://postgres:user1418@localhost:5432/tsy'
-
-
-class HomeConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get('HOME_DATABASE_URL') or \
-        'postgresql://postgres:0392@localhost:5432/testdb'
+        'postgresql://postgres:user1418@localhost:5432/tsy_digital_railway'
 
 
 config = {
     'development': DevelopmentConfig,
     'testing': TestingConfig,
     'production': ProductionConfig,
-    'home': HomeConfig,
     'default': DevelopmentConfig
 }

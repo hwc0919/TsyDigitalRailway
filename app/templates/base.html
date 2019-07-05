@@ -8,7 +8,7 @@
   <title>{% block title %}三维数字铁路网络应用系统{% endblock title %}</title>
   {% block css %}
   <link rel="shortcut icon" href={{ url_for("static", filename="images/favicon.ico") }} type="image/x-icon">
-  <link rel="stylesheet" href={{ url_for("static", filename="css/font-awesome/css/font-awesome.min.css") }}>
+  <link rel="stylesheet" href={{ url_for("static", filename="tools/font-awesome/css/font-awesome.min.css") }}>
   <link rel="stylesheet" href={{ url_for("static", filename="css/base.css") }}>
   <link rel="stylesheet" href={{ url_for("static", filename="css/my_framework.css") }}>
   {% endblock css %}
@@ -113,7 +113,7 @@
   {% endblock %}
 
   {% block js %}
-  <script src={{ url_for("static", filename="js/jquery-3.4.0.min.js") }}></script>
+  <script src={{ url_for("static", filename="tools/jquery-3.4.0.min.js") }}></script>
   <script src={{ url_for("static", filename="js/base.js") }}></script>
   {% endblock %}
 </body>

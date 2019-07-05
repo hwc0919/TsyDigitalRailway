@@ -1,12 +1,10 @@
-import json
 import os
 import re
 import time
 
 from flask import abort, redirect, render_template, request, session, url_for
 
-from .. import OVERVIEW_DIR, VIDEO_DIR, db
-from ..models import Role, User
+from .. import OVERVIEW_DIR, VIDEO_DIR
 from . import main
 
 

@@ -1,10 +1,6 @@
 var fovDegrees = [90.0, 70.0, 53.0, 45.0, 35.0, 25.0, 15.0]
 var fovIndex = 0
 
-var smokeKinds = ["Chemney smoke white", "Chimney smoke grey", "Chimney smoke black",
-  "Chimney smoke thin", "Chimney smoke verticall gray",
-  "Chimney smoke vertical black", "Fire smoke white", "Fire smoke gray"]
-
 function Run(id) {
   switch (id) {
     case "select":

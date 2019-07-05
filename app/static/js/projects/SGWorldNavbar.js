@@ -174,7 +174,7 @@ function genAdministrativeDivisions() {
 // 加载网络地图
 function loadIMap() {
   if (SGWorld) {
-    var url = "\\\\192.10.15.200\\FLYProject\\数字中国\\全国基础地理信息数据\\地理环境.fly";
+    var url = "\\\\192.10.15.200\\FLYProject\\实景中国\\全国基础地理信息数据\\地理环境.fly";
     SGWorld.ProjectTree.LoadFlyLayer(url);
   }
 }
@@ -211,7 +211,6 @@ function loadKmlFly() {
     });
   }
 }
-
 
 // 从服务器加载
 function loadFromServer() {
