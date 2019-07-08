@@ -47,9 +47,10 @@ class Role(db.Model):
                            password='tsy1418system', role=admin_role)
         server_user = User(username='server',
                            password='tsy1418server', role=admin_role)
+        admin = User(username='admin', password='admin', role=admin_role)
         guest_user = User(username='guest', password='guest', role=user_role)
         db.session.add_all(
-            [admin_role, user_role, system_user, server_user, guest_user])
+            [admin_role, user_role, system_user, server_user, admin, guest_user])
         db.session.commit()
 
 
@@ -117,11 +118,10 @@ class User(db.Model):
     def add_test_data():
         admin_role = Role.query.filter_by(name='Admin').first()
         user_role = Role.query.filter_by(name='User').first()
-        admin = User(username='admin', password='admin', role=admin_role)
         user = User(username='user', password='user', role=user_role)
         hwc = User(username='hwc0919', password='123456', realname='何莞晨',
                    email='hwc14@qq.com', phone='17888830919', role=admin_role)
-        db.session.add_all([admin, user, hwc])
+        db.session.add_all([user, hwc])
         db.session.commit()
 
 
