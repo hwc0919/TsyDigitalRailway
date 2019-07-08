@@ -6,7 +6,7 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'user1418'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PERMANENT_SESSION_LIFETIME = timedelta(days=2)
-    SEND_FILE_MAX_AGE_DEFAULT = timedelta(seconds=1)
+    # SEND_FILE_MAX_AGE_DEFAULT = timedelta(seconds=1)
 
     @staticmethod
     def init_app(app):
