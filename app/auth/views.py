@@ -33,6 +33,7 @@ def login_handler():
                            'username': username,
                            'role_name': user.role.name,
                            'is_admin': user.is_admin()}
+        session.permanent = True
         return jsonify({'status': True, 'message': '登陆成功, 即将自动跳转', 'url': '/'})
 
 
