@@ -1,5 +1,9 @@
 // init SGWorld
 function SGWorldInit() {
+  if (!window.ActiveXObject && !("ActiveXObject" in window)) {
+    alert("请使用IE浏览器");
+    return false;
+  }
   // 创建SGWorld
   try {
     TerraExplorerInformationWindowEx.AttachTo3dWindow(TerraExplorer3DWindowEx);
@@ -7,8 +11,22 @@ function SGWorldInit() {
     SGWorld.AttachEvent("OnLoadFinished", OnLoadFinished);
   }
   catch (err) {
-    alert('您的浏览器不支持ActiveX控件, 请使用IE浏览器重新打开页面.');
+    alert('您的计算机尚未安装TerraExplore,请前往首页根据提示安装。');
     return false;
+  }
+
+  // 激活权限
+  var alert_bak = window.alert;
+  window.alert = function () {
+    return false;
+  }
+  try {
+    var mCmd = new ActiveXObject("AxRGUDun.WebLogin");
+    mCmd.ConnectToRIMServer();
+  } catch (err) {
+    showPrompt("局域网权限控件未安装或工作异常");
+  } finally {
+    window.alert = alert_bak;
   }
   // 加载项目
   try {
@@ -17,8 +35,7 @@ function SGWorldInit() {
     SGWorld.Project.open(project_url);
   }
   catch (err) {
-    alert(err);
-    alert("项目加载失败, 请检查资源是否存在.");
+    alert("项目资源不存在或未安装局域网权限控件, 无法正常打开项目。")
     return false;
   }
 }

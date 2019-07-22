@@ -2,7 +2,7 @@ jQuery(document).ready(function () {
   // 加载首页
   jQuery(".content-panel[data-panel-name='overview-panel']").load('/ajax_load/overview', function (response, status, xhr) {
     if (status == "error") {
-      jQuery(this).html('<h1 class="placeholder">内容加载失败</h1>');
+      jQuery(this).html('<h1 class="placeholder">内容加载失败</h1><link rel="stylesheet" href="/static/css/content_base.css">');
     }
   });
 

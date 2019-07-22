@@ -8,21 +8,27 @@ from flask_sqlalchemy import SQLAlchemy
 from config import config
 
 
+# 路径常量
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 VIDEO_DIR = os.path.join(BASE_DIR, 'static/video')
 OVERVIEW_DIR = "\\\\192.10.15.200\\FLYProject\\其他资源\\风采展示"
 FLY_DIR = "\\\\192.10.15.200\\FLYProject"
 
+# 初始化数据库ORM
 db = SQLAlchemy()
 
 
+# 初始化服务器变量app
 def create_app(config_name):
     app = Flask(__name__)
+    # 载入配置
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
+    # db关联app
     db.init_app(app)
 
+    # 注册蓝本
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
@@ -38,7 +44,7 @@ def create_app(config_name):
     return app
 
 
-# 登录限制装饰器
+# 登录限定装饰器
 def login_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -48,7 +54,7 @@ def login_required(func):
             return redirect(url_for('auth.login'))
     return wrapper
 
-
+# 管理员限定装饰器
 def admin_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):

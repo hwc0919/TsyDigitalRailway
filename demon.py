@@ -24,7 +24,7 @@ class Demon:
                     time.sleep(60)
                     continue
                 os.system(
-                    f"pythonw server.py --host 0.0.0.0 -p {self.port} -r 1")
+                    f"pythonw server.py --host 0.0.0.0 -p {self.port} -d 0 -r 1")
                 print(
                     f'\nDemon: 服务器重启 {datetime.datetime.now()}\n')
                 with open('logs/demon.log', 'a') as f:

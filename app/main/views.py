@@ -76,3 +76,8 @@ def ajax_load_search_result():
     if not video_list:
         return '<h1 class="placeholder">没有找到相关视频...</h1>'
     return render_template('video.html', video_list=video_list)
+
+
+@main.route('/controller_instruction')
+def controller_instruction():
+    return render_template('controller_instruction.html')

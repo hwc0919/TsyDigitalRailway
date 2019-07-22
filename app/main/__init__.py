@@ -4,4 +4,5 @@ from flask import Blueprint          # 第一行
 
 main = Blueprint('main', __name__)    # 第二行
 
-from . import views, errors          # 第三行
+if True:
+    from . import views, errors          # 第三行
