@@ -3,7 +3,7 @@ from datetime import timedelta
 
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'user1418'
+    SECRET_KEY = os.environ.get('SECRET_KEY') or '***somethingyoushouldchange***'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PERMANENT_SESSION_LIFETIME = timedelta(days=2)
     # REMEMBER_COOKIE_DURATION = timedelta(days=2)
